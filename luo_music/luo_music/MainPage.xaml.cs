@@ -1,6 +1,8 @@
 ﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
 using luo_music.ViewModel;
+using Luo.Shared.Data;
+using System;
 
 namespace luo_music
 {
@@ -19,7 +21,7 @@ namespace luo_music
                 Vm.RunClock();
             };
 
-
+            LuoVolFactory.getlist();
         }
 
         private void SystemNavigationManagerBackRequested(object sender, BackRequestedEventArgs e)

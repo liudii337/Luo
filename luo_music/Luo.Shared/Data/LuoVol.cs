@@ -1,7 +1,9 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -180,5 +182,43 @@ namespace Luo.Shared.Data
             }
         }
 
+        public LuoVol(string _cover,string _volnum, string _volurl, string _title, string _commentcount, string _favdcount)
+        {
+            Cover = _cover;
+            VolNum = _volnum;
+            VolUrl = _volurl;
+            Title = _title;
+            CommentCount = _commentcount;
+            FavdCount = _favdcount;
+        }
+
+        public void GetDetailVol(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            //查找节点
+            //var vol_number = doc.DocumentNode.SelectSingleNode("//span[@class='vol-number rounded']").InnerText;
+            //var vol_title = doc.DocumentNode.SelectSingleNode("//span[@class='vol-title']").InnerText;
+            //var vol_img = doc.DocumentNode.SelectSingleNode("//*[@id='volCoverWrapper']/img").GetAttributeValue("src", "");
+
+            Description = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml.Replace("\n", "").Replace("<p>", "").Replace("</p>", "\n").Replace("<br>", "").Replace(" ", "");
+            Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
+
+            VolSongs = new ObservableCollection<LuoVolSong>();
+            var list = doc.DocumentNode.SelectNodes("//li[@class='track-item rounded']");
+
+
+            foreach (var i in list)
+            {
+                var string1 = i.SelectSingleNode("./div[1]/a[1]").InnerText;
+                var _index = string1.Substring(0, 2);
+                var _name = string1.Remove(0, 4);
+                var _artist=i.SelectSingleNode("./div[1]/span[2]").InnerText;
+                var imagesrc = i.SelectSingleNode("./div[1]/a[3]").GetAttributeValue("data-img", "");
+                VolSongs.Add(new LuoVolSong(VolNum,_index, _name, _artist, imagesrc));
+            }
+
+        }
     }
 }
