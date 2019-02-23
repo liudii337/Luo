@@ -6,20 +6,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:data="using:Luo.Shared.Data"
       x:Class="luo_music.MainPage"
       mc:Ignorable="d ignore"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
 
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.906,1.164"
-                                 StartPoint="0.244,-0.159">
-                <GradientStop Color="#FFA20000"
-                              Offset="0" />
-                <GradientStop Color="#FFCD7C10"
-                              Offset="1" />
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        
 
         <StackPanel Background="#FF1F1F1F"
                     Width="300"
@@ -85,5 +78,42 @@
                        Foreground="White"
                        Text="{Binding Clock}" />
         </StackPanel>
+        
+        <Grid HorizontalAlignment="Left" Width="400">
+            <ListView ItemsSource="{Binding LuoVols}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:LuoVol">
+                        <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Image Name="Cover" Source="{Binding Cover}" RelativePanel.AlignTopWithPanel="True"/>
+                            <Grid RelativePanel.Below="Cover"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+                                <RelativePanel Margin="5,5,5,5">
+                                    <TextBlock Name="left" Text="vol." RelativePanel.AlignLeftWithPanel="True" />
+                                    <TextBlock Name="num" Text="{Binding VolNum}" Margin="0,0,5,0" RelativePanel.RightOf="left"/>
+                                    <TextBlock Text="{Binding Title}" RelativePanel.RightOf="num"/>
+
+                                    <TextBlock Name="comment" Text="{Binding CommentCount}" RelativePanel.AlignRightWithPanel="True"/>
+                                    <FontIcon Name="icon1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE134;" RelativePanel.LeftOf="comment" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15" Margin="0,0,3,0"/>
+                                    <TextBlock Name="favd" Text="{Binding FavdCount}" RelativePanel.LeftOf="icon1" Margin="0,0,5,0"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" RelativePanel.LeftOf="favd" FontSize="15" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,3,0"/>
+                                </RelativePanel>
+
+                            </Grid>
+
+                        </RelativePanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

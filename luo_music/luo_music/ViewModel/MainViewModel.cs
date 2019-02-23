@@ -7,6 +7,8 @@ using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 using luo_music.Model;
+using System.Collections.ObjectModel;
+using Luo.Shared.Data;
 
 namespace luo_music.ViewModel
 {
@@ -153,6 +155,7 @@ namespace luo_music.ViewModel
         {
             try
             {
+                LuoVols = await _dataService.GetVolList();
                 var item = await _dataService.GetData();
                 WelcomeTitle = item.Title;
             }
@@ -162,5 +165,23 @@ namespace luo_music.ViewModel
                 WelcomeTitle = ex.Message;
             }
         }
+
+        private ObservableCollection<LuoVol> _luoVols;
+        public ObservableCollection<LuoVol> LuoVols
+        {
+            get
+            {
+                return _luoVols;
+            }
+            set
+            {
+                if (_luoVols != value)
+                {
+                    _luoVols = value;
+                    RaisePropertyChanged(() => LuoVols);
+                }
+            }
+        }
+
     }
 }

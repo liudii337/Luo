@@ -21,7 +21,7 @@ namespace luo_music
                 Vm.RunClock();
             };
 
-            LuoVolFactory.getlist();
+            //LuoVolFactory.getlist();
         }
 
         private void SystemNavigationManagerBackRequested(object sender, BackRequestedEventArgs e)

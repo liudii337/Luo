@@ -41,7 +41,8 @@ namespace luo_music.ViewModel
             if (ViewModelBase.IsInDesignModeStatic
                     || UseDesignTimeData)
             {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+                //SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+                SimpleIoc.Default.Register<IDataService, DataService>();
             }
             else
             {

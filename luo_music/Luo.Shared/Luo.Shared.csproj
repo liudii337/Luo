@@ -109,6 +109,7 @@
     <Compile Include="Data\LuoVol.cs" />
     <Compile Include="Data\LuoVolFactory.cs" />
     <Compile Include="Data\LuoVolSong.cs" />
+    <Compile Include="Data\LuoVolTag.cs" />
     <Compile Include="Data\ModelBase.cs" />
     <Compile Include="Helper\Request.cs" />
     <Compile Include="Helper\StringHelper.cs" />

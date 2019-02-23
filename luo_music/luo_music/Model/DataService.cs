@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Luo.Shared.Data;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace luo_music.Model
 {
@@ -11,6 +13,11 @@ namespace luo_music.Model
             // Simulate by returning a DataItem
             var item = new DataItem("Welcome to MVVM Light");
             return Task.FromResult(item);
+        }
+
+        public Task<ObservableCollection<LuoVol>> GetVolList()
+        {
+            return LuoVolFactory.getlist();
         }
     }
 }

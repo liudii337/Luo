@@ -62,8 +62,8 @@ namespace Luo.Shared.Data
             }
         }
 
-        private string[] tags;
-        public string[] Tags
+        private ObservableCollection<string> tags;
+        public ObservableCollection<string> Tags
         {
             get
             {
@@ -205,10 +205,15 @@ namespace Luo.Shared.Data
             Description = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml.Replace("\n", "").Replace("<p>", "").Replace("</p>", "\n").Replace("<br>", "").Replace(" ", "");
             Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
 
+            Tags = new ObservableCollection<String>();
+            var vol_tags = doc.DocumentNode.SelectNodes("//a[@class='vol-tag-item']");
+            foreach (var i in vol_tags)
+            {
+                Tags.Add(i.InnerText.Replace("#", ""));
+            }
+
             VolSongs = new ObservableCollection<LuoVolSong>();
             var list = doc.DocumentNode.SelectNodes("//li[@class='track-item rounded']");
-
-
             foreach (var i in list)
             {
                 var string1 = i.SelectSingleNode("./div[1]/a[1]").InnerText;

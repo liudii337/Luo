@@ -55,7 +55,31 @@ namespace Luo.Shared.Data
             return vollist;
         }
 
-        public static async void getlist()
+        public static ObservableCollection<LuoVolTag> GetVolTagListFromHtml(string html)
+        {
+            var voltaglist = new ObservableCollection<LuoVolTag>();
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            //查找节点
+            var titleNode = doc.DocumentNode.SelectSingleNode("//div[@class='pagenav-wrapper']");
+            var list = titleNode.SelectNodes("./a[@class='item']");
+
+            foreach (var i in list)
+            {
+                var _src = i.GetAttributeValue("href", "");
+                var _name = i.InnerText;
+                voltaglist.Add(new LuoVolTag()
+                {
+                    Name=_name,
+                    Src=_src
+                });
+            }
+
+            return voltaglist;
+        }
+
+        public async static Task<ObservableCollection<LuoVol>> getlist()
         {
             var http = new HttpClient();
             http.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36");
@@ -63,7 +87,8 @@ namespace Luo.Shared.Data
             http.Dispose();
             string result = response.Content.ReadAsStringAsync().Result;
 
-            await GetVolListFromHtml(result);
+            GetVolTagListFromHtml(result);
+            return await GetVolListFromHtml(result);
         }
     }
 }
