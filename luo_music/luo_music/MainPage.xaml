@@ -80,7 +80,7 @@
         </StackPanel>
         
         <Grid HorizontalAlignment="Left" Width="400">
-            <ListView ItemsSource="{Binding LuoVols}">
+            <ListView ItemsSource="{Binding DataVM.DataList}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:LuoVol">
                         <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

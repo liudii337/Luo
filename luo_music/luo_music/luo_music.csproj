@@ -106,6 +106,7 @@
       <DependentUpon>SecondPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\DataViewModel\DataViewModelBase.cs" />
+    <Compile Include="ViewModel\DataViewModel\VolDataViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>

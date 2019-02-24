@@ -106,15 +106,20 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data\CancellationTokenSourceFactory.cs" />
     <Compile Include="Data\LuoVol.cs" />
     <Compile Include="Data\LuoVolFactory.cs" />
     <Compile Include="Data\LuoVolSong.cs" />
     <Compile Include="Data\LuoVolTag.cs" />
     <Compile Include="Data\ModelBase.cs" />
+    <Compile Include="Service\CloudService.cs" />
+    <Compile Include="Service\VolService.cs" />
+    <Compile Include="Service\VolServiceBase.cs" />
     <Compile Include="Helper\Request.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Helper\Xpath_helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IService.cs" />
     <EmbeddedResource Include="Properties\Luo.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,9 @@ using Microsoft.Practices.ServiceLocation;
 using luo_music.Model;
 using System.Collections.ObjectModel;
 using Luo.Shared.Data;
+using luo_music.ViewModel.DataViewModel;
+using Luo.Shared.Service;
+using Luo.Shared.Helper;
 
 namespace luo_music.ViewModel
 {
@@ -113,6 +116,24 @@ namespace luo_music.ViewModel
             }
         }
 
+        private CancellationTokenSourceFactory _ctsFactory;
+        public CancellationTokenSourceFactory CtsFactory
+        {
+            get
+            {
+                return _ctsFactory ?? (_ctsFactory = CancellationTokenSourceFactory.CreateDefault());
+            }
+        }
+
+        private LuoVolFactory _normalFactory;
+        public LuoVolFactory NormalFactory
+        {
+            get
+            {
+                return _normalFactory ?? (_normalFactory = new LuoVolFactory());
+            }
+        }
+
         public MainViewModel(
             IDataService dataService,
             INavigationService navigationService)
@@ -120,6 +141,11 @@ namespace luo_music.ViewModel
             _dataService = dataService;
             _navigationService = navigationService;
             Initialize();
+
+            DataVM = new VolDataViewModel(this,
+                new VolService(Request.GetAllVol, NormalFactory, CtsFactory));
+
+            DataVM.RefreshAsync();
         }
 
         public void RunClock()
@@ -183,5 +209,21 @@ namespace luo_music.ViewModel
             }
         }
 
+        private VolDataViewModel _dataVM;
+        public VolDataViewModel DataVM
+        {
+            get
+            {
+                return _dataVM;
+            }
+            set
+            {
+                if (_dataVM != value)
+                {
+                    _dataVM = value;
+                    RaisePropertyChanged(() => DataVM);
+                }
+            }
+        }
     }
 }

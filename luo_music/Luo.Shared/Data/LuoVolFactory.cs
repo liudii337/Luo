@@ -12,6 +12,11 @@ namespace Luo.Shared.Data
 {
     public class LuoVolFactory
     {
+        public async Task<ObservableCollection<LuoVol>> GetVolsAsync(string html)
+        {
+            return await GetVolListFromHtml(html);
+        }
+
         public async static Task<ObservableCollection<LuoVol>>  GetVolListFromHtml(string html)
         {
             var vollist = new ObservableCollection<LuoVol>();
@@ -45,7 +50,6 @@ namespace Luo.Shared.Data
 
                     string result = http_response.Content.ReadAsStringAsync().Result;
                     vol.GetDetailVol(result);
-
                 }
 
                 vollist.Add(vol);
@@ -54,6 +58,7 @@ namespace Luo.Shared.Data
 
             return vollist;
         }
+
 
         public static ObservableCollection<LuoVolTag> GetVolTagListFromHtml(string html)
         {
