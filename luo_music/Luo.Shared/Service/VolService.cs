@@ -19,10 +19,10 @@ namespace Luo.Shared.Service
             RequestUrl = url;
         }
 
-        //public Task<string> GetImageDetailAsync(string id)
-        //{
-        //    return _cloudService.GetVolDetailAsync(id, GetCancellationToken());
-        //}
+        public Task<string> GetVolDetailHtmlAsync(string url)
+        {
+            return _cloudService.GetVolDetailHtmlAsync(url);
+        }
 
         public override async Task<IEnumerable<LuoVol>> GetVolsAsync()
         {
@@ -31,7 +31,7 @@ namespace Luo.Shared.Service
             if (result != null)
             {
                 //工厂加工，获得成品
-                var volList = await _VolFactory.GetVolsAsync(result);
+                var volList = _VolFactory.GetVols(result);
                 return volList;
             }
             else

@@ -3,12 +3,13 @@ using Windows.UI.Xaml.Navigation;
 using luo_music.ViewModel;
 using Luo.Shared.Data;
 using System;
+using luo_music.Model;
 
 namespace luo_music
 {
     public sealed partial class MainPage
     {
-        public MainViewModel Vm => (MainViewModel)DataContext;
+        public MainViewModel MainVm => (MainViewModel)DataContext;
 
         public MainPage()
         {
@@ -18,7 +19,7 @@ namespace luo_music
 
             Loaded += (s, e) =>
             {
-                Vm.RunClock();
+                MainVm.RunClock();
             };
 
             //LuoVolFactory.getlist();
@@ -35,8 +36,16 @@ namespace luo_music
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            Vm.StopClock();
+            MainVm.StopClock();
             base.OnNavigatingFrom(e);
+        }
+
+        private async void ListView_ItemClick(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        {
+            VolItem item = (VolItem)e.ClickedItem;
+            await item.GetVolDetialAsync();
+            MainVm.CurrentVol = item;
+            MainVm.StopClock();
         }
     }
 }

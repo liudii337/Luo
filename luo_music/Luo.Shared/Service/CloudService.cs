@@ -25,6 +25,11 @@ namespace Luo.Shared.Service
             return response.Content.ReadAsStringAsync().Result;
         }
 
+        internal async Task<string> GetVolDetailHtmlAsync(string url)
+        {
+            return await HttpRequestAsync(url);
+        }
+
         internal async Task<string> GetVolsAsync(int page, int pageCount, CancellationToken token, string url)
         {
             //var param = GetDefaultParam();

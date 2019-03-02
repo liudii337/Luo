@@ -225,5 +225,22 @@ namespace luo_music.ViewModel
                 }
             }
         }
+
+        private VolItem _currentVol;
+        public VolItem CurrentVol
+        {
+            get
+            {
+                return _currentVol;
+            }
+            set
+            {
+                if (_currentVol != value)
+                {
+                    _currentVol = value;
+                    RaisePropertyChanged(nameof(CurrentVol));
+                }
+            }
+        }
     }
 }

@@ -209,7 +209,8 @@ namespace Luo.Shared.Data
             var vol_tags = doc.DocumentNode.SelectNodes("//a[@class='vol-tag-item']");
             foreach (var i in vol_tags)
             {
-                Tags.Add(i.InnerText.Replace("#", ""));
+                //Tags.Add(i.InnerText.Replace("#", ""));
+                Tags.Add(i.InnerText);
             }
 
             VolSongs = new ObservableCollection<LuoVolSong>();

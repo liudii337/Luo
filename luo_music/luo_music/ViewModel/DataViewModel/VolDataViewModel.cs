@@ -1,4 +1,5 @@
 ﻿using Luo.Shared.Data;
+using luo_music.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace luo_music.ViewModel.DataViewModel
 {
-    public class VolDataViewModel : DataViewModelBase<LuoVol>
+    public class VolDataViewModel : DataViewModelBase<VolItem>
     {
         protected MainViewModel _mainViewModel;
         protected VolServiceBase _volService;
@@ -23,11 +24,21 @@ namespace luo_music.ViewModel.DataViewModel
             _volService?.Cancel();
         }
 
-        protected override void ClickItem(LuoVol item)
+        protected override void ClickItem(VolItem item)
         {
         }
 
-        protected void UpdateHintVisibility(IEnumerable<LuoVol> list)
+        protected IEnumerable<VolItem> CreateVolItems(IEnumerable<LuoVol> vols)
+        {
+            var list = new List<VolItem>();
+            foreach (var i in vols)
+            {
+                list.Add(new VolItem(i));
+            }
+            return list;
+        }
+
+        protected void UpdateHintVisibility(IEnumerable<VolItem> list)
         {
             //_mainViewModel.FooterLoadingVisibility = Visibility.Collapsed;
             //_mainViewModel.FooterReloadVisibility = Visibility.Collapsed;
@@ -53,7 +64,7 @@ namespace luo_music.ViewModel.DataViewModel
             //}
         }
 
-        protected async override Task<IEnumerable<LuoVol>> GetList(int pageIndex)
+        protected async override Task<IEnumerable<VolItem>> GetList(int pageIndex)
         {
             try
             {
@@ -80,7 +91,7 @@ namespace luo_music.ViewModel.DataViewModel
             {
                 //var task = Logger.LogAsync(e2);
                 HandleFailed(e2);
-                return new List<LuoVol>();
+                return new List<VolItem>();
             }
         }
 
@@ -107,15 +118,15 @@ namespace luo_music.ViewModel.DataViewModel
             });
         }
 
-        protected override void LoadMoreItemCompleted(IEnumerable<LuoVol> list, int pagingIndex)
+        protected override void LoadMoreItemCompleted(IEnumerable<VolItem> list, int pagingIndex)
         {
             foreach (var item in list)
             {
-                //item.Init();
+                item.Init();
             }
         }
 
-        protected async virtual Task<IEnumerable<LuoVol>> RequestAsync(int pageIndex)
+        protected async virtual Task<IEnumerable<VolItem>> RequestAsync(int pageIndex)
         {
             try
             {
@@ -123,7 +134,7 @@ namespace luo_music.ViewModel.DataViewModel
                 var result = await _volService.GetVolsAsync();
                 if (result != null)
                 {
-                    return result;
+                    return CreateVolItems(result);
                 }
                 else
                     return null;

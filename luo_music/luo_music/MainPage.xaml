@@ -7,18 +7,25 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:data="using:Luo.Shared.Data"
+      xmlns:data1="using:luo_music.Model"
       x:Class="luo_music.MainPage"
       mc:Ignorable="d ignore"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <ItemsPanelTemplate x:Key="HorizontalItemsPanelTemplate">
+            <VirtualizingStackPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+    </Page.Resources>
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid Background="White">
         
 
         <StackPanel Background="#FF1F1F1F"
                     Width="300"
                     HorizontalAlignment="Center"
                     Height="450"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
             <Button Content="Increment counter"
                     HorizontalAlignment="Stretch"
                     Margin="0,0,0,20"
@@ -78,42 +85,93 @@
                        Foreground="White"
                        Text="{Binding Clock}" />
         </StackPanel>
-        
-        <Grid HorizontalAlignment="Left" Width="400">
-            <ListView ItemsSource="{Binding DataVM.DataList}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:LuoVol">
-                        <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <Image Name="Cover" Source="{Binding Cover}" RelativePanel.AlignTopWithPanel="True"/>
-                            <Grid RelativePanel.Below="Cover"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
-                                <RelativePanel Margin="5,5,5,5">
-                                    <TextBlock Name="left" Text="vol." RelativePanel.AlignLeftWithPanel="True" />
-                                    <TextBlock Name="num" Text="{Binding VolNum}" Margin="0,0,5,0" RelativePanel.RightOf="left"/>
-                                    <TextBlock Text="{Binding Title}" RelativePanel.RightOf="num"/>
+        <Grid Background="{StaticResource SystemControlAcrylicElementBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid HorizontalAlignment="Left" Grid.Column="0">
+                <ListView ItemsSource="{Binding DataVM.DataList}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data1:VolItem">
+                            <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="5">
+                                <Image Name="Cover" Source="{Binding Vol.Cover}" RelativePanel.AlignTopWithPanel="True"/>
+                                <Grid RelativePanel.Below="Cover"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+                                    <RelativePanel Margin="5,5,5,5">
+                                        <TextBlock Text="{Binding TitleString}" RelativePanel.AlignLeftWithPanel="True"/>
 
-                                    <TextBlock Name="comment" Text="{Binding CommentCount}" RelativePanel.AlignRightWithPanel="True"/>
-                                    <FontIcon Name="icon1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE134;" RelativePanel.LeftOf="comment" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15" Margin="0,0,3,0"/>
-                                    <TextBlock Name="favd" Text="{Binding FavdCount}" RelativePanel.LeftOf="icon1" Margin="0,0,5,0"/>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" RelativePanel.LeftOf="favd" FontSize="15" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,3,0"/>
-                                </RelativePanel>
+                                        <TextBlock Name="comment" Text="{Binding Vol.CommentCount}" RelativePanel.AlignRightWithPanel="True"/>
+                                        <FontIcon Name="icon1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE134;" RelativePanel.LeftOf="comment" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15" Margin="0,0,3,0"/>
+                                        <TextBlock Name="favd" Text="{Binding Vol.FavdCount}" RelativePanel.LeftOf="icon1" Margin="0,0,5,0"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" RelativePanel.LeftOf="favd" FontSize="15" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,3,0"/>
+                                    </RelativePanel>
 
-                            </Grid>
+                                </Grid>
 
-                        </RelativePanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
+                            </RelativePanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-            </ListView>
+                </ListView>
+            </Grid>
+            <Grid Grid.Column="1" MaxWidth="800" HorizontalAlignment="Center" Margin="20,0,20,0" >
+                <ScrollViewer>
+                    <StackPanel>
+                        <Image Source="{Binding CurrentVol.Vol.Cover}"/>
+                        <Grid Margin="0,10,0,10">
+                            <TextBlock Text="{Binding CurrentVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
+                            <ListView ItemsSource="{Binding CurrentVol.Vol.Tags}" VerticalAlignment="Center" HorizontalAlignment="Right" IsItemClickEnabled="False" SelectionMode="None" ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding }" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                        <TextBlock Text="{Binding CurrentVol.Vol.Description}" TextWrapping="Wrap" Margin="0,10,0,10"/>
+                        <ListView ItemsSource="{Binding CurrentVol.Vol.VolSongs}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="data:LuoVolSong">
+                                    <Grid Height="60" Margin="0,5,0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Image Source="{Binding AlbumImage}" Grid.Column="1"/>
+                                        <Grid Grid.Column="2" Margin="10,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding Name}" Grid.Row="0"/>
+                                            <TextBlock Text="{Binding Artist}" Grid.Row="1"/>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Padding" Value="0,0,0,0" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </StackPanel>
+
+                </ScrollViewer>
+            </Grid>
+
+
         </Grid>
+        <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Canvas.ZIndex="-1" />
+
     </Grid>
 </Page>

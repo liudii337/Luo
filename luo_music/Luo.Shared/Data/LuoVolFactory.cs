@@ -12,12 +12,12 @@ namespace Luo.Shared.Data
 {
     public class LuoVolFactory
     {
-        public async Task<ObservableCollection<LuoVol>> GetVolsAsync(string html)
+        public ObservableCollection<LuoVol> GetVols(string html)
         {
-            return await GetVolListFromHtml(html);
+            return GetVolListFromHtml(html);
         }
 
-        public async static Task<ObservableCollection<LuoVol>>  GetVolListFromHtml(string html)
+        public static ObservableCollection<LuoVol>  GetVolListFromHtml(string html)
         {
             var vollist = new ObservableCollection<LuoVol>();
 
@@ -42,15 +42,15 @@ namespace Luo.Shared.Data
 
                 var vol = new LuoVol(cover,volnum,volurl,title,commentcount,favdcount);
 
-                if (vol.VolUrl != null)
-                {
-                    var http_detail = new HttpClient();
-                    http_detail.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36");
-                    var http_response = await http_detail.GetAsync(vol.VolUrl);
+                //if (vol.VolUrl != null)
+                //{
+                //    var http_detail = new HttpClient();
+                //    http_detail.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36");
+                //    var http_response = await http_detail.GetAsync(vol.VolUrl);
 
-                    string result = http_response.Content.ReadAsStringAsync().Result;
-                    vol.GetDetailVol(result);
-                }
+                //    string result = http_response.Content.ReadAsStringAsync().Result;
+                //    vol.GetDetailVol(result);
+                //}
 
                 vollist.Add(vol);
 
@@ -93,7 +93,7 @@ namespace Luo.Shared.Data
             string result = response.Content.ReadAsStringAsync().Result;
 
             GetVolTagListFromHtml(result);
-            return await GetVolListFromHtml(result);
+            return GetVolListFromHtml(result);
         }
     }
 }
