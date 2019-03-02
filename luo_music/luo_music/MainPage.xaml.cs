@@ -9,7 +9,7 @@ namespace luo_music
 {
     public sealed partial class MainPage
     {
-        public MainViewModel MainVm => (MainViewModel)DataContext;
+        public MainViewModel MainVM => (MainViewModel)DataContext;
 
         public MainPage()
         {
@@ -19,7 +19,7 @@ namespace luo_music
 
             Loaded += (s, e) =>
             {
-                MainVm.RunClock();
+                MainVM.RunClock();
             };
 
             //LuoVolFactory.getlist();
@@ -36,7 +36,7 @@ namespace luo_music
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            MainVm.StopClock();
+            MainVM.StopClock();
             base.OnNavigatingFrom(e);
         }
 
@@ -44,8 +44,15 @@ namespace luo_music
         {
             VolItem item = (VolItem)e.ClickedItem;
             await item.GetVolDetialAsync();
-            MainVm.CurrentVol = item;
-            MainVm.StopClock();
+            MainVM.CurrentVol = item;
+            MainVM.StopClock();
+        }
+
+        private void ListView_ItemClick_1(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        {
+            LuoVolSong item = (LuoVolSong)e.ClickedItem;
+            MainVM.CurrentSong = item;
+            //Player.Play();
         }
     }
 }

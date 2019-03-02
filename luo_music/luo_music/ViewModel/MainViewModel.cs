@@ -242,5 +242,22 @@ namespace luo_music.ViewModel
                 }
             }
         }
+
+        private LuoVolSong _currentSong;
+        public LuoVolSong CurrentSong
+        {
+            get
+            {
+                return _currentSong;
+            }
+            set
+            {
+                if (_currentSong != value)
+                {
+                    _currentSong = value;
+                    RaisePropertyChanged(() => CurrentSong);
+                }
+            }
+        }
     }
 }

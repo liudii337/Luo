@@ -120,8 +120,8 @@
 
                 </ListView>
             </Grid>
-            <Grid Grid.Column="1" MaxWidth="800" HorizontalAlignment="Center" Margin="20,0,20,0" >
-                <ScrollViewer>
+            <ScrollViewer Grid.Column="1">
+                <Grid Grid.Column="1" MaxWidth="800" HorizontalAlignment="Center" Margin="20,0,20,0" >
                     <StackPanel>
                         <Image Source="{Binding CurrentVol.Vol.Cover}"/>
                         <Grid Margin="0,10,0,10">
@@ -135,7 +135,7 @@
                             </ListView>
                         </Grid>
                         <TextBlock Text="{Binding CurrentVol.Vol.Description}" TextWrapping="Wrap" Margin="0,10,0,10"/>
-                        <ListView ItemsSource="{Binding CurrentVol.Vol.VolSongs}">
+                        <ListView ItemsSource="{Binding CurrentVol.Vol.VolSongs}" Margin="0,10,0,10" IsItemClickEnabled="True" ItemClick="ListView_ItemClick_1">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="data:LuoVolSong">
                                     <Grid Height="60" Margin="0,5,0,5">
@@ -165,13 +165,13 @@
                             </ListView.ItemContainerStyle>
                         </ListView>
                     </StackPanel>
+                </Grid>
+            </ScrollViewer>
 
-                </ScrollViewer>
-            </Grid>
 
 
         </Grid>
         <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Canvas.ZIndex="-1" />
-
+        <MediaElement Name="Player" Source="{Binding CurrentSong.SongUrl}" AutoPlay="True" Canvas.ZIndex="-1"/>
     </Grid>
 </Page>
