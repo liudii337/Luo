@@ -8,6 +8,7 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:data="using:Luo.Shared.Data"
       xmlns:data1="using:luo_music.Model"
+      xmlns:convertor="using:luo_music.Convertor"
       x:Class="luo_music.MainPage"
       mc:Ignorable="d ignore"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -15,6 +16,7 @@
         <ItemsPanelTemplate x:Key="HorizontalItemsPanelTemplate">
             <VirtualizingStackPanel Orientation="Horizontal"/>
         </ItemsPanelTemplate>
+        <convertor:StringToUrl x:Key="Convertor"/>
     </Page.Resources>
 
     <Grid Background="White">
@@ -172,6 +174,6 @@
 
         </Grid>
         <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Canvas.ZIndex="-1" />
-        <MediaElement Name="Player" Source="{Binding CurrentSong.SongUrl}" AutoPlay="True" Canvas.ZIndex="-1"/>
+        <MediaPlayerElement Name="Player" AutoPlay="True" Canvas.ZIndex="-1"/>
     </Grid>
 </Page>

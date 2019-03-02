@@ -4,6 +4,7 @@ using luo_music.ViewModel;
 using Luo.Shared.Data;
 using System;
 using luo_music.Model;
+using Windows.Media.Core;
 
 namespace luo_music
 {
@@ -52,7 +53,7 @@ namespace luo_music
         {
             LuoVolSong item = (LuoVolSong)e.ClickedItem;
             MainVM.CurrentSong = item;
-            //Player.Play();
+            Player.Source=MediaSource.CreateFromUri(new Uri(item.SongUrl));
         }
     }
 }
