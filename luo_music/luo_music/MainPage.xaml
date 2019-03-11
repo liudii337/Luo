@@ -16,7 +16,6 @@
         <ItemsPanelTemplate x:Key="HorizontalItemsPanelTemplate">
             <VirtualizingStackPanel Orientation="Horizontal"/>
         </ItemsPanelTemplate>
-        <convertor:StringToUrl x:Key="Convertor"/>
     </Page.Resources>
 
     <Grid Background="White">

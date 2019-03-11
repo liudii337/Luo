@@ -49,11 +49,12 @@ namespace luo_music
             MainVM.StopClock();
         }
 
-        private void ListView_ItemClick_1(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        private async void ListView_ItemClick_1(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
         {
             LuoVolSong item = (LuoVolSong)e.ClickedItem;
-            MainVM.CurrentSong = item;
-            Player.Source=MediaSource.CreateFromUri(new Uri(item.SongUrl));
+            //MainVM.CurrentSong = item;
+            //Player.Source=MediaSource.CreateFromUri(new Uri(item.SongUrl));
+            await MainVM.InstantPlayAsync(MainVM.CurrentVol.Vol.VolSongs, MainVM.CurrentVol.Vol.VolSongs.IndexOf(item));
         }
     }
 }

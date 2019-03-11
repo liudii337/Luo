@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Luo.Shared.Helper
 {
-    class StringHelper
+    public static class StringHelper
     {
         public static string SpliteForm2String(string a,string b1,string b2)
         {
@@ -14,5 +14,6 @@ namespace Luo.Shared.Helper
             int b21 = a.IndexOf(b2);//找b的位置
             return (a.Substring(b11 + 1)).Substring(0, b21 - b11 - 1);
         }
+
     }
 }

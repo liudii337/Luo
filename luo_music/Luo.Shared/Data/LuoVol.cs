@@ -221,8 +221,9 @@ namespace Luo.Shared.Data
                 var _index = string1.Substring(0, 2);
                 var _name = string1.Remove(0, 4);
                 var _artist=i.SelectSingleNode("./div[1]/span[2]").InnerText;
+                var _album = i.SelectSingleNode("./div[2]/div[2]/div[1]/p[3]").InnerText.Remove(0, 7);
                 var imagesrc = i.SelectSingleNode("./div[1]/a[3]").GetAttributeValue("data-img", "");
-                VolSongs.Add(new LuoVolSong(VolNum,_index, _name, _artist, imagesrc));
+                VolSongs.Add(new LuoVolSong(VolNum,_index, _name, _artist,_album, imagesrc));
             }
 
         }

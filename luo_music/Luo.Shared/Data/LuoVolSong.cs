@@ -76,6 +76,23 @@ namespace Luo.Shared.Data
             }
         }
 
+        private string album;
+        public string Album
+        {
+            get
+            {
+                return album;
+            }
+            set
+            {
+                if (album != value)
+                {
+                    album = value;
+                    RaisePropertyChanged(() => Album);
+                }
+            }
+        }
+
         private string albumimage;
         public string AlbumImage
         {
@@ -110,12 +127,15 @@ namespace Luo.Shared.Data
             }
         }
 
-        public LuoVolSong(string _vol,string _index, string _name, string _artist, string _albumimage)
+        public bool IsOnline = true;
+
+        public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
         {
             VolNum = _vol;
             Index = _index;
             Name = _name;
             Artist = _artist;
+            Album = _album;
             AlbumImage = _albumimage;
             SongUrl = SongUriFormat(_vol, _index);
         }

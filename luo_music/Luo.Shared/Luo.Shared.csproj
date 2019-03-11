@@ -112,6 +112,10 @@
     <Compile Include="Data\LuoVolSong.cs" />
     <Compile Include="Data\LuoVolTag.cs" />
     <Compile Include="Data\ModelBase.cs" />
+    <Compile Include="Extension\EnumrableExtesion.cs" />
+    <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="PlaybackEngine\IPlayer.cs" />
+    <Compile Include="PlaybackEngine\Player.cs" />
     <Compile Include="Service\CloudService.cs" />
     <Compile Include="Service\VolService.cs" />
     <Compile Include="Service\VolServiceBase.cs" />
