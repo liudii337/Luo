@@ -16,6 +16,8 @@ using Luo.Shared.PlaybackEngine;
 using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
+using Windows.System;
+using luo_music.Pages;
 
 namespace luo_music.ViewModel
 {
@@ -283,6 +285,71 @@ namespace luo_music.ViewModel
             }
         }
 
+        private int _currentIndex = -1;
+        public int CurrentIndex
+        {
+            get
+            {
+                return _currentIndex;
+            }
+            set
+            {
+                if (_currentIndex != value)
+                {
+                    _currentIndex = value;
+                    RaisePropertyChanged(() => CurrentIndex);
+                }
+            }
+        }
+        #region Navigate
+        public List<HamPanelItem> HamList { get; set; } = new List<HamPanelItem>()
+        {
+            new HamPanelItem
+            {
+                //多语言支持
+                //Title = Consts.Localizer.GetString("HomeText"),
+                Title="最新期刊",
+                TargetType = typeof(VolListPage),
+                Icon="\uE80F",
+                Index = VirtualKey.Number1,
+                IndexNum = "1"
+            },
+            new HamPanelItem
+            {
+                Title = "分类",
+                Icon="\uE2AC",
+                TargetType = typeof(CategoryPage),
+                Index = VirtualKey.Number2,
+                IndexNum = "2"
+            },
+            new HamPanelItem
+            {
+                Title = "收藏",
+                Icon = "\uEFA9",
+                TargetType = typeof(HeartPage),
+                Index = VirtualKey.Number3,
+                IndexNum = "3"
+            },
+        };
+
+        private bool _needShowBack=false;
+        public bool NeedShowBack
+        {
+            get
+            {
+                return _needShowBack;
+            }
+            set
+            {
+                if (_needShowBack != value)
+                {
+                    _needShowBack = value;
+                    RaisePropertyChanged(() => NeedShowBack);
+                }
+            }
+        }
+        #endregion
+
         #region PlayMusic
         private bool _isPlaying;
         public bool IsPlaying
@@ -389,74 +456,63 @@ namespace luo_music.ViewModel
 
         private async void Player_StatusChanged(object sender, PlayingItemsChangedArgs e)
         {
-//            await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
-//            {
-//                if (e.CurrentIndex == -1)
-//                {
-//                    CurrentSong = null;
-//                    //NowPlayingList.Clear();
-//                    //NowListPreview = "-/-";
-//                    //CurrentTitle = null;
-//                    //CurrentAlbum = null;
-//                    //CurrentArtist = null;
-//                    //await CurrentArtwork.SetSourceAsync(await RandomAccessStreamReference.CreateFromUri(new Uri(Consts.BlackPlaceholder)).OpenReadAsync());
-//                    //CurrentIndex = -1;
-//                    //NeedShowPanel = false;
-//                    //IsPodcast = false;
-//                    //ReleaseDisplay();
-//                    return;
-//                }
+            await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
+            {
+                if (e.CurrentIndex == -1)
+                {
+                    CurrentSong = null;
+                    //NowPlayingList.Clear();
+                    //NowListPreview = "-/-";
+                    //CurrentTitle = null;
+                    //CurrentAlbum = null;
+                    //CurrentArtist = null;
+                    //await CurrentArtwork.SetSourceAsync(await RandomAccessStreamReference.CreateFromUri(new Uri(Consts.BlackPlaceholder)).OpenReadAsync());
+                    //CurrentIndex = -1;
+                    //NeedShowPanel = false;
+                    //IsPodcast = false;
+                    //ReleaseDisplay();
+                    return;
+                }
 
-//                if (e.CurrentSong != null)
-//                {
-//                    CurrentSong = e.CurrentSong;
-//                    var p = e.CurrentSong;
-//                    //CurrentTitle = p.Title.IsNullorEmpty() ? p.FilePath.Split('\\').LastOrDefault() : p.Title;
-//                    //IsPodcast = p.IsPodcast;
-//                    //CurrentAlbum = p.Album.IsNullorEmpty() ? Consts.UnknownAlbum : p.Album;
-//                    //CurrentArtist = p.Performers == null ? (p.AlbumArtists == null ? Consts.UnknownArtists : string.Join(Consts.CommaSeparator, p.AlbumArtists)) : string.Join(Consts.CommaSeparator, p.Performers);
+                if (e.CurrentSong != null)
+                {
+                    CurrentSong = e.CurrentSong;
+                    //var p = e.CurrentSong;
+                    ////CurrentTitle = p.Title.IsNullorEmpty() ? p.FilePath.Split('\\').LastOrDefault() : p.Title;
+                    ////IsPodcast = p.IsPodcast;
+                    ////CurrentAlbum = p.Album.IsNullorEmpty() ? Consts.UnknownAlbum : p.Album;
+                    ////CurrentArtist = p.Performers == null ? (p.AlbumArtists == null ? Consts.UnknownArtists : string.Join(Consts.CommaSeparator, p.AlbumArtists)) : string.Join(Consts.CommaSeparator, p.Performers);
 
-//                    if (e.Thumnail != null)
-//                    {
-//                        await CurrentArtwork.SetSourceAsync(await e.Thumnail.OpenReadAsync());
-//                    }
-//                    else
-//                    {
-//                        var thumb = RandomAccessStreamReference.CreateFromUri(new Uri(Consts.BlackPlaceholder));
-//                        await CurrentArtwork.SetSourceAsync(await thumb.OpenReadAsync());
-//                    }
+                    //if (e.Thumnail != null)
+                    //{
+                    //    await CurrentArtwork.SetSourceAsync(await e.Thumnail.OpenReadAsync());
+                    //}
+                    //else
+                    //{
+                    //    var thumb = RandomAccessStreamReference.CreateFromUri(new Uri(Consts.BlackPlaceholder));
+                    //    await CurrentArtwork.SetSourceAsync(await thumb.OpenReadAsync());
+                    //}
 
-//                    var task = Task.Run(() =>
-//                    {
-//                        Tile.SendNormal(CurrentTitle, CurrentAlbum, string.Join(Consts.CommaSeparator, p.Performers ?? new string[] { }), p.PicturePath);
-//                    });
+                    //var task = Task.Run(() =>
+                    //{
+                    //    Tile.SendNormal(CurrentTitle, CurrentAlbum, string.Join(Consts.CommaSeparator, p.Performers ?? new string[] { }), p.PicturePath);
+                    //});
 
-//                }
-//                if (e.Items is IReadOnlyList<Song> l)
-//                {
-//                    NowListPreview = $"{e.CurrentIndex + 1}/{l.Count}";
-//                    NowPlayingList.Clear();
-//                    for (int i = 0; i < l.Count; i++)
-//                    {
-//                        NowPlayingList.Add(new SongViewModel(l[i])
-//                        {
-//                            Index = (uint)i,
-//                        });
-//                    }
-//                }
-//                if (e.CurrentIndex < NowPlayingList.Count)
-//                {
-//                    CurrentIndex = e.CurrentIndex;
+                }
+                //if (e.Items is IReadOnlyList<Song> l)
+                //{
+                //    NowListPreview = $"{e.CurrentIndex + 1}/{l.Count}";
+                //    NowPlayingList.Clear();
+                //    for (int i = 0; i < l.Count; i++)
+                //    {
+                //        NowPlayingList.Add(new SongViewModel(l[i])
+                //        {
+                //            Index = (uint)i,
+                //        });
+                //    }
+                //}
+                CurrentIndex = e.CurrentIndex;
 
-//                }
-//                if (MainPage.Current.IsCurrentDouban)
-//                {
-//                    return;
-//                }
-//                else
-//                {
-//                    NeedShowPanel = true;
-//                }
 //                ApplicationView.GetForCurrentView().Title = CurrentPlayingDesc();
 
 //                if (e.CurrentSong != null && Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Shell.AdaptiveCardBuilder"))
@@ -468,15 +524,15 @@ namespace luo_music.ViewModel
 
 //                    if (!NowPlayingList[currentIndex].IsOnline)
 //                    {
-//                        //if (NowPlayingList[currentIndex].Song.PicturePath.IsNullorEmpty())
-//                        //{
-//                        //    img0 = Consts.BlackPlaceholder;
-//                        //}
-//                        //else
-//                        //{
-//                        //    img0 = $"ms-appdata:///temp/{NowPlayingList[currentIndex].Artwork.AbsoluteUri.Split('/').Last()}";
-//                        //}
-//                        img0 = null;
+//                                    //if (NowPlayingList[currentIndex].Song.PicturePath.IsNullorEmpty())
+//                                    //{
+//                                    //    img0 = Consts.BlackPlaceholder;
+//                                    //}
+//                                    //else
+//                                    //{
+//                                    //    img0 = $"ms-appdata:///temp/{NowPlayingList[currentIndex].Artwork.AbsoluteUri.Split('/').Last()}";
+//                                    //}
+//                                    img0 = null;
 //                    }
 //                    else
 //                    {
@@ -509,7 +565,7 @@ namespace luo_music.ViewModel
 
 //                    var songs = NowPlayingList.Where(s => s.IsOnedrive || s.IsOnline).Select(s => s.Song).ToList();
 //#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-//                    Task.Run(async () =>
+//                                Task.Run(async () =>
 //                    {
 //                        if (songs.Count > 0)
 //                        {
@@ -523,12 +579,12 @@ namespace luo_music.ViewModel
 //                    });
 //#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
 
-//                    await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+//                                await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
 //                    {
 //                        try
 //                        {
-//                            //Dispose of any current UserActivitySession, and create a new one.
-//                            (_currentActivity as UserActivitySession)?.Dispose();
+//                                        //Dispose of any current UserActivitySession, and create a new one.
+//                                        (_currentActivity as UserActivitySession)?.Dispose();
 //                            _currentActivity = act.CreateSession();
 //                        }
 //                        catch (Exception)
@@ -536,7 +592,7 @@ namespace luo_music.ViewModel
 //                        }
 //                    });
 //                }
-//            });
+            });
         }
 
         private void Player_DownloadProgressChanged(object sender, DownloadProgressChangedArgs e)

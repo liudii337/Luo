@@ -7,8 +7,7 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:data="using:Luo.Shared.Data"
-      xmlns:data1="using:luo_music.Model"
-      xmlns:convertor="using:luo_music.Convertor"
+      xmlns:model="using:luo_music.Model"
       x:Class="luo_music.MainPage"
       mc:Ignorable="d ignore"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -18,8 +17,245 @@
         </ItemsPanelTemplate>
     </Page.Resources>
 
-    <Grid Background="White">
-        
+    <Grid x:Name="Root" Background="{x:Null}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="72"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="72"/>
+        </Grid.RowDefinitions>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
+              x:Name="TitleBar" Loaded="TitleBar_Loaded" Grid.ColumnSpan="2" Grid.Row="0"/>
+
+        <Button HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                Width="72" Height="48"
+                BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                Visibility="{x:Bind MainVM.NeedShowBack, Mode=OneWay}"
+                Click="BackButton_Click">
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE0C4;" Style="{ThemeResource CaptionTextBlockStyle}"/>
+        </Button>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+              Grid.RowSpan="3" Padding="0,48,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="HamPane" SelectionMode="Single" IsItemClickEnabled="False"
+                      ItemsSource="{x:Bind MainVM.HamList}" Grid.Row="1"
+                      SelectionChanged="HamPane_SelectionChanged"
+                      Loaded="HamPane_Loaded"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:HamPanelItem">
+                        <StackPanel Background="{ThemeResource SystemControlTransparentBrush}"
+                                    VerticalAlignment="Stretch" AccessKey="{x:Bind IndexNum}"
+                                    Width="72"
+                                    x:Name="Panel" HorizontalAlignment="Center" 
+                                    ToolTipService.ToolTip="{x:Bind Title}" Height="72">
+                            <FontIcon HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                      FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Icon}" Height="36"
+                                      Margin="0,8,0,0"/>
+                            <Viewbox Stretch="Uniform" Height="28" Margin="0,-4,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBlock x:Name="Title" Text="{x:Bind Title}" Width="64" TextAlignment="Center"
+                                           HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                                           MaxLines="2" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"
+                                           FontSize="12" Style="{ThemeResource BodyTextBlockStyle}"/>
+                            </Viewbox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0,0,0,0" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Button AccessKey="5" Padding="0" VerticalContentAlignment="Stretch" x:Uid="More"
+                    HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                    ToolTipService.ToolTip="More" Grid.Row="1" 
+                    BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                    Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                    Height="72">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button>
+        </Grid>
+
+        <Frame Grid.Column="1" Grid.Row="1" Visibility="Visible" Margin="0,0,0,0"
+               Navigated="MainFrame_Navigated"
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainFrame"/>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Grid.Row="2" Grid.Column="1" x:Name="NowPanel" Background="{ThemeResource SystemControlAltHighAcrylicWindowBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button BorderThickness="0" x:Name="NowPanelButton"
+                    Background="Transparent" Grid.Column="3" HorizontalContentAlignment="Right"
+                    Width="320"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Margin="8" Grid.Column="1" x:Name="Artwork" 
+                               HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                               Stretch="Uniform" Source="{Binding CurrentSong.AlbumImage,Mode=OneWay}"/>
+                        <Grid x:Name="NowPanelTexts" Margin="4,8" 
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                                     Stretch="Uniform" Grid.Row="0">
+                                <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay}" 
+                                           TextWrapping="NoWrap" HorizontalAlignment="Right"
+                                           Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
+                                           TextTrimming="CharacterEllipsis" MaxWidth="240"/>
+
+                            </Viewbox>
+                            <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                                     Stretch="Uniform" Grid.Row="1">
+                                <TextBlock x:Name="Album" Text="{Binding CurrentSong.Album, Mode=OneWay}" 
+                                           HorizontalAlignment="Right"
+                                           Style="{ThemeResource BodyTextBlockStyle}" 
+                                           MaxLines="1" FontSize="13"
+                                           TextWrapping="NoWrap" MaxWidth="240"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </Viewbox>
+                            <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                                     Stretch="Uniform" Grid.Row="2">
+                                <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
+                                           HorizontalAlignment="Right"
+                                           Style="{ThemeResource BodyTextBlockStyle}" 
+                                           MaxLines="1" FontSize="13" MaxWidth="240"
+                                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                </Button.Content>
+
+            </Button>
+            <StackPanel Orientation="Horizontal" Grid.Column="0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
+                        Command="{x:Bind MainVM.GoPrevious}" ToolTipService.ToolTip="Previous" 
+                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <!--<Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Context.GlyphPreOfOnline(Context.IsPodcast),Mode=OneWay}" />
+                    </Button.Content>-->
+                </Button>
+                <Button AccessKey="P" x:Name="PlayPause"
+                        Command="{x:Bind MainVM.PlayPause}" Width="48" Height="48" Margin="4" 
+                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <!--<Button.Content>
+                        <SymbolIcon Symbol="{x:Bind Context.NullableBoolToSymbol(Context.IsPlaying), Mode=OneWay}"/>
+                    </Button.Content>-->
+                </Button>
+                <Button AccessKey="]" x:Uid="Next" x:Name="Next"
+                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        Command="{x:Bind MainVM.GoNext}" 
+                        ToolTipService.ToolTip="Next" Width="48" Height="48" Margin="4" 
+                        HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <!--<Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Context.GlyphNextOfOnline(Context.IsPodcast),Mode=OneWay}" />
+                    </Button.Content>-->
+                </Button>
+
+                
+
+                <!--
+                <ToggleButton x:Uid="Shuffle" x:Name="Shuffle"
+                              BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                              Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                              IsChecked="{x:Bind MainVM.IsShuffle, Mode=TwoWay}" ToolTipService.ToolTip="Shuffle"
+                              Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <ToggleButton.Content>
+                        <SymbolIcon Symbol="Shuffle"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+                
+                <ToggleButton x:Uid="Loop" x:Name="Refresh" 
+                              Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                              BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                              IsChecked="{x:Bind Context.IsLoop, Mode=TwoWay}" ToolTipService.ToolTip="Loop"
+                              Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <ToggleButton.Content>
+                        <SymbolIcon Symbol="Refresh"/>
+                    </ToggleButton.Content>
+                </ToggleButton>
+                <Button AccessKey="E" x:Uid="Stop" x:Name="Stop" 
+                        Command="{x:Bind MainVM.Stop}" ToolTipService.ToolTip="Stop"
+                        Width="48" Height="48" Margin="4" BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <Button.Content>
+                        <SymbolIcon Symbol="Stop"/>
+                    </Button.Content>
+                </Button>
+                <Button AccessKey="L" x:Uid="PlayList" x:Name="PlayListBtn" 
+                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        ToolTipService.ToolTip="Playing list" Margin="4,0" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button.Content>
+                        <Grid>
+                            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                       x:Name="PlayListFull" Text="{x:Bind Context.NowListPreview,Mode=OneWay}" 
+                                       Style="{ThemeResource BodyTextBlockStyle}" Margin="12,8"/>
+                            <FontIcon x:Name="PlayListNarrow" Visibility="Collapsed" FontSize="15" 
+                                      Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                      FontFamily="Segoe MDL2 Assets" Glyph="&#xE12F;" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <ProgressBar Grid.Column="1" Margin="12,0"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                         Height="2" 
+                         Foreground="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}" 
+                         Background="{x:Null}" Value="{x:Bind MainVM.BufferProgress, Mode=OneWay}"/>
+            
+            <Slider Grid.Column="1" Margin="0,6,0,0"
+                    Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                    Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    Value="{x:Bind MainVM.PositionToValue(Context.CurrentPosition, Context.TotalDuration), Mode=OneWay}"
+                    ThumbToolTipValueConverter="{StaticResource SliderToolTipConverter}" ValueChanged="Slider_ValueChanged"
+                    x:Name="MainSlider"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="2"
+                        HorizontalAlignment="Right" VerticalAlignment="Stretch" x:Name="PositionText">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock x:Name="PositionNarrow" Visibility="Collapsed" Margin="4"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               Text="{x:Bind PositionNarrowToString(Context.CurrentPosition), Mode=OneWay}"/>
+                    <TextBlock x:Name="PositionFull" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4"
+                               Text="{x:Bind PositionToString(Context.CurrentPosition, Context.TotalDuration), Mode=OneWay}"/>
+                </Grid>
+             -->
+            </StackPanel>
+           
+        </Grid>
+
 
         <StackPanel Background="#FF1F1F1F"
                     Width="300"
@@ -86,7 +322,7 @@
                        Foreground="White"
                        Text="{Binding Clock}" />
         </StackPanel>
-        <Grid Background="{StaticResource SystemControlAcrylicElementBrush}">
+        <Grid Background="{StaticResource SystemControlAcrylicElementBrush}" Grid.Column="1" Grid.Row="1" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="500"/>
                 <ColumnDefinition Width="*"/>
@@ -94,7 +330,7 @@
             <Grid HorizontalAlignment="Left" Grid.Column="0">
                 <ListView ItemsSource="{Binding DataVM.DataList}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data1:VolItem">
+                        <DataTemplate x:DataType="model:VolItem">
                             <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="5">
                                 <Image Name="Cover" Source="{Binding Vol.Cover}" RelativePanel.AlignTopWithPanel="True"/>
                                 <Grid RelativePanel.Below="Cover"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
@@ -136,7 +372,7 @@
                             </ListView>
                         </Grid>
                         <TextBlock Text="{Binding CurrentVol.Vol.Description}" TextWrapping="Wrap" Margin="0,10,0,10"/>
-                        <ListView ItemsSource="{Binding CurrentVol.Vol.VolSongs}" Margin="0,10,0,10" IsItemClickEnabled="True" ItemClick="ListView_ItemClick_1">
+                        <ListView ItemsSource="{Binding CurrentVol.Vol.VolSongs}" Margin="0,10,0,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectedIndex="{x:Bind MainVM.CurrentIndex,Mode=OneWay,FallbackValue=-1}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="data:LuoVolSong">
                                     <Grid Height="60" Margin="0,5,0,5">
@@ -146,14 +382,14 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <Image Source="{Binding AlbumImage}" Grid.Column="1"/>
+                                        <Image Source="{Binding AlbumImage}" Grid.Column="1" VerticalAlignment="Center"/>
                                         <Grid Grid.Column="2" Margin="10,0,0,0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Text="{Binding Name}" Grid.Row="0"/>
-                                            <TextBlock Text="{Binding Artist}" Grid.Row="1"/>
+                                            <TextBlock Text="{Binding Name}" Grid.Row="0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Artist}" Grid.Row="1" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>
@@ -172,7 +408,6 @@
 
 
         </Grid>
-        <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Canvas.ZIndex="-1" />
-        <MediaPlayerElement Name="Player" AutoPlay="True" Canvas.ZIndex="-1"/>
+
     </Grid>
 </Page>

@@ -6,11 +6,17 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 namespace luo_music
 {
     sealed partial class App
     {
+        private UISettings ui;
+        private Frame rootFrame;
+
         public App()
         {
             InitializeComponent();
@@ -51,6 +57,8 @@ namespace luo_music
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
+                    CreateRootFrame(e.PreviousExecutionState);
+
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
@@ -66,6 +74,56 @@ namespace luo_music
         private void HandleNotificationMessage(NotificationMessageAction<string> message)
         {
             message.Execute("Success (from App.xaml.cs)!");
+        }
+
+        private async void CreateRootFrame(ApplicationExecutionState previousExecutionState)
+        {
+            rootFrame = Window.Current.Content as Frame;
+
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame
+                {
+                    // Set the default language
+                    // Language = Windows.Globalization.ApplicationLanguages.Languages[0]
+                };
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+                if (previousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    //TODO: Load state from previously suspended application
+                }
+
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+            }
+
+
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = Colors.Black;
+
+            //if (ui != null) ui.ColorValuesChanged -= Ui_ColorValuesChanged;
+            //ui = new UISettings();
+            //ui.ColorValuesChanged += Ui_ColorValuesChanged;
+            //titleBar.ButtonHoverBackgroundColor = ui.GetColorValue(UIColorType.Accent);
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+
+
+            // if you want not to have any window smaller than this size...
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(320, 320));
+
+
+            //var s = Settings.Current;
+            //SQLOperator.Current();
+            //ImageCache.Instance.CacheDuration = TimeSpan.MaxValue;
+            //ImageCache.Instance.RetryCount = 1;
+            //await ImageCache.Instance.InitializeAsync(ApplicationData.Current.LocalFolder, "Cache");
         }
 
         /// <summary>
