@@ -15,5 +15,9 @@ namespace Luo.Shared.Helper
             return (a.Substring(b11 + 1)).Substring(0, b21 - b11 - 1);
         }
 
+        public static string DescripitionParse(this string s)
+        {
+            return s.Replace("&nbsp;", "").Replace("&#39;", "").Replace("&ldquo;", "").Replace("&rdquo;", "");
+        }
     }
 }

@@ -10,27 +10,30 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
 
-    <Grid MaxWidth="700">
-        <ListView ItemsSource="{Binding DataVM.DataList}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:VolItem">
-                    <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="5">
-                        <Image Name="Cover" Source="{Binding Vol.Cover}" RelativePanel.AlignTopWithPanel="True"/>
-                        <Grid RelativePanel.Below="Cover"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
-                            <RelativePanel Margin="5,5,5,5">
-                                <TextBlock Text="{Binding TitleString}" RelativePanel.AlignLeftWithPanel="True"/>
+    <Grid>
+        <Grid MaxWidth="700" Margin="20,0,20,0">
+            <ListView ItemsSource="{Binding DataVM.DataList}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:VolItem">
+                        <RelativePanel Name="main_pannel" Margin="0,5,0,5" Background="#FFF2F2F2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="5">
+                            <Image Name="Cover" Source="{Binding Vol.Cover}" RelativePanel.AlignTopWithPanel="True"/>
+                            <Grid RelativePanel.Below="Cover"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+                                <RelativePanel Margin="5,5,5,5">
+                                    <TextBlock Text="{Binding TitleString}" RelativePanel.AlignLeftWithPanel="True"/>
 
-                                <TextBlock Name="comment" Text="{Binding Vol.CommentCount}" RelativePanel.AlignRightWithPanel="True"/>
-                                <FontIcon Name="icon1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE134;" RelativePanel.LeftOf="comment" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15" Margin="0,0,3,0"/>
-                                <TextBlock Name="favd" Text="{Binding Vol.FavdCount}" RelativePanel.LeftOf="icon1" Margin="0,0,5,0"/>
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" RelativePanel.LeftOf="favd" FontSize="15" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,3,0"/>
-                            </RelativePanel>
-
-                        </Grid>
-
-                    </RelativePanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                    <TextBlock Name="comment" Text="{Binding Vol.CommentCount}" RelativePanel.AlignRightWithPanel="True"/>
+                                    <FontIcon Name="icon1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE134;" RelativePanel.LeftOf="comment" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15" Margin="0,0,3,0"/>
+                                    <TextBlock Name="favd" Text="{Binding Vol.FavdCount}" RelativePanel.LeftOf="icon1" Margin="0,0,5,0"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" RelativePanel.LeftOf="favd" FontSize="15" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,0,3,0"/>
+                                </RelativePanel>
+                            </Grid>
+                        </RelativePanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <!--<Border Background="Black" Opacity="0.1" Canvas.ZIndex="-1">
+            <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
+        </Border>-->
     </Grid>
 </Page>

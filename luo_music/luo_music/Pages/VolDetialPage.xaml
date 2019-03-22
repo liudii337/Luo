@@ -18,7 +18,7 @@
 
     <Grid>
         <ScrollViewer>
-            <Grid MaxWidth="800" HorizontalAlignment="Center" Margin="20,0,20,0" >
+            <Grid MaxWidth="800" HorizontalAlignment="Center" Margin="20,20,20,20" >
                 <StackPanel>
                     <Image Source="{Binding CurrentVol.Vol.Cover}"/>
                     <Grid Margin="0,10,0,10">
@@ -36,20 +36,14 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolSong">
                                 <Grid Height="60" Margin="0,5,0,5" x:Name="root">
-                                    <Grid.Resources>
-                                        <Storyboard x:Key="test" BeginTime="0:0:0">
-                                            <DoubleAnimation Storyboard.TargetName="NumText"
-                                                     Storyboard.TargetProperty="Opacity"
-                                                     Duration="0:0:0.1"
-                                                     To="0" />
-                                        </Storyboard>
-                                    </Grid.Resources>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="60"/>
                                         <ColumnDefinition Width="60"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="NumText" Text="{Binding Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE189;" Foreground="Red" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsPlaying}"/>
+                                    <!--<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE994;" Foreground="Red" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsPlaying}"/>-->
+                                    <TextBlock x:Name="NumText" Text="{Binding Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind VisibilityTrans(IsPlaying),Mode=OneWay}"/>
                                     <Image Source="{Binding AlbumImage}" Grid.Column="1" VerticalAlignment="Center"/>
                                     <Grid Grid.Column="2" Margin="10,0,0,0">
                                         <Grid.RowDefinitions>

@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Luo.Shared.Helper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -165,6 +166,8 @@ namespace Luo.Shared.Data
 
         }
 
+        public bool IsDetailGet = false;
+
         private ObservableCollection<LuoVolSong> volSongs;
         public ObservableCollection<LuoVolSong> VolSongs
         {
@@ -202,7 +205,20 @@ namespace Luo.Shared.Data
             //var vol_title = doc.DocumentNode.SelectSingleNode("//span[@class='vol-title']").InnerText;
             //var vol_img = doc.DocumentNode.SelectSingleNode("//*[@id='volCoverWrapper']/img").GetAttributeValue("src", "");
 
-            Description = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml.Replace("\n", "").Replace("<p>", "").Replace("</p>", "\n").Replace("<br>", "").Replace(" ", "");
+            var a = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").SelectNodes("./p");
+            foreach(var i in a)
+            {
+                if(i.InnerText=="br")
+                {
+                    Description = Description + "\n";
+                }
+                else
+                {
+                    Description = Description + i.InnerText + "\n";
+                }
+            }
+            Description=Description.DescripitionParse();
+
             Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
 
             Tags = new ObservableCollection<String>();
@@ -225,7 +241,7 @@ namespace Luo.Shared.Data
                 var imagesrc = i.SelectSingleNode("./div[1]/a[3]").GetAttributeValue("data-img", "");
                 VolSongs.Add(new LuoVolSong(VolNum,_index, _name, _artist,_album, imagesrc));
             }
-
+            IsDetailGet = true;
         }
     }
 }

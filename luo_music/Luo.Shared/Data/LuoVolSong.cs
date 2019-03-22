@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace Luo.Shared.Data
 {
@@ -128,6 +129,28 @@ namespace Luo.Shared.Data
         }
 
         public bool IsOnline = true;
+
+        private bool isPlaying = false;
+        public bool IsPlaying
+        {
+            get
+            {
+                return isPlaying;
+            }
+            set
+            {
+                if (isPlaying != value)
+                {
+                    isPlaying = value;
+                    RaisePropertyChanged(() => IsPlaying);
+                }
+            }
+        }
+
+        public Visibility VisibilityTrans(bool s)
+        {
+            return s == true ? Visibility.Collapsed : Visibility.Visible;
+        }
 
         public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
         {

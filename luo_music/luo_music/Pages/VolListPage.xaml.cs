@@ -37,9 +37,14 @@ namespace luo_music.Pages
         public static event NavigateHandel MainNavigateToEvent;
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
+        { 
             VolItem item = (VolItem)e.ClickedItem;
-            await item.GetVolDetialAsync();
+
+            if(!item.Vol.IsDetailGet)
+            {
+                await item.GetVolDetialAsync();
+            }
+
             MainVM.CurrentVol = item;
             MainNavigateToEvent(typeof(VolDetialPage));
         }

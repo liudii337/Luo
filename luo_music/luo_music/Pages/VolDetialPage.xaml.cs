@@ -58,20 +58,36 @@ namespace luo_music.Pages
                 if(MainVM.CurrentSong.VolNum !=MainVM.CurrentVol.Vol.VolNum)
                 {
                     ((ListView)sender).SelectedIndex = -1;
+                    return;
+                }
+                else
+                {
+                    foreach (var a in ((ListView)sender).Items)
+                    {
+                        if (((LuoVolSong)a).IsPlaying == true)
+                        {
+                            ((LuoVolSong)a).IsPlaying = false;
+                        }
+                    }
+                    var item = ((ListView)sender).SelectedItem as LuoVolSong;
+                    if(item !=null && !item.IsPlaying)
+                    {
+                        item.IsPlaying = true;
+                    }
                 }
             }
 
             
-            var ab = (LuoVolSong)e.AddedItems[0];
-            var _item = SongListView.ContainerFromItem(ab) as ListViewItem;
-            //var test= _item.ContentTemplate.GetElement()
-            Storyboard sb = _item.Resources["test"] as Storyboard;
-            sb.Begin();
-            if (e.RemovedItems.Count()!=0)
-            {
-                var cd = (LuoVolSong)e.RemovedItems[0];
+            //var ab = (LuoVolSong)e.AddedItems[0];
+            //var _item = SongListView.ContainerFromItem(ab) as ListViewItem;
+            ////var test= _item.ContentTemplate.GetElement()
+            //Storyboard sb = _item.Resources["test"] as Storyboard;
+            //sb.Begin();
+            //if (e.RemovedItems.Count()!=0)
+            //{
+            //    var cd = (LuoVolSong)e.RemovedItems[0];
 
-            }
+            //}
 
             
         }

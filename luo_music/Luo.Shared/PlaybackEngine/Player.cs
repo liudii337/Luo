@@ -244,6 +244,7 @@ namespace Luo.Shared.PlaybackEngine
                     break;
             }
 
+
             var currentSong = mediaPlaybackList.CurrentItem?.Source.CustomProperties["SONG"] as LuoVolSong;
 
 

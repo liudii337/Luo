@@ -18,6 +18,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
 using Windows.System;
 using luo_music.Pages;
+using Windows.UI.Xaml;
 
 namespace luo_music.ViewModel
 {
@@ -263,7 +264,7 @@ namespace luo_music.ViewModel
                 if (_currentVol != value)
                 {
                     _currentVol = value;
-                    RaisePropertyChanged(nameof(CurrentVol));
+                    RaisePropertyChanged(() => CurrentVol);
                 }
             }
         }
@@ -368,6 +369,11 @@ namespace luo_music.ViewModel
             }
         }
 
+        public Visibility VisibilityTrans(bool s)
+        {
+            return s == true ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         public RelayCommand GoPrevious
         {
             get
@@ -460,7 +466,7 @@ namespace luo_music.ViewModel
             {
                 if (e.CurrentIndex == -1)
                 {
-                    CurrentSong = null;
+                    //CurrentSong = null;
                     //NowPlayingList.Clear();
                     //NowListPreview = "-/-";
                     //CurrentTitle = null;
@@ -477,6 +483,7 @@ namespace luo_music.ViewModel
                 if (e.CurrentSong != null)
                 {
                     CurrentSong = e.CurrentSong;
+                    CurrentSong.IsPlaying = true;
                     //var p = e.CurrentSong;
                     ////CurrentTitle = p.Title.IsNullorEmpty() ? p.FilePath.Split('\\').LastOrDefault() : p.Title;
                     ////IsPodcast = p.IsPodcast;
