@@ -118,6 +118,9 @@
     <Compile Include="Pages\VolListPage.xaml.cs">
       <DependentUpon>VolListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\VolTagListPage.xaml.cs">
+      <DependentUpon>VolTagListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecondPage.xaml.cs">
       <DependentUpon>SecondPage.xaml</DependentUpon>
@@ -209,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\VolListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\VolTagListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

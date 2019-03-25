@@ -11,6 +11,11 @@ namespace Luo.Shared.Helper
         public static string HOST => "www.luoo.net";
 
         public static string GetAllVol => $"http://{HOST}/tag/?p=";
+
+        public static string GetTagVol(string tag)
+        {
+            return $"http://{HOST}/tag/{tag}?p=";
+        }
         
         //public static string SearchImages => $"http://{HOST}/search/photos?";
 

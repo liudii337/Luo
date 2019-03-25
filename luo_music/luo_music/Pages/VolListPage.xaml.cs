@@ -57,14 +57,6 @@ namespace luo_music.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if(e.SourcePageType==typeof(CategoryPage))
-            {
-                MainVM.NeedShowBack = true;
-            }
-            else
-            {
-                MainVM.NeedShowBack = false;
-            }
         }
     }
 }

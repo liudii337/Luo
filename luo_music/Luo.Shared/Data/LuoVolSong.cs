@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace Luo.Shared.Data
 {
@@ -151,6 +153,12 @@ namespace Luo.Shared.Data
         {
             return s == true ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        public Brush ColorTrans(bool s)
+        {
+            return s == true ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+        }
+
 
         public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
         {

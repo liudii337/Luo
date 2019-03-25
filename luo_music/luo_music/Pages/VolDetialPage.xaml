@@ -31,8 +31,8 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                    <TextBlock Text="{Binding CurrentVol.Vol.Description}" TextWrapping="Wrap" Margin="0,10,0,10"/>
-                    <ListView x:Name="SongListView" ItemsSource="{Binding CurrentVol.Vol.VolSongs}" Margin="0,10,0,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectedIndex="{x:Bind MainVM.CurrentIndex,Mode=OneWay,FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
+                    <TextBlock Text="{Binding CurrentVol.Vol.Description}" FontFamily="Microsoft JhengHei" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="14"/>
+                    <ListView x:Name="SongListView" ItemsSource="{Binding CurrentVol.Vol.VolSongs}" Margin="0,10,0,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentIndex,Mode=OneWay,FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolSong">
                                 <Grid Height="60" Margin="0,5,0,5" x:Name="root">
@@ -41,8 +41,7 @@
                                         <ColumnDefinition Width="60"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE189;" Foreground="Red" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsPlaying}"/>
-                                    <!--<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE994;" Foreground="Red" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsPlaying}"/>-->
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE994;" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsPlaying}" Foreground="Red" />
                                     <TextBlock x:Name="NumText" Text="{Binding Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind VisibilityTrans(IsPlaying),Mode=OneWay}"/>
                                     <Image Source="{Binding AlbumImage}" Grid.Column="1" VerticalAlignment="Center"/>
                                     <Grid Grid.Column="2" Margin="10,0,0,0">
@@ -50,8 +49,12 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Name}" Grid.Row="0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="{Binding Artist}" Grid.Row="1" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Name}" Grid.Row="0" VerticalAlignment="Center" FontSize="15"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Artist}" FontSize="13"/>
+                                            <TextBlock Text="·" FontSize="14" Margin="3,0,3,0" FontWeight="ExtraBold" Foreground="{x:Bind ColorTrans(IsPlaying),Mode=OneWay}"/>
+                                            <TextBlock Text="{Binding Album}" FontSize="13"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Grid>
                             </DataTemplate>

@@ -184,6 +184,7 @@ namespace luo_music.ViewModel
             DataVM = new VolDataViewModel(this,
                 new VolService(Request.GetAllVol, NormalFactory, CtsFactory));
 
+            LuoVolTags = LuoVolFactory.GetVolTagList();
             DataVM.RefreshAsync();
 
             player = new Player();
@@ -252,6 +253,23 @@ namespace luo_music.ViewModel
             }
         }
 
+        private VolDataViewModel _tagDataVM;
+        public VolDataViewModel TagDataVM
+        {
+            get
+            {
+                return _tagDataVM;
+            }
+            set
+            {
+                if (_tagDataVM != value)
+                {
+                    _tagDataVM = value;
+                    RaisePropertyChanged(() => TagDataVM);
+                }
+            }
+        }
+
         private VolItem _currentVol;
         public VolItem CurrentVol
         {
@@ -280,13 +298,20 @@ namespace luo_music.ViewModel
             {
                 if (_currentSong != value)
                 {
+                    var lastsong = _currentSong;
+                    if(lastsong!=null)
+                    {
+                        lastsong.IsPlaying = false;
+                    }
+
                     _currentSong = value;
+                    _currentSong.IsPlaying = true;
                     RaisePropertyChanged(() => CurrentSong);
                 }
             }
         }
 
-        private int _currentIndex = -1;
+        private int _currentIndex;
         public int CurrentIndex
         {
             get
@@ -297,11 +322,62 @@ namespace luo_music.ViewModel
             {
                 if (_currentIndex != value)
                 {
-                    _currentIndex = value;
+
                     RaisePropertyChanged(() => CurrentIndex);
                 }
             }
         }
+
+        #region CategoryPage
+
+        private ObservableCollection<LuoVolTag> _luoVolTags;
+        public ObservableCollection<LuoVolTag> LuoVolTags
+        {
+            get
+            {
+                return _luoVolTags;
+            }
+            set
+            {
+                if (_luoVolTags != value)
+                {
+                    _luoVolTags = value;
+                    RaisePropertyChanged(() => LuoVolTags);
+                }
+            }
+        }
+
+        private int _currentTagIndex = -1;
+        public int CurrentTagIndex
+        {
+            get
+            {
+                return _currentTagIndex;
+            }
+            set
+            {
+                if (_currentTagIndex != value)
+                {
+
+                    _currentTagIndex = value;
+
+                    if (_currentTagIndex != -1)
+                    {
+                        TagDataVM = new VolDataViewModel(this,
+                            new VolService(Request.GetTagVol(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
+                    }
+
+                    RaisePropertyChanged(() => CurrentTagIndex);
+
+                    if (TagDataVM != null)
+                    {
+                        TagDataVM.RefreshAsync();
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region Navigate
         public List<HamPanelItem> HamList { get; set; } = new List<HamPanelItem>()
         {
@@ -483,7 +559,7 @@ namespace luo_music.ViewModel
                 if (e.CurrentSong != null)
                 {
                     CurrentSong = e.CurrentSong;
-                    CurrentSong.IsPlaying = true;
+                    //CurrentSong.IsPlaying = true;
                     //var p = e.CurrentSong;
                     ////CurrentTitle = p.Title.IsNullorEmpty() ? p.FilePath.Split('\\').LastOrDefault() : p.Title;
                     ////IsPodcast = p.IsPodcast;

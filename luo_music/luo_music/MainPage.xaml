@@ -65,6 +65,7 @@
             <ListView x:Name="HamPane" SelectionMode="Single" IsItemClickEnabled="False"
                       ItemsSource="{x:Bind MainVM.HamList}" Grid.Row="1"
                       SelectionChanged="HamPane_SelectionChanged"
+                      ItemClick="HamPane_ItemClick"
                       Loaded="HamPane_Loaded"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <ListView.ItemTemplate>

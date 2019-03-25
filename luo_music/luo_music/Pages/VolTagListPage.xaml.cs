@@ -1,4 +1,4 @@
-﻿using Luo.Shared.Data;
+﻿using luo_music.Model;
 using luo_music.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,29 +22,40 @@ namespace luo_music.Pages
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class CategoryPage : Page
+    public sealed partial class VolTagListPage : Page
     {
         public MainViewModel MainVM => (MainViewModel)DataContext;
+
+        public VolTagListPage()
+        {
+            this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
+        }
 
         public delegate void NavigateHandel(Type page);
         public static event NavigateHandel MainNavigateToEvent;
 
-        public CategoryPage()
+        private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.InitializeComponent();
+            VolItem item = (VolItem)e.ClickedItem;
+
+            if (!item.Vol.IsDetailGet)
+            {
+                await item.GetVolDetialAsync();
+            }
+
+            MainVM.CurrentVol = item;
+            MainNavigateToEvent(typeof(VolDetialPage));
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            MainVM.NeedShowBack = true;
-        }
-
-        private void TagGrid_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //var item = (LuoVolTag)e.ClickedItem;
-            //MainVM.CurrentTagIndex = MainVM.LuoVolTags.IndexOf(item);
-            MainNavigateToEvent(typeof(VolTagListPage));
         }
     }
 }

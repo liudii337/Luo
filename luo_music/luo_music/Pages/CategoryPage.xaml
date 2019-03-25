@@ -5,10 +5,23 @@
     xmlns:local="using:luo_music.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:Luo.Shared.Data"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
     <Grid>
+        <GridView x:Name="TagGrid" ItemsSource="{Binding LuoVolTags}" SelectedIndex="{Binding CurrentTagIndex,Mode=TwoWay}" IsItemClickEnabled="True" ItemClick="TagGrid_ItemClick">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="data:LuoVolTag">
+                    <Grid MaxWidth="400">
+                        <Image Source="{x:Bind ImgSrc}"/>
+                        <Border Background="White" Opacity="0.35" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
 
     </Grid>
 </Page>

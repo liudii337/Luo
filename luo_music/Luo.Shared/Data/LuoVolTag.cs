@@ -25,19 +25,36 @@ namespace Luo.Shared.Data
             }
         }
 
-        private string src;
-        public string Src
+        private string keysrc;
+        public string KeySrc
         {
             get
             {
-                return src;
+                return keysrc;
             }
             set
             {
-                if (src != value)
+                if (keysrc != value)
                 {
-                    src = value;
-                    RaisePropertyChanged(() => Src);
+                    keysrc = value;
+                    RaisePropertyChanged(() => KeySrc);
+                }
+            }
+        }
+
+        private string imgsrc;
+        public string ImgSrc
+        {
+            get
+            {
+                return imgsrc;
+            }
+            set
+            {
+                if (imgsrc != value)
+                {
+                    imgsrc = value;
+                    RaisePropertyChanged(() => ImgSrc);
                 }
             }
         }

@@ -47,6 +47,18 @@ namespace luo_music
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             VolListPage.MainNavigateToEvent += VolListPage_MainNavigateToEvent;
+            VolTagListPage.MainNavigateToEvent += VolTagListPage_MainNavigateToEvent;
+            CategoryPage.MainNavigateToEvent += CategoryPage_MainNavigateToEvent;
+        }
+
+        private void VolTagListPage_MainNavigateToEvent(Type page)
+        {
+            MainFrame.Navigate(page);
+        }
+
+        private void CategoryPage_MainNavigateToEvent(Type page)
+        {
+            MainFrame.Navigate(page);
         }
 
         private void VolListPage_MainNavigateToEvent(Type page)
@@ -75,7 +87,11 @@ namespace luo_music
             HamPane.SelectionChanged -= HamPane_SelectionChanged;
             if(MainFrame.Content.GetType()==typeof(VolDetialPage))
             {
-
+                MainVM.NeedShowBack = true;
+            }
+            else if(MainFrame.Content.GetType() == typeof(VolTagListPage))
+            {
+                MainVM.NeedShowBack = true;
             }
             else
             {
@@ -109,6 +125,7 @@ namespace luo_music
             }
             else
             {
+                MainVM.NeedShowBack = false;
                 return false;
             }
         }
@@ -121,6 +138,11 @@ namespace luo_music
         private void HamPane_Loaded(object sender, RoutedEventArgs e)
         {
             HamPane.SelectedIndex = 0;
+        }
+
+        private void HamPane_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

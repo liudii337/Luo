@@ -45,7 +45,7 @@ namespace luo_music.Pages
             base.OnNavigatedFrom(e);
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             MainVM.NeedShowBack = true;
@@ -59,21 +59,6 @@ namespace luo_music.Pages
                 {
                     ((ListView)sender).SelectedIndex = -1;
                     return;
-                }
-                else
-                {
-                    foreach (var a in ((ListView)sender).Items)
-                    {
-                        if (((LuoVolSong)a).IsPlaying == true)
-                        {
-                            ((LuoVolSong)a).IsPlaying = false;
-                        }
-                    }
-                    var item = ((ListView)sender).SelectedItem as LuoVolSong;
-                    if(item !=null && !item.IsPlaying)
-                    {
-                        item.IsPlaying = true;
-                    }
                 }
             }
 

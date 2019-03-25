@@ -19,5 +19,21 @@ namespace Luo.Shared.Helper
         {
             return s.Replace("&nbsp;", "").Replace("&#39;", "").Replace("&ldquo;", "").Replace("&rdquo;", "");
         }
+
+        public static string HtmlParse(this string s)
+        {
+            int j = 0;
+            foreach(char i in s)
+            {
+                if (i == ' ' || i == '\n')
+                { j = j + 1; }
+                else
+                    break;
+            }
+            s = s.Remove(0, j);
+            s = s.Replace("<br><br>", "\n");
+            s = s.Replace("<br>", "\n");
+            return s;
+        }
     }
 }

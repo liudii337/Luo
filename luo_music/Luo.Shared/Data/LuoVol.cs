@@ -206,27 +206,39 @@ namespace Luo.Shared.Data
             //var vol_img = doc.DocumentNode.SelectSingleNode("//*[@id='volCoverWrapper']/img").GetAttributeValue("src", "");
 
             var a = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").SelectNodes("./p");
-            foreach(var i in a)
+            var b = "";
+            if(a != null)
             {
-                if(i.InnerText=="br")
+                foreach (var i in a)
                 {
-                    Description = Description + "\n";
-                }
-                else
-                {
-                    Description = Description + i.InnerText + "\n";
+                    if (i.InnerText == "br")
+                    {
+                        b = b + "\n";
+                    }
+                    else
+                    {
+                        b = b + i.InnerText + "\n";
+                    }
                 }
             }
-            Description=Description.DescripitionParse();
+            else
+            {
+                b = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml.HtmlParse();
+            }
+
+            Description=b.DescripitionParse();
 
             Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
 
             Tags = new ObservableCollection<String>();
             var vol_tags = doc.DocumentNode.SelectNodes("//a[@class='vol-tag-item']");
-            foreach (var i in vol_tags)
+            if(vol_tags != null)
             {
-                //Tags.Add(i.InnerText.Replace("#", ""));
-                Tags.Add(i.InnerText);
+                foreach (var i in vol_tags)
+                {
+                    //Tags.Add(i.InnerText.Replace("#", ""));
+                    Tags.Add(i.InnerText);
+                }
             }
 
             VolSongs = new ObservableCollection<LuoVolSong>();

@@ -256,7 +256,10 @@ namespace luo_music.Model
         public async Task GetVolDetialAsync()
         {
             var result = await _service.GetVolDetailHtmlAsync(Vol.VolUrl);
-            Vol.GetDetailVol(result);
+            if(result!=null)
+            {
+                Vol.GetDetailVol(result);
+            }
             //if (result.IsRequestSuccessful)
             //{
             //    JsonObject.TryParse(result.JsonSrc, out JsonObject json);
