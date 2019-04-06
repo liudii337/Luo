@@ -73,6 +73,21 @@ namespace Luo.Shared.PlaybackEngine
             MediaPlayer.Volume = value / 100d;
         }
 
+        private async Task ToggleVolumeAnimation(bool istoplaying)
+        {
+            //淡入淡出效果
+            var startVolume = istoplaying ? 0 : 100;
+            var goalVolume = istoplaying ? 100 : 0;
+
+            var step = (goalVolume - startVolume) / 20;
+            do
+            {
+                startVolume = startVolume + step;
+                ChangeVolume(startVolume);
+                await Task.Delay(25);
+            } while (startVolume != goalVolume);           
+        }
+
         public event EventHandler<DownloadProgressChangedArgs> DownloadProgressChanged;
         public event EventHandler<PlaybackStatusChangedArgs> PlaybackStatusChanged;
         public event EventHandler<PlayingItemsChangedArgs> ItemsChanged;
@@ -220,6 +235,7 @@ namespace Luo.Shared.PlaybackEngine
             PlaybackStatusChanged?.Invoke(this, new PlaybackStatusChangedArgs()
             {
                 PlaybackStatus = MediaPlayer.PlaybackSession.PlaybackState,
+                IsOneLoop=MediaPlayer.IsLoopingEnabled,
                 IsLoop = mediaPlaybackList.AutoRepeatEnabled,
                 IsShuffle = isShuffle
             });
@@ -251,6 +267,7 @@ namespace Luo.Shared.PlaybackEngine
             ItemsChanged?.Invoke(this, new PlayingItemsChangedArgs
             {
                 IsShuffle = isShuffle,
+                IsOneLoop = MediaPlayer.IsLoopingEnabled,
                 IsLoop = mediaPlaybackList.AutoRepeatEnabled,
                 CurrentSong = currentSong,
                 CurrentIndex = currentSong == null ? -1 : currentList.FindIndex(a => a == currentSong),
@@ -571,69 +588,14 @@ namespace Luo.Shared.PlaybackEngine
             mediaPlaybackList.AutoRepeatEnabled = b ?? false;
         }
 
+        public void LoopOne(bool? b)
+        {
+            MediaPlayer.IsLoopingEnabled = b ?? false;
+        }
+
         public void Shuffle(bool? b)
         {
-            lock (lockable)
-            {
-                if (IsShuffle == b)
-                    return;
-
-                var cure = mediaPlaybackList.CurrentItem.Source.CustomProperties["SONG"] as LuoVolSong;
-                _savedState = MediaPlayer.PlaybackSession.PlaybackState;
-                _savedPosition = MediaPlayer.PlaybackSession.Position;
-
-                MediaPlayer.Pause();
-                MediaPlayer.Source = null;
-
-                if (b is bool boo && boo)
-                {
-                    if (boo)
-                    {
-                        IsShuffle = true;
-                        if (currentList.Count > 0)
-                        {
-                            currentListBackup = currentList.ToList();
-                            var l = currentList.ToList();
-                            l.Shuffle();
-                            var index = l.IndexOf(cure);
-                            var p = l[0];
-                            l[0] = l[index];
-                            l[index] = p;
-                            isShuffle = false;
-#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                            NewPlayList(l);
-#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                            isShuffle = true;
-                        }
-
-                    }
-                }
-                else
-                {
-                    IsShuffle = false;
-                    if (currentListBackup != null)
-                    {
-                        var index = currentListBackup.IndexOf(cure);
-#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                        NewPlayList(currentListBackup.ToList(), index);
-#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                    }
-                    else if (currentList.Count > 0)
-                    {
-                        var index = currentList.IndexOf(cure);
-#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                        NewPlayList(currentList.ToList(), index);
-#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-                    }
-                }
-
-                if (_savedState == MediaPlaybackState.Playing)
-                {
-                    MediaPlayer.Play();
-                }
-                MediaPlayer.PlaybackSession.Position = _savedPosition;
-            }
-
+            mediaPlaybackList.ShuffleEnabled = b ?? false;
         }
 
         public void Next()
@@ -736,13 +698,17 @@ namespace Luo.Shared.PlaybackEngine
             }
 
             MediaPlayer.Play();
+            await ToggleVolumeAnimation(true);
             //ChangeVolume(Settings.Current.PlayerVolume);
         }
 
-        public void Pause()
+        public async void Pause()
         {
             if (MediaPlayer.PlaybackSession.CanPause)
+            {
+                await ToggleVolumeAnimation(false);
                 MediaPlayer.Pause();
+            }              
         }
 
 
@@ -883,6 +849,7 @@ namespace Luo.Shared.PlaybackEngine
             ItemsChanged?.Invoke(this, new PlayingItemsChangedArgs()
             {
                 IsShuffle = isShuffle,
+                IsOneLoop = MediaPlayer.IsLoopingEnabled,
                 IsLoop = mediaPlaybackList.AutoRepeatEnabled,
                 CurrentSong = currentList[curIdx],
                 CurrentIndex = curIdx,
@@ -922,6 +889,7 @@ namespace Luo.Shared.PlaybackEngine
             PlaybackStatusChanged?.Invoke(this, new PlaybackStatusChangedArgs()
             {
                 PlaybackStatus = MediaPlayer.PlaybackSession.PlaybackState,
+                IsOneLoop = MediaPlayer.IsLoopingEnabled,
                 IsLoop = mediaPlaybackList.AutoRepeatEnabled,
                 IsShuffle = isShuffle
             });
@@ -931,6 +899,7 @@ namespace Luo.Shared.PlaybackEngine
                 ItemsChanged?.Invoke(this, new PlayingItemsChangedArgs
                 {
                     IsShuffle = isShuffle,
+                    IsOneLoop = MediaPlayer.IsLoopingEnabled,
                     IsLoop = mediaPlaybackList.AutoRepeatEnabled,
                     CurrentSong = currentSong,
                     CurrentIndex = currentSong == null ? -1 : currentList.FindIndex(a => a == currentSong),

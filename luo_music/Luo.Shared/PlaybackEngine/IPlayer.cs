@@ -29,6 +29,7 @@ namespace Luo.Shared.PlaybackEngine
         void ChangeVolume(double vol);
         void ChangeAudioEndPoint(string outputDeviceID);
         void Loop(bool? isOn);
+        void LoopOne(bool? isOn);
         void Shuffle(bool? isOn);
 
         MediaPlayer MediaPlayer { get; }

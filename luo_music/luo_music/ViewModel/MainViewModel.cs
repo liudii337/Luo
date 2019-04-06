@@ -19,6 +19,7 @@ using Windows.Media.Playback;
 using Windows.System;
 using luo_music.Pages;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace luo_music.ViewModel
 {
@@ -188,6 +189,7 @@ namespace luo_music.ViewModel
             DataVM.RefreshAsync();
 
             player = new Player();
+            PlayMode = 0;
 
             Task.Run(() =>
             {
@@ -445,9 +447,120 @@ namespace luo_music.ViewModel
             }
         }
 
+        private bool _isLoop;
+        public bool IsLoop
+        {
+            get
+            {
+                return _isLoop;
+            }
+            set
+            {
+                if (_isLoop != value)
+                {
+                    _isLoop = value;
+                    player?.Loop(value);
+                    RaisePropertyChanged(() => IsLoop);                    
+                }
+            }
+        }
+
+        private bool _isOneLoop;
+        public bool IsOneLoop
+        {
+            get
+            {
+                return _isOneLoop;
+            }
+            set
+            {
+                if (_isOneLoop != value)
+                {
+                    _isOneLoop = value;
+                    player?.LoopOne(value);
+                    RaisePropertyChanged(() => IsOneLoop);
+                }
+            }
+        }
+
+        private bool _isShuffle;
+        public bool IsShuffle
+        {
+            get
+            {
+                return _isShuffle;
+            }
+            set
+            {
+                if (_isShuffle != value)
+                {
+                    _isShuffle = value;
+                    player?.Shuffle(value);
+                    RaisePropertyChanged(() => IsShuffle);
+                }
+            }
+        }
+
+        private int _playMode;
+        public int PlayMode
+        {
+            get
+            {
+                return _playMode;
+            }
+            set
+            {
+                if (_playMode != value)
+                {
+                    _playMode = value;
+                    RaisePropertyChanged(() => PlayMode);
+                }
+                switch (_playMode)
+                {
+                    case 0:
+                        IsLoop = true;
+                        IsOneLoop = false;
+                        IsShuffle = false;
+                        break;
+                    case 1:
+                        IsLoop = true;
+                        IsOneLoop = true;
+                        IsShuffle = false;
+                        break;
+                    case 2:
+                        IsLoop = true;
+                        IsOneLoop = false;
+                        IsShuffle = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         public Visibility VisibilityTrans(bool s)
         {
             return s == true ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public string PlayPauseToIcon(bool isplaying)
+        {
+            return isplaying == true ? "\uE103" : "\uE102";
+        }
+
+        public string PlayModeToIcon(int playmode)
+        {
+            switch (playmode)
+            {
+                case 0:
+                    return "\uE1CD";
+                case 1:
+                    return "\uE1CC";
+                case 2:
+                    return "\uE8B1";
+                default:
+                    return "\uE1CD";
+            }
         }
 
         public RelayCommand GoPrevious
@@ -492,7 +605,7 @@ namespace luo_music.ViewModel
                     if (IsPlaying is bool b)
                     {
                         if (b)
-                        {
+                        {                            
                             player?.Pause();
                         }
                         else
@@ -504,6 +617,19 @@ namespace luo_music.ViewModel
                     {
                         player?.Play();
                     }
+                });
+            }
+        }
+
+        public RelayCommand NextPlayMode
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    PlayMode++;
+                    if(PlayMode==3)
+                    { PlayMode = 0; }
                 });
             }
         }
@@ -524,10 +650,11 @@ namespace luo_music.ViewModel
             await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
                 IsPlaying = e.PlaybackStatus == MediaPlaybackState.Playing;
-                //isLoop = e.IsLoop;
-                //isShuffle = e.IsShuffle;
-                //RaisePropertyChanged("IsLoop");
-                //RaisePropertyChanged("IsShuffle");
+                IsLoop = e.IsLoop;
+                IsOneLoop = e.IsOneLoop;
+                //IsShuffle = e.IsShuffle;
+
+
 
                 //if (e.PlaybackStatus == MediaPlaybackState.Playing && Settings.Current.PreventLockscreen)
                 //{

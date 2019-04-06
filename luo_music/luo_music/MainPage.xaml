@@ -175,18 +175,18 @@
                         BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
                         Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
                         Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <!--<Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Context.GlyphPreOfOnline(Context.IsPodcast),Mode=OneWay}" />
-                    </Button.Content>-->
+                    <Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE100;" />
+                    </Button.Content>
                 </Button>
                 <Button AccessKey="P" x:Name="PlayPause"
                         Command="{x:Bind MainVM.PlayPause}" Width="48" Height="48" Margin="4" 
                         BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
                         Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <!--<Button.Content>
-                        <SymbolIcon Symbol="{x:Bind Context.NullableBoolToSymbol(Context.IsPlaying), Mode=OneWay}"/>
-                    </Button.Content>-->
+                    <Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayPauseToIcon(MainVM.IsPlaying),Mode=OneWay}"/>
+                    </Button.Content>
                 </Button>
                 <Button AccessKey="]" x:Uid="Next" x:Name="Next"
                         BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
@@ -194,59 +194,25 @@
                         Command="{x:Bind MainVM.GoNext}" 
                         ToolTipService.ToolTip="Next" Width="48" Height="48" Margin="4" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <!--<Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Context.GlyphNextOfOnline(Context.IsPodcast),Mode=OneWay}" />
-                    </Button.Content>-->
+                    <Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE101;" />
+                    </Button.Content>
                 </Button>
 
-                
-
-                <!--
-                <ToggleButton x:Uid="Shuffle" x:Name="Shuffle"
-                              BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                              Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
-                              IsChecked="{x:Bind MainVM.IsShuffle, Mode=TwoWay}" ToolTipService.ToolTip="Shuffle"
-                              Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <ToggleButton.Content>
-                        <SymbolIcon Symbol="Shuffle"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
-                
-                <ToggleButton x:Uid="Loop" x:Name="Refresh" 
-                              Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
-                              BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                              IsChecked="{x:Bind Context.IsLoop, Mode=TwoWay}" ToolTipService.ToolTip="Loop"
-                              Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <ToggleButton.Content>
-                        <SymbolIcon Symbol="Refresh"/>
-                    </ToggleButton.Content>
-                </ToggleButton>
-                <Button AccessKey="E" x:Uid="Stop" x:Name="Stop" 
-                        Command="{x:Bind MainVM.Stop}" ToolTipService.ToolTip="Stop"
-                        Width="48" Height="48" Margin="4" BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
+                <Button AccessKey="P" x:Name="PlayMode"
+                        Command="{x:Bind MainVM.NextPlayMode}" Width="48" Height="48" Margin="4" 
+                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
                         Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
                     <Button.Content>
-                        <SymbolIcon Symbol="Stop"/>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayModeToIcon(MainVM.PlayMode),Mode=OneWay}"/>
                     </Button.Content>
                 </Button>
-                <Button AccessKey="L" x:Uid="PlayList" x:Name="PlayListBtn" 
-                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
-                        ToolTipService.ToolTip="Playing list" Margin="4,0" 
-                        HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button.Content>
-                        <Grid>
-                            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                                       x:Name="PlayListFull" Text="{x:Bind Context.NowListPreview,Mode=OneWay}" 
-                                       Style="{ThemeResource BodyTextBlockStyle}" Margin="12,8"/>
-                            <FontIcon x:Name="PlayListNarrow" Visibility="Collapsed" FontSize="15" 
-                                      Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                                      FontFamily="Segoe MDL2 Assets" Glyph="&#xE12F;" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
+
+
+
+
+            <!--
             <ProgressBar Grid.Column="1" Margin="12,0"
                          HorizontalAlignment="Stretch" VerticalAlignment="Center"
                          Height="2" 
