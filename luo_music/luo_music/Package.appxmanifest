@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp uap3 iot">
-  <Identity Name="0d688cb5-a66e-449c-bb7c-714318d38e4f" Publisher="CN=YourName" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="0d688cb5-a66e-449c-bb7c-714318d38e4f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="14286XL.Luoo" Publisher="CN=D9C34D25-DB83-4D90-BC9D-2C03D91F65B3" Version="1.0.1.0" />
+  <mp:PhoneIdentity PhoneProductId="eebdc8bb-4778-4af1-a38b-6640339d8f25" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>luo_music</DisplayName>
-    <PublisherDisplayName>YourName</PublisherDisplayName>
+    <DisplayName>Luoo</DisplayName>
+    <PublisherDisplayName>X·L</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="luo_music.App">
-      <uap:VisualElements DisplayName="luo_music" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="luo_music" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Luoo" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="luo_music" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png" ShortName="落网">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -27,18 +27,6 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
-    <Capability Name="allJoyn" />
-    <Capability Name="internetClientServer" />
-    <Capability Name="codeGeneration" />
     <uap3:Capability Name="backgroundMediaPlayback" />
-    <uap:Capability Name="voipCall" />
-    <iot:Capability Name="lowLevelDevices" />
-    <uap:Capability Name="videosLibrary" />
-    <uap:Capability Name="picturesLibrary" />
-    <uap:Capability Name="musicLibrary" />
-    <uap3:Capability Name="remoteSystem" />
-    <uap:Capability Name="appointments" />
-    <DeviceCapability Name="lowLevel" />
-    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>
