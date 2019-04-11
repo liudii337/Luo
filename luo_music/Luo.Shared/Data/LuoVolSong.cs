@@ -173,7 +173,8 @@ namespace Luo.Shared.Data
 
         private string SongUriFormat(string _vol, string _index)
         {
-            return string.Format("http://192.168.73.133/mp3-cdn2.luoo.net/low/luoo/radio{0}/{1}.mp3", _vol, _index);
+            var vol = int.Parse(_vol);
+            return string.Format("http://mp3-cdn2.luoo.net/low/luoo/radio{0}/{1}.mp3", vol, _index);
         }
     }
 }

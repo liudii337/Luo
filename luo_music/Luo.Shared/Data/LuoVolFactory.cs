@@ -122,7 +122,7 @@ namespace Luo.Shared.Data
         {
             var http = new HttpClient();
             http.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36");
-            var response = await http.GetAsync("http://www.luoo.net/music");
+            var response = await http.GetAsync("http://www.luoo.net/tag/?p=90");
             http.Dispose();
             string result = response.Content.ReadAsStringAsync().Result;
 
