@@ -313,7 +313,7 @@ namespace luo_music.ViewModel
             }
         }
 
-        private int _currentIndex;
+        private int _currentIndex = -1;
         public int CurrentIndex
         {
             get

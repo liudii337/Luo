@@ -9,6 +9,8 @@ using GalaSoft.MvvmLight.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI;
+using Windows.UI.Popups;
+using Luo.Shared.Extension;
 
 namespace luo_music
 {
@@ -21,6 +23,34 @@ namespace luo_music
         {
             InitializeComponent();
             Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
+        }
+
+        private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            await new MessageDialog("Application Unhandled Exception:\r\n" + GetExceptionDetailMessage(e.Exception), "爆了 :(")
+                .ShowAsync();
+        }
+
+        private void RegisterExceptionHandlingSynchronizationContext()
+        {
+            ExceptionHandlingSynchronizationContext
+                .Register()
+                .UnhandledException += SynchronizationContext_UnhandledException; ;
+        }
+
+        private async void SynchronizationContext_UnhandledException(object sender, Luo.Shared.Extension.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            await new MessageDialog("Synchronization Context Unhandled Exception:\r\n" + GetExceptionDetailMessage(e.Exception), "爆了 :(")
+                .ShowAsync();
+        }
+
+        // https://github.com/ljw1004/async-exception-stacktrace
+        private string GetExceptionDetailMessage(Exception ex)
+        {
+            return $"{ex.Message}\r\n{ex.StackTraceEx()}";
         }
 
         /// <summary>
@@ -69,6 +99,13 @@ namespace luo_music
             Messenger.Default.Register<NotificationMessageAction<string>>(
                 this,
                 HandleNotificationMessage);
+
+            RegisterExceptionHandlingSynchronizationContext();
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            RegisterExceptionHandlingSynchronizationContext();
         }
 
         private void HandleNotificationMessage(NotificationMessageAction<string> message)
