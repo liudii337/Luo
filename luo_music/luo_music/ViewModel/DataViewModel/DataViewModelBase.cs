@@ -85,6 +85,8 @@ namespace luo_music.ViewModel.DataViewModel
 
                 await DataList.LoadMoreItemsAsync(20u);
 
+                RefreshCompleted();
+
                 return true;
             }
             catch (Exception e)
@@ -133,6 +135,8 @@ namespace luo_music.ViewModel.DataViewModel
         protected abstract Task<IEnumerable<T>> GetList(int pageIndex);
 
         protected abstract void ClickItem(T item);
+
+        protected abstract void RefreshCompleted();
 
         protected abstract void LoadMoreItemCompleted(IEnumerable<T> list, int index);
     }

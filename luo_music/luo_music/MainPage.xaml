@@ -8,6 +8,7 @@
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:data="using:Luo.Shared.Data"
       xmlns:model="using:luo_music.Model"
+      xmlns:convertor="using:Luo.Shared.Convertor"
       x:Class="luo_music.MainPage"
       mc:Ignorable="d ignore"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -15,6 +16,7 @@
         <ItemsPanelTemplate x:Key="HorizontalItemsPanelTemplate">
             <VirtualizingStackPanel Orientation="Horizontal"/>
         </ItemsPanelTemplate>
+        <convertor:DoubleTimespanConvertor x:Key="DoubleTimespanConvertor"/>
     </Page.Resources>
 
     <Grid x:Name="Root" Background="{x:Null}">
@@ -46,7 +48,7 @@
 
 
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource SystemControlAcrylicWindowBrush}"
-              Grid.RowSpan="3" Padding="0,0,0,0">
+              Grid.RowSpan="3" Padding="0,0,0,0" BorderThickness="0,0,1,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
                 <RowDefinition Height="*"/>
@@ -98,7 +100,7 @@
                     ToolTipService.ToolTip="More" Grid.Row="1" 
                     BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
                     Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
-                    Height="72">
+                    Height="72" Visibility="Collapsed">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;"
                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Button>
@@ -115,59 +117,10 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
-            <Button BorderThickness="0" x:Name="NowPanelButton"
-                    Background="Transparent" Grid.Column="3" HorizontalContentAlignment="Right"
-                    Width="320"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Button.Content>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Margin="8" Grid.Column="1" x:Name="Artwork" 
-                               HorizontalAlignment="Right" VerticalAlignment="Stretch"
-                               Stretch="Uniform" Source="{Binding CurrentSong.AlbumImage,Mode=OneWay}"/>
-                        <Grid x:Name="NowPanelTexts" Margin="4,8" 
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"/>
-                                <RowDefinition Height="3*"/>
-                                <RowDefinition Height="3*"/>
-                            </Grid.RowDefinitions>
-                            <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch" 
-                                     Stretch="Uniform" Grid.Row="0">
-                                <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay}" 
-                                           TextWrapping="NoWrap" HorizontalAlignment="Right"
-                                           Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
-                                           TextTrimming="CharacterEllipsis" MaxWidth="240"/>
-
-                            </Viewbox>
-                            <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch" 
-                                     Stretch="Uniform" Grid.Row="1">
-                                <TextBlock x:Name="Album" Text="{Binding CurrentSong.Album, Mode=OneWay}" 
-                                           HorizontalAlignment="Right"
-                                           Style="{ThemeResource BodyTextBlockStyle}" 
-                                           MaxLines="1" FontSize="13"
-                                           TextWrapping="NoWrap" MaxWidth="240"
-                                           TextTrimming="CharacterEllipsis"/>
-                            </Viewbox>
-                            <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch" 
-                                     Stretch="Uniform" Grid.Row="2">
-                                <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
-                                           HorizontalAlignment="Right"
-                                           Style="{ThemeResource BodyTextBlockStyle}" 
-                                           MaxLines="1" FontSize="13" MaxWidth="240"
-                                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                            </Viewbox>
-                        </Grid>
-                    </Grid>
-                </Button.Content>
-
-            </Button>
+           
+            
             <StackPanel Orientation="Horizontal" Grid.Column="0"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
@@ -199,45 +152,83 @@
                     </Button.Content>
                 </Button>
 
+
+            </StackPanel>
+            
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,0,8,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Margin="4" x:Name="Artwork" Width="48" Height="48"
+                       Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Stretch="Uniform" Source="{Binding CurrentSong.AlbumImage,Mode=OneWay, FallbackValue='/Assets/DefaultCover.png'}"/>
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Height="50" Margin="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}"  
+                                           TextWrapping="NoWrap"
+                                           FontSize="14"
+                                           Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
+                                           TextTrimming="CharacterEllipsis" MaxWidth="240"/>
+
+                        <TextBlock Text="-" FontSize="14" Margin="3,0,3,0" FontWeight="ExtraBold" />
+
+                        <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay, FallbackValue='独立，不独于世'}" 
+                                           Style="{ThemeResource BodyTextBlockStyle}" 
+                                           MaxLines="1" FontSize="14" VerticalAlignment="Center"
+                                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                    <TextBlock x:Name="PositionText" 
+                            Grid.Row="0" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Margin="4"
+                            Text="{x:Bind PositionToString(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
+                    <ProgressBar Grid.Row="1" 
+                            HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            Height="2" 
+                            Foreground="{ThemeResource AppBarItemDisabledForegroundThemeBrush}" 
+                            Background="{ThemeResource AppBarBackgroundThemeBrush}" 
+                            Value="{x:Bind MainVM.BufferProgress, Mode=OneWay}"/>
+
+                    <Slider Grid.Row="1"
+                            Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
+                            HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            Value="{x:Bind MainVM.CurrentPosition, Mode=OneWay,Converter={StaticResource DoubleTimespanConvertor}}"
+                            Maximum="{x:Bind MainVM.TotalDuration, Mode=OneWay,Converter={StaticResource DoubleTimespanConvertor}}"
+                            ValueChanged="MainSlider_ValueChanged"
+                            IsThumbToolTipEnabled="False"                    
+                            x:Name="MainSlider"/>
+
+                </Grid>
+            </Grid>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button AccessKey="P" x:Name="PlayMode"
                         Command="{x:Bind MainVM.NextPlayMode}" Width="48" Height="48" Margin="4" 
                         BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
                         Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
-                        HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayModeToIcon(MainVM.PlayMode),Mode=OneWay}"/>
                     </Button.Content>
                 </Button>
-
-
-
-
-            <!--
-            <ProgressBar Grid.Column="1" Margin="12,0"
-                         HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                         Height="2" 
-                         Foreground="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}" 
-                         Background="{x:Null}" Value="{x:Bind MainVM.BufferProgress, Mode=OneWay}"/>
-            
-            <Slider Grid.Column="1" Margin="0,6,0,0"
-                    Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
-                    Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                    Value="{x:Bind MainVM.PositionToValue(Context.CurrentPosition, Context.TotalDuration), Mode=OneWay}"
-                    ThumbToolTipValueConverter="{StaticResource SliderToolTipConverter}" ValueChanged="Slider_ValueChanged"
-                    x:Name="MainSlider"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="2"
-                        HorizontalAlignment="Right" VerticalAlignment="Stretch" x:Name="PositionText">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <TextBlock x:Name="PositionNarrow" Visibility="Collapsed" Margin="4"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" 
-                               Text="{x:Bind PositionNarrowToString(Context.CurrentPosition), Mode=OneWay}"/>
-                    <TextBlock x:Name="PositionFull" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4"
-                               Text="{x:Bind PositionToString(Context.CurrentPosition, Context.TotalDuration), Mode=OneWay}"/>
-                </Grid>
-             -->
             </StackPanel>
-           
+
+            
+
+
+
+
+
+
         </Grid>
 
 

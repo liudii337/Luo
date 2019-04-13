@@ -275,6 +275,8 @@ namespace Luo.Shared.PlaybackEngine
                 Thumnail = mediaPlaybackList.CurrentItem?.GetDisplayProperties().Thumbnail
             });
 
+            PlaybackSession_PositionChangedAsync(MediaPlayer.PlaybackSession, null);
+
             // TODO: restore when error
             if (args.Reason == MediaPlaybackItemChangedReason.Error)
             {

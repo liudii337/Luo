@@ -68,7 +68,6 @@ namespace Luo.Shared.PlaybackEngine
         public LuoVolSong CurrentSong { get; set; }
         public bool IsLoop { get; set; }
         public bool IsShuffle { get; set; }
-
         public bool IsOneLoop { get; set; }
 
         public RandomAccessStreamReference Thumnail { get; set; }

@@ -8,6 +8,7 @@ using Windows.Media.Core;
 using Windows.UI.Xaml.Controls;
 using luo_music.Pages;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 
 namespace luo_music
 {
@@ -143,6 +144,20 @@ namespace luo_music
         private void HamPane_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        public string PositionToString(TimeSpan t1, TimeSpan total)
+        {
+            if (total == null || total == default(TimeSpan))
+            {
+                return "0:00/0:00";
+            }
+            return $"{$"{(int)(Math.Floor(t1.TotalMinutes))}:{t1.Seconds.ToString("00")}"}/{$"{(int)(Math.Floor(total.TotalMinutes))}:{total.Seconds.ToString("00")}"}";
+        }
+
+        private void MainSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            MainVM.ChangePlayPosition(TimeSpan.FromSeconds(e.NewValue));
         }
     }
 }

@@ -13,6 +13,23 @@ namespace luo_music.ViewModel.DataViewModel
         protected MainViewModel _mainViewModel;
         protected VolServiceBase _volService;
 
+        private string volcover="";
+        public string VolCover
+        {
+            get
+            {
+                return volcover;
+            }
+            set
+            {
+                if (volcover != value)
+                {
+                    volcover = value;
+                    RaisePropertyChanged(() => VolCover);
+                }
+            }
+        }
+
         public VolDataViewModel(MainViewModel viewModel, VolServiceBase service)
         {
             _mainViewModel = viewModel;
@@ -40,26 +57,26 @@ namespace luo_music.ViewModel.DataViewModel
 
         protected void UpdateHintVisibility(IEnumerable<VolItem> list)
         {
-            //_mainViewModel.FooterLoadingVisibility = Visibility.Collapsed;
-            //_mainViewModel.FooterReloadVisibility = Visibility.Collapsed;
-            //_mainViewModel.NoNetworkHintVisibility = Visibility.Collapsed;
-            //_mainViewModel.EndVisibility = Visibility.Collapsed;
+            ////_mainViewModel.FooterLoadingVisibility = Visibility.Collapsed;
+            ////_mainViewModel.FooterReloadVisibility = Visibility.Collapsed;
+            ////_mainViewModel.NoNetworkHintVisibility = Visibility.Collapsed;
+            ////_mainViewModel.EndVisibility = Visibility.Collapsed;
 
             //// No items at all
             //if (DataList.Count == 0)
             //{
             //    if (list.Count() == 0)
             //    {
-            //        _mainViewModel.NoItemHintVisibility = Visibility.Visible;
+            //        //_mainViewModel.NoItemHintVisibility = Visibility.Visible;
             //    }
             //}
             //else
             //{
-            //    _mainViewModel.NoItemHintVisibility = Visibility.Collapsed;
-
+            //    //_mainViewModel.NoItemHintVisibility = Visibility.Collapsed;
+            //    //VolCover = DataList[0].Vol.Cover;
             //    if (list.Count() == 0)
             //    {
-            //        _mainViewModel.EndVisibility = Visibility.Visible;
+            //        //_mainViewModel.EndVisibility = Visibility.Visible;
             //    }
             //}
         }
@@ -144,6 +161,14 @@ namespace luo_music.ViewModel.DataViewModel
             {
                 return null;
                 //throw new APIException("Request timeout");
+            }
+        }
+
+        protected override void RefreshCompleted()
+        {
+            if (DataList.Count > 0)
+            {
+                VolCover = DataList[0].Vol.Cover;
             }
         }
     }

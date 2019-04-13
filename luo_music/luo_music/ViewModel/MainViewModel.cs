@@ -20,6 +20,7 @@ using Windows.System;
 using luo_music.Pages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
+using System.Runtime.Serialization;
 
 namespace luo_music.ViewModel
 {
@@ -41,7 +42,7 @@ namespace luo_music.ViewModel
         private RelayCommand _sendMessageCommand;
         private RelayCommand _showDialogCommand;
         private string _welcomeTitle = string.Empty;
-        private IPlayer player;
+        public IPlayer player;
 
         #region Previous
         public string Clock
@@ -563,6 +564,75 @@ namespace luo_music.ViewModel
             }
         }
 
+
+        private double _bufferProgress;
+        public double BufferProgress
+        {
+            get
+            {
+                return _bufferProgress;
+            }
+            set
+            {
+                if (_bufferProgress != value)
+                {
+                    _bufferProgress = value;
+                    RaisePropertyChanged(() => BufferProgress);
+                }
+            }
+        }
+
+        private TimeSpan _currentPosition;
+        public TimeSpan CurrentPosition
+        {
+            get
+            {
+                return _currentPosition;
+            }
+            set
+            {
+                if (_currentPosition != value)
+                {
+                    _currentPosition = value;
+                    RaisePropertyChanged(() => CurrentPosition);
+                }
+            }
+        }
+
+        private TimeSpan _totalDuration;
+        public TimeSpan TotalDuration
+        {
+            get
+            {
+                return _totalDuration;
+            }
+            set
+            {
+                if (_totalDuration != value)
+                {
+                    _totalDuration = value;
+                    RaisePropertyChanged(() => TotalDuration);
+                }
+            }
+        }
+
+        public double PositionToValue(TimeSpan t1, TimeSpan total)
+        {
+            if (total == null || total == default(TimeSpan))
+            {
+                return 0;
+            }
+            return 100 * (t1.TotalMilliseconds / total.TotalMilliseconds);
+        }
+
+        internal void ChangePlayPosition(TimeSpan timeSpan)
+        {
+            if (timeSpan < TotalDuration)
+            {
+                player.Seek(timeSpan);
+            }
+        }
+
         public RelayCommand GoPrevious
         {
             get
@@ -640,9 +710,13 @@ namespace luo_music.ViewModel
             player.Play();
         }
 
-        private void Player_PositionUpdated(object sender, PositionUpdatedArgs e)
+        private async void Player_PositionUpdated(object sender, PositionUpdatedArgs e)
         {
-            //throw new NotImplementedException();
+            await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            {
+                CurrentPosition = e.Current;
+                TotalDuration = e.Total;
+            });
         }
 
         private async void Player_PlaybackStatusChanged(object sender, PlaybackStatusChangedArgs e)
@@ -805,9 +879,12 @@ namespace luo_music.ViewModel
             });
         }
 
-        private void Player_DownloadProgressChanged(object sender, DownloadProgressChangedArgs e)
+        private async void Player_DownloadProgressChanged(object sender, DownloadProgressChangedArgs e)
         {
-            //throw new NotImplementedException();
+            await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            {
+                BufferProgress = 100 * e.Progress;
+            });
         }
 
         #endregion

@@ -41,7 +41,7 @@ namespace luo_music.Pages
 
             if (!item.Vol.IsDetailGet)
             {
-                await item.GetVolDetialAsync();
+                item.GetVolDetialAsync();
             }
 
             MainVM.CurrentVol = item;
