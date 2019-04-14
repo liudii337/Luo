@@ -201,9 +201,8 @@
                             Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
                             Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                            Value="{x:Bind MainVM.CurrentPosition, Mode=OneWay,Converter={StaticResource DoubleTimespanConvertor}}"
                             Maximum="{x:Bind MainVM.TotalDuration, Mode=OneWay,Converter={StaticResource DoubleTimespanConvertor}}"
-                            ValueChanged="MainSlider_ValueChanged"
+                            PointerReleased="MainSlider_PointerReleased"
                             IsThumbToolTipEnabled="False"                    
                             x:Name="MainSlider"/>
 

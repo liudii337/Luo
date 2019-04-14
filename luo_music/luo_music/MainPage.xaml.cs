@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Controls;
 using luo_music.Pages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Data;
+using Luo.Shared.Convertor;
 
 namespace luo_music
 {
@@ -21,6 +23,10 @@ namespace luo_music
             InitializeComponent();
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
+
+            MainSlider.AddHandler(PointerReleasedEvent, new PointerEventHandler(MainSlider_PointerReleased), true);
+
+            SetSliderBinding();
 
             Loaded += (s, e) =>
             {
@@ -155,10 +161,21 @@ namespace luo_music
             return $"{$"{(int)(Math.Floor(t1.TotalMinutes))}:{t1.Seconds.ToString("00")}"}/{$"{(int)(Math.Floor(total.TotalMinutes))}:{total.Seconds.ToString("00")}"}";
         }
 
-        private void MainSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        private void MainSlider_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            if(Math.Abs(e.OldValue-e.NewValue)>0.2)
-            { MainVM.ChangePlayPosition(TimeSpan.FromSeconds(e.NewValue)); }            
+            MainVM.ChangePlayPosition(TimeSpan.FromSeconds(MainSlider.Value));
+            SetSliderBinding();
+        }
+
+        private void SetSliderBinding()
+        {
+            var convertor = new DoubleTimespanConvertor();
+            MainSlider.SetBinding(Slider.ValueProperty, new Binding() { Source = MainVM, Path = new PropertyPath("CurrentPosition"), Converter = convertor, Mode = BindingMode.OneWay });
+        }
+
+        private void MainSlider_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MainVM.ChangePlayPosition(TimeSpan.FromSeconds(MainSlider.Value));
         }
     }
 }
