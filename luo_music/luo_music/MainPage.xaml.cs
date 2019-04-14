@@ -157,7 +157,8 @@ namespace luo_music
 
         private void MainSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            MainVM.ChangePlayPosition(TimeSpan.FromSeconds(e.NewValue));
+            if(Math.Abs(e.OldValue-e.NewValue)>0.2)
+            { MainVM.ChangePlayPosition(TimeSpan.FromSeconds(e.NewValue)); }            
         }
     }
 }

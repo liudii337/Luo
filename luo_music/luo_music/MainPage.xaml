@@ -48,7 +48,7 @@
 
 
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource SystemControlAcrylicWindowBrush}"
-              Grid.RowSpan="3" Padding="0,0,0,0" BorderThickness="0,0,1,0">
+              Grid.RowSpan="3" Padding="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
                 <RowDefinition Height="*"/>

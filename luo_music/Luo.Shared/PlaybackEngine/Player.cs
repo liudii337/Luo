@@ -101,7 +101,7 @@ namespace Luo.Shared.PlaybackEngine
             mediaPlaybackList = new MediaPlaybackList();
             mediaPlaybackList.CurrentItemChanged += MediaPlaybackList_CurrentItemChanged;
             MediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
-            //mediaPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChangedAsync;
+            MediaPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChangedAsync;
         }
 
         private void InitMediaPlayer()
