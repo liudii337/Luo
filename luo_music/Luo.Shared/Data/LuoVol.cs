@@ -195,6 +195,16 @@ namespace Luo.Shared.Data
             FavdCount = _favdcount;
         }
 
+        public LuoVol(string _cover, string _volnum, string _volurl, string _title)
+        {
+            Cover = _cover;
+            VolNum = _volnum;
+            VolUrl = _volurl;
+            Title = _title;
+            CommentCount = "1314";
+            FavdCount = "999";
+        }
+
         public void GetDetailVol(string html)
         {
             HtmlDocument doc = new HtmlDocument();
@@ -255,5 +265,55 @@ namespace Luo.Shared.Data
             }
             IsDetailGet = true;
         }
+
+        public void GetDetailVol_w(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            //查找节点
+            //var vol_number = doc.DocumentNode.SelectSingleNode("//span[@class='vol-number rounded']").InnerText;
+            //var vol_title = doc.DocumentNode.SelectSingleNode("//span[@class='vol-title']").InnerText;
+            //var vol_img = doc.DocumentNode.SelectSingleNode("//*[@id='volCoverWrapper']/img").GetAttributeValue("src", "");
+
+            var text = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml;
+            Description = text.Replace("\n", "").Replace("\r", "").Replace("<p>","").Replace("<br>", "\n").Replace("</p>","\n").Replace(" ", "");
+
+
+            //Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
+
+            Tags = new ObservableCollection<String>();
+            var vol_tags = doc.DocumentNode.SelectNodes("//a[@target='_blank']");
+
+            if (vol_tags != null)
+            {
+                foreach (var i in vol_tags)
+                {
+                    Tags.Add(i.InnerText.Replace("&nbsp", ""));
+                }
+            }
+
+            VolSongs = new ObservableCollection<LuoVolSong>();
+
+            var script = doc.DocumentNode.Descendants("script").ToArray()[1].OuterHtml;
+
+            int b1 = script.IndexOf("[");//找a的位置
+            int b2 = script.IndexOf("]");//找b的位置
+            var jsonString = (script.Substring(b1)).Substring(0, b2 - b1 + 1);
+
+            var list = SimpleSong.FromJson(jsonString);
+
+            foreach (var i in list)
+            {
+                var _index = i.Name.Substring(0, 2);
+                var _name = i.Name.Substring(4);
+                var _artist = i.Author;
+                var _songsrc = i.Src.OriginalString;
+
+                VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _songsrc));
+            }
+            IsDetailGet = true;
+        }
+
     }
 }

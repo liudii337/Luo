@@ -176,5 +176,24 @@ namespace Luo.Shared.Data
             var vol = int.Parse(_vol);
             return string.Format("http://mp3-cdn2.luoo.net/low/luoo/radio{0}/{1}.mp3", vol, _index);
         }
+
+        public LuoVolSong(string _vol, string _index, string _name, string _artist, string _songurl)
+        {
+            VolNum = _vol;
+            Index = _index;
+            Name = _name;
+            Artist = _artist;
+            Album = "";
+            AlbumImage = "";
+            SongUrl = _songurl;
+        }
+
+        //example: http://192.168.73.132/luoow.wxwenku.com/999/07._Froesche_Die_Schröders.mp3
+        private string SongUriFormat_w(string _vol, string _index, string _name)
+        {
+            var vol = int.Parse(_vol);
+            var name = _name.Replace(" ", "_");
+            return string.Format("http://192.168.73.132/luoow.wxwenku.com/{0}/{1}._{2}.mp3", vol, _index, name);
+        }
     }
 }

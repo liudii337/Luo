@@ -14,7 +14,8 @@ namespace Luo.Shared.Data
     {
         public ObservableCollection<LuoVol> GetVols(string html)
         {
-            return GetVolListFromHtml(html);
+            // 暂用新的API
+            return GetVolListFromHtml_w(html);
         }
 
         public static ObservableCollection<LuoVol>  GetVolListFromHtml(string html)
@@ -129,5 +130,34 @@ namespace Luo.Shared.Data
             GetVolTagListFromHtml(result);
             return GetVolListFromHtml(result);
         }
+
+        public static ObservableCollection<LuoVol> GetVolListFromHtml_w(string html)
+        {
+            var vollist = new ObservableCollection<LuoVol>();
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            //查找节点
+            var list = doc.DocumentNode.SelectNodes("//div[@class='thumbnail theborder']");
+
+            foreach (var i in list)
+            {
+                //http://luoow.wxwenku.com/100/cover.jpg
+                //http://luoow.wxwenku.com/99/cover_min.jpg
+                var cover = i.SelectSingleNode("./a/img").GetAttributeValue("src", "").Replace("_min", "");
+
+                var Node1 = i.SelectSingleNode("./div/p/a");
+                var volnum = Node1.GetAttributeValue("href", "").Replace("/", "");
+                var volurl = "https://www.luoow.com/" + volnum +"/";
+                var title = Node1.GetAttributeValue("title", "");
+
+                var vol = new LuoVol(cover, volnum, volurl, title);
+
+                vollist.Add(vol);
+            }
+
+            return vollist;
+        }
+
     }
 }

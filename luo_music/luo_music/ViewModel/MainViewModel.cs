@@ -184,7 +184,7 @@ namespace luo_music.ViewModel
             Initialize();
 
             DataVM = new VolDataViewModel(this,
-                new VolService(Request.GetAllVol, NormalFactory, CtsFactory));
+                new VolService(Request.GetAllVol_w, NormalFactory, CtsFactory));
 
             LuoVolTags = LuoVolFactory.GetVolTagList();
             DataVM.RefreshAsync();

@@ -21,13 +21,15 @@ namespace Luo.Shared.Service
 
         public Task<string> GetVolDetailHtmlAsync(string url)
         {
-            return _cloudService.GetVolDetailHtmlAsync(url);
+            // 暂用新的API
+            return _cloudService.GetVolDetailHtmlAsync_w(url);
         }
 
         public override async Task<IEnumerable<LuoVol>> GetVolsAsync()
         {
             //网络请求获得原料
-            var result = await _cloudService.GetVolsAsync(Page, Count, GetCancellationToken(), RequestUrl);
+            // 暂用新的API
+            var result = await _cloudService.GetVolsAsync_w(Page, Count, GetCancellationToken(), RequestUrl);
             if (result != null)
             {
                 //工厂加工，获得成品

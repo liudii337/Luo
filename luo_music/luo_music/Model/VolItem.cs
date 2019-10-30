@@ -258,7 +258,8 @@ namespace luo_music.Model
             var result = await _service.GetVolDetailHtmlAsync(Vol.VolUrl);
             if(result!=null)
             {
-                Vol.GetDetailVol(result);
+                // 暂用新的API
+                Vol.GetDetailVol_w(result);
             }
             //if (result.IsRequestSuccessful)
             //{
