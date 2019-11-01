@@ -176,12 +176,12 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="5"/>
                                         <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="5"/>
                                     </Grid.RowDefinitions>
-                                    <Rectangle x:Name="HorizontalTrackRect" Grid.ColumnSpan="3" Fill="{TemplateBinding Background}" Height="{ThemeResource SliderTrackThemeHeight}" Grid.Row="1"/>
-                                    <Rectangle x:Name="HorizontalDecreaseRect" Fill="{ThemeResource SliderTrackValueFillPointerOver}" Grid.Row="1"/>
+                                    <Rectangle x:Name="HorizontalTrackRect" Grid.ColumnSpan="3" Fill="{TemplateBinding Background}" Height="4" Grid.Row="1"/>
+                                    <Rectangle x:Name="HorizontalDecreaseRect" Fill="{ThemeResource SliderTrackValueFillPointerOver}" Height="4"  Grid.Row="1"/>
                                     <TickBar x:Name="TopTickBar" Grid.ColumnSpan="3" Fill="{ThemeResource SliderTickBarFill}" Height="{ThemeResource SliderOutsideTickBarThemeHeight}" Margin="0,0,0,4" VerticalAlignment="Bottom" Visibility="Collapsed"/>
                                     <TickBar x:Name="HorizontalInlineTickBar" Grid.ColumnSpan="3" Fill="{ThemeResource SliderInlineTickBarFill}" Height="{ThemeResource SliderTrackThemeHeight}" Grid.Row="1" Visibility="Collapsed"/>
                                     <TickBar x:Name="BottomTickBar" Grid.ColumnSpan="3" Fill="{ThemeResource SliderTickBarFill}" Height="{ThemeResource SliderOutsideTickBarThemeHeight}" Margin="0,4,0,0" Grid.Row="2" VerticalAlignment="Top" Visibility="Collapsed"/>
@@ -394,7 +394,8 @@
                             Text="{x:Bind PositionToString(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
                     <ProgressBar Grid.Row="1" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                            Height="2" 
+                            Height="4" 
+                            Opacity="0.5"
                             Foreground="{ThemeResource AppBarItemDisabledForegroundThemeBrush}" 
                             Background="{ThemeResource AppBarBackgroundThemeBrush}" 
                             Value="{x:Bind MainVM.BufferProgress, Mode=OneWay}"/>

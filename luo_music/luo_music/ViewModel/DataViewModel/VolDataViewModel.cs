@@ -137,9 +137,12 @@ namespace luo_music.ViewModel.DataViewModel
 
         protected override void LoadMoreItemCompleted(IEnumerable<VolItem> list, int pagingIndex)
         {
-            foreach (var item in list)
+            if(list!=null)
             {
-                item.Init();
+                foreach (var item in list)
+                {
+                    item.Init();
+                }
             }
         }
 

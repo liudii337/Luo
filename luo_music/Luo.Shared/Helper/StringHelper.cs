@@ -17,6 +17,14 @@ namespace Luo.Shared.Helper
 
         public static string DescripitionParse(this string s)
         {
+            if(s[s.Length-1] == '\n')
+            {
+                s = s.Remove(s.Length - 1);
+            }
+            if (s[s.Length - 1] == '\n')
+            {
+                s = s.Remove(s.Length - 1);
+            }
             return s.Replace("&nbsp;", "").Replace("&#39;", "").Replace("&ldquo;", "").Replace("&rdquo;", "");
         }
 
@@ -32,6 +40,13 @@ namespace Luo.Shared.Helper
             }
             s = s.Remove(0, j);
             s = s.Replace("<br><br>", "\n");
+            s = s.Replace("<br>", "\n");
+            return s;
+        }
+
+        public static string HtmlParse_w(this string s)
+        {
+            s = s.Replace("\n", "").Replace("\r", "").Replace(" ", "");
             s = s.Replace("<br>", "\n");
             return s;
         }

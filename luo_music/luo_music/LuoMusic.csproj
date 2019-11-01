@@ -7,8 +7,8 @@
     <ProjectGuid>{268D6582-FAE7-434B-BF19-8FBA478B9E3C}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>luo_music</RootNamespace>
-    <AssemblyName>luo_music</AssemblyName>
+    <RootNamespace>LuoMusic</RootNamespace>
+    <AssemblyName>LuoMusic</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
@@ -100,7 +100,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AdaptiveGridView.cs" />
+    <Compile Include="Common\ColorToBrushConverter.cs" />
+    <Compile Include="Common\Composition\CompositionAnimationBuilder.cs" />
+    <Compile Include="Common\Composition\CompositionExtensions.cs" />
     <Compile Include="Common\IncrementalLoadingCollection.cs" />
+    <Compile Include="Common\TopNavigationControl.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -201,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Common\TopNavigationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -232,6 +241,10 @@
     <Page Include="SecondPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

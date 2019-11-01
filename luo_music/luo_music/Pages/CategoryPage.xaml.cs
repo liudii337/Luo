@@ -32,6 +32,11 @@ namespace luo_music.Pages
         public CategoryPage()
         {
             this.InitializeComponent();
+
+            NavigationCacheMode = NavigationCacheMode.Enabled;
+
+            TagListPage.Navigate(typeof(VolTagListPage));
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,11 +45,15 @@ namespace luo_music.Pages
             MainVM.NeedShowBack = true;
         }
 
-        private void TagGrid_ItemClick(object sender, ItemClickEventArgs e)
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //var item = (LuoVolTag)e.ClickedItem;
-            //MainVM.CurrentTagIndex = MainVM.LuoVolTags.IndexOf(item);
-            MainNavigateToEvent(typeof(VolTagListPage));
+
+        }
+
+        private void TagGrid_TitleClicked(object sender, object e)
+        {
+
         }
     }
 }

@@ -189,6 +189,12 @@ namespace luo_music.ViewModel
             LuoVolTags = LuoVolFactory.GetVolTagList();
             DataVM.RefreshAsync();
 
+            TagDataVM = new VolDataViewModel(this,
+                new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
+
+
+            TagDataVM.RefreshAsync();
+
             player = new Player();
             PlayMode = 0;
 
@@ -350,7 +356,7 @@ namespace luo_music.ViewModel
             }
         }
 
-        private int _currentTagIndex = -1;
+        private int _currentTagIndex = 0;
         public int CurrentTagIndex
         {
             get
@@ -366,8 +372,10 @@ namespace luo_music.ViewModel
 
                     if (_currentTagIndex != -1)
                     {
+                        //TagDataVM = new VolDataViewModel(this,
+                        //    new VolService(Request.GetTagVol(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
                         TagDataVM = new VolDataViewModel(this,
-                            new VolService(Request.GetTagVol(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
+                            new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
                     }
 
                     RaisePropertyChanged(() => CurrentTagIndex);

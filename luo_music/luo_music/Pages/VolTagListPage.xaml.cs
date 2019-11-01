@@ -1,12 +1,16 @@
-﻿using luo_music.Model;
+﻿using luo_music.Common.Composition;
+using luo_music.Model;
 using luo_music.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,9 +30,13 @@ namespace luo_music.Pages
     {
         public MainViewModel MainVM => (MainViewModel)DataContext;
 
+        private Compositor _compositor;
+
+
         public VolTagListPage()
         {
             this.InitializeComponent();
+            this._compositor = this.GetVisual().Compositor;
             NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
@@ -57,5 +65,75 @@ namespace luo_music.Pages
         {
             base.OnNavigatedTo(e);
         }
+
+        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            var rootGrid = sender as Grid;
+
+            rootGrid.PointerEntered += RootGrid_PointerEntered;
+            rootGrid.PointerExited += RootGrid_PointerExited;
+        }
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var rootGrid = sender as Grid;
+            rootGrid.Clip = new RectangleGeometry()
+            {
+                Rect = new Rect(0, 0, rootGrid.ActualWidth, rootGrid.ActualHeight)
+            };
+        }
+
+        private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Touch)
+            {
+                return;
+            }
+            var rootGrid = sender as Grid;
+            var maskBorder = rootGrid as FrameworkElement;
+            var img = rootGrid.Children[0] as FrameworkElement;
+
+            ToggleItemPointOverAnimation(maskBorder, img, false);
+        }
+
+        private void RootGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Touch)
+            {
+                return;
+            }
+            var rootGrid = sender as Grid;
+            var maskBorder = rootGrid as FrameworkElement;
+            var img = rootGrid.Children[0] as FrameworkElement;
+
+            ToggleItemPointOverAnimation(maskBorder, img, true);
+        }
+
+
+        private void ToggleItemPointOverAnimation(FrameworkElement mask, FrameworkElement img, bool show)
+        {
+            var imgVisual = img.GetVisual();
+
+            var scaleAnimation = CreateScaleAnimation(show);
+
+            if (imgVisual.CenterPoint.X == 0 && imgVisual.CenterPoint.Y == 0)
+            {
+                imgVisual.CenterPoint = new Vector3((float)mask.ActualWidth / 2, (float)mask.ActualHeight / 2, 0f);
+            }
+
+            imgVisual.StartAnimation("Scale.x", scaleAnimation);
+            imgVisual.StartAnimation("Scale.y", scaleAnimation);
+
+        }
+
+        private ScalarKeyFrameAnimation CreateScaleAnimation(bool show)
+        {
+            var scaleAnimation = _compositor.CreateScalarKeyFrameAnimation();
+            scaleAnimation.InsertKeyFrame(1f, show ? 1.05f : 1f);
+            scaleAnimation.Duration = TimeSpan.FromMilliseconds(1000);
+            scaleAnimation.StopBehavior = AnimationStopBehavior.LeaveCurrentValue;
+            return scaleAnimation;
+        }
+
     }
 }

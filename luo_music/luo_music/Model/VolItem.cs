@@ -133,7 +133,7 @@ namespace luo_music.Model
 
         public void Init()
         {
-            TitleString = $"vol.{Vol.VolNum} {Vol.Title}";
+            TitleString = $"Vol.{Vol.VolNum} {Vol.Title}";
         }
 
         private string _titleString;

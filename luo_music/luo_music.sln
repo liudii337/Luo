@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luo_music", "luo_music\luo_music.csproj", "{268D6582-FAE7-434B-BF19-8FBA478B9E3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuoMusic", "luo_music\LuoMusic.csproj", "{268D6582-FAE7-434B-BF19-8FBA478B9E3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luo.Shared", "Luo.Shared\Luo.Shared.csproj", "{65EDF7BC-0D53-4196-A76A-D747879FEC54}"
 EndProject

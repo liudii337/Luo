@@ -276,8 +276,28 @@ namespace Luo.Shared.Data
             //var vol_title = doc.DocumentNode.SelectSingleNode("//span[@class='vol-title']").InnerText;
             //var vol_img = doc.DocumentNode.SelectSingleNode("//*[@id='volCoverWrapper']/img").GetAttributeValue("src", "");
 
-            var text = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml;
-            Description = text.Replace("\n", "").Replace("\r", "").Replace("<p>","").Replace("<br>", "\n").Replace("</p>","\n").Replace(" ", "");
+            var a = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").SelectNodes("./p");
+            var b = "";
+            if (a != null)
+            {
+                foreach (var i in a)
+                {
+                    if (i.InnerText == "br")
+                    {
+                        b = b + "\n";
+                    }
+                    else
+                    {
+                        b = b + i.InnerText + "\n";
+                    }
+                }
+            }
+            else
+            {
+                b = doc.DocumentNode.SelectSingleNode("//div[@class='vol-desc']").InnerHtml.HtmlParse_w();
+            }
+
+            Description = b.DescripitionParse();
 
 
             //Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
@@ -303,6 +323,8 @@ namespace Luo.Shared.Data
 
             var list = SimpleSong.FromJson(jsonString);
 
+            var repeatFlag = 0;
+
             foreach (var i in list)
             {
                 var _index = i.Name.Substring(0, 2);
@@ -310,8 +332,17 @@ namespace Luo.Shared.Data
                 var _artist = i.Author;
                 var _songsrc = i.Src.OriginalString;
 
-                VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _songsrc));
+                if(_index=="01")
+                { repeatFlag++; }
+
+                if(repeatFlag==1)
+                {
+                    VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _songsrc));
+                }
             }
+
+            //check if there is repeat volSongs
+
             IsDetailGet = true;
         }
 

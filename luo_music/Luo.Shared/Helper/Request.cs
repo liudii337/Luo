@@ -58,7 +58,7 @@ namespace Luo.Shared.Helper
         //example: tag="世界音乐"
         public static string GetTagVol_w(string tag)
         {
-            return $"https://{HOST}/tag/{tag}";
+            return $"https://{HOST_w}/tag/{tag}";
         }
 
 

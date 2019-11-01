@@ -75,5 +75,18 @@ namespace Luo.Shared.Service
             var result = await HttpRequestAsync_w(string.Format("{0}{1}", url, Request.RequestParse(page)));
             return result;
         }
+
+        internal async Task<string> GetTagVolsAsync_w(int page, int pageCount, CancellationToken token, string url)
+        {
+            if(page==1)
+            {
+                var result = await HttpRequestAsync_w(url);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

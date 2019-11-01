@@ -11,7 +11,14 @@ namespace Luo.Shared.Service
     {
         protected string RequestUrl { get; set; }
 
-        public int Count { get; set; } = 30;
+        public int Count { get; set; } = 20;
+        // to realize 20 each time
+        public int Offset { get; set; } = 1;
+        public int LastPage { get; set; } = 1;
+
+        public int TagOffset { get; set; } = 1;
+        public int TagLastPage { get; set; } = 1;
+
 
         public VolService(string url, LuoVolFactory factory,
             CancellationTokenSourceFactory ctsFactory) : base(factory, ctsFactory)
@@ -29,16 +36,62 @@ namespace Luo.Shared.Service
         {
             //网络请求获得原料
             // 暂用新的API
-            var result = await _cloudService.GetVolsAsync_w(Page, Count, GetCancellationToken(), RequestUrl);
-            if (result != null)
+            // check if it's tag request
+            if(!RequestUrl.Contains("tag"))
             {
-                //工厂加工，获得成品
-                var volList = _VolFactory.GetVols(result);
-                return volList;
+                var result = await _cloudService.GetVolsAsync_w(Offset, Count, GetCancellationToken(), RequestUrl);
+                if (result != null)
+                {
+                    //工厂加工，获得成品
+                    var volList = _VolFactory.GetVols(result);
+                    // to realize 20 each time
+                    if ((volList.Count - (Page - LastPage) * Count) > Count)
+                    {
+                        //the rest is more than 20
+                        var list = volList.ToList().GetRange((Page - LastPage) * Count, Count);
+                        return list;
+                    }
+                    else
+                    {
+                        //the rest is less than 20
+                        var list = volList.Skip((Page - LastPage) * Count);
+                        Offset = Offset + 1;
+                        LastPage = Page + 1;
+                        return list;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
-                return null;
+                var result = await _cloudService.GetTagVolsAsync_w(TagOffset, Count, GetCancellationToken(), RequestUrl);
+                if (result != null)
+                {
+                    //工厂加工，获得成品
+                    var volList = _VolFactory.GetVols(result);
+                    // to realize 20 each time
+                    if ((volList.Count - (Page - TagLastPage) * Count) > Count)
+                    {
+                        //the rest is more than 20
+                        var list = volList.ToList().GetRange((Page - TagLastPage) * Count, Count);
+                        return list;
+                    }
+                    else
+                    {
+                        //the rest is less than 20
+                        var list = volList.Skip((Page - TagLastPage) * Count);
+                        TagOffset = TagOffset + 1;
+                        TagLastPage = Page + 1;
+                        return list;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }
