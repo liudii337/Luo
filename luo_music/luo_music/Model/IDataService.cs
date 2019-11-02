@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace luo_music.Model
+namespace LuoMusic.Model
 {
     public interface IDataService
     {

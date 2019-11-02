@@ -1,4 +1,4 @@
-﻿namespace luo_music.Model
+﻿namespace LuoMusic.Model
 {
     public class DataItem
     {

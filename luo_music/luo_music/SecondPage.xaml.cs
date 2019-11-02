@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 
-namespace luo_music
+namespace LuoMusic
 {
     public sealed partial class SecondPage
     {

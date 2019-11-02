@@ -6,10 +6,10 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using luo_music.Model;
+using LuoMusic.Model;
 using System.Collections.ObjectModel;
 using Luo.Shared.Data;
-using luo_music.ViewModel.DataViewModel;
+using LuoMusic.ViewModel.DataViewModel;
 using Luo.Shared.Service;
 using Luo.Shared.Helper;
 using Luo.Shared.PlaybackEngine;
@@ -17,12 +17,12 @@ using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
 using Windows.System;
-using luo_music.Pages;
+using LuoMusic.Pages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 using System.Runtime.Serialization;
 
-namespace luo_music.ViewModel
+namespace LuoMusic.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

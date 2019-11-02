@@ -1,18 +1,18 @@
 ﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
-using luo_music.ViewModel;
+using LuoMusic.ViewModel;
 using Luo.Shared.Data;
 using System;
-using luo_music.Model;
+using LuoMusic.Model;
 using Windows.Media.Core;
 using Windows.UI.Xaml.Controls;
-using luo_music.Pages;
+using LuoMusic.Pages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Data;
 using Luo.Shared.Convertor;
 
-namespace luo_music
+namespace LuoMusic
 {
     public sealed partial class MainPage
     {

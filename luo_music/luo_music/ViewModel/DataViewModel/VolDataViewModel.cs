@@ -1,12 +1,12 @@
 ﻿using Luo.Shared.Data;
-using luo_music.Model;
+using LuoMusic.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace luo_music.ViewModel.DataViewModel
+namespace LuoMusic.ViewModel.DataViewModel
 {
     public class VolDataViewModel : DataViewModelBase<VolItem>
     {

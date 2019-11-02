@@ -2,9 +2,9 @@
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using luo_music.Model;
+using LuoMusic.Model;
 
-namespace luo_music.ViewModel
+namespace LuoMusic.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the

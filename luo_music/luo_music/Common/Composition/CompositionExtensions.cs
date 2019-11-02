@@ -8,7 +8,7 @@ using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
 
-namespace luo_music.Common.Composition
+namespace LuoMusic.Common.Composition
 {
     public static class CompositionExtensions
     {

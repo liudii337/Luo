@@ -1,7 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local1="using:luo_music.Common">
+    xmlns:local1="using:LuoMusic.Common">
 
 
     <Style TargetType="local1:TopNavigationControl">

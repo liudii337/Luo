@@ -1,12 +1,12 @@
 ﻿<Page
-    x:Class="luo_music.Pages.VolListPage"
+    x:Class="LuoMusic.Pages.VolListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:luo_music.Pages"
+    xmlns:local="using:LuoMusic.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:luo_music.Model"
-    xmlns:common="using:luo_music.Common"
+    xmlns:model="using:LuoMusic.Model"
+    xmlns:common="using:LuoMusic.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">

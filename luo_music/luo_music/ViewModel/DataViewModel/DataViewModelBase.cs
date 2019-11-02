@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using luo_music.Common;
+using LuoMusic.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
-namespace luo_music.ViewModel.DataViewModel
+namespace LuoMusic.ViewModel.DataViewModel
 {
     public abstract class DataViewModelBase<T> : ViewModelBase
     {

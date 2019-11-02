@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Composition;
 
-namespace luo_music.Common.Composition
+namespace LuoMusic.Common.Composition
 {
     public class CompositionAnimationBuilder
     {

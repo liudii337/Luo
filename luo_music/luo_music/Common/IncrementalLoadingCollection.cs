@@ -11,7 +11,7 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Data;
 
-namespace luo_music.Common
+namespace LuoMusic.Common
 {
     public class ResultData<T>
     {

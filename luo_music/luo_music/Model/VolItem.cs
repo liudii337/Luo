@@ -12,7 +12,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.System;
 
-namespace luo_music.Model
+namespace LuoMusic.Model
 {
     public class VolItem : ModelBase
     {

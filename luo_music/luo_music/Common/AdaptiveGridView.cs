@@ -7,7 +7,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace luo_music.Common
+namespace LuoMusic.Common
 {
     public interface IListViewAdapter
     {

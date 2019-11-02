@@ -12,7 +12,7 @@ using Windows.UI;
 using Windows.UI.Popups;
 using Luo.Shared.Extension;
 
-namespace luo_music
+namespace LuoMusic
 {
     sealed partial class App
     {

@@ -7,7 +7,7 @@ using Windows.System;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
 
-namespace luo_music.Model
+namespace LuoMusic.Model
 {
     public class HamPanelItem
     {

@@ -7,7 +7,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
-namespace luo_music.Common
+namespace LuoMusic.Common
 {
     public class ColorToBrushConverter : IValueConverter
     {
