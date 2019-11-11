@@ -1,4 +1,5 @@
-﻿using LuoMusic.Common.Composition;
+﻿using JP.Utils.UI;
+using LuoMusic.Common.Composition;
 using LuoMusic.Model;
 using LuoMusic.ViewModel;
 using System;
@@ -31,11 +32,14 @@ namespace LuoMusic.Pages
     {
         public MainViewModel MainVM => (MainViewModel)DataContext;
 
+        public static VolListPage _volListPage;
+
         private Compositor _compositor;
 
         public VolListPage()
         {
             this.InitializeComponent();
+            _volListPage = this;
             this._compositor = this.GetVisual().Compositor;
             NavigationCacheMode = NavigationCacheMode.Enabled;
         }
@@ -133,6 +137,11 @@ namespace LuoMusic.Pages
             scaleAnimation.Duration = TimeSpan.FromMilliseconds(1000);
             scaleAnimation.StopBehavior = AnimationStopBehavior.LeaveCurrentValue;
             return scaleAnimation;
+        }
+
+        public void ScrollToTop()
+        {
+            VolListGridView.GetScrollViewer().ChangeView(null, 0, null);
         }
     }
 }

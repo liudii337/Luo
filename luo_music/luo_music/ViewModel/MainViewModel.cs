@@ -44,6 +44,9 @@ namespace LuoMusic.ViewModel
         private string _welcomeTitle = string.Empty;
         public IPlayer player;
 
+        public event EventHandler<int> AboutToUpdateSelectedNavIndex;
+
+
         #region Previous
         public string Clock
         {
@@ -279,6 +282,7 @@ namespace LuoMusic.ViewModel
             }
         }
 
+        //use for view binding
         private VolItem _currentVol;
         public VolItem CurrentVol
         {
@@ -292,6 +296,42 @@ namespace LuoMusic.ViewModel
                 {
                     _currentVol = value;
                     RaisePropertyChanged(() => CurrentVol);
+                }
+            }
+        }
+
+        //use for recorde current play vol
+        private VolItem _currentPlayVol;
+        public VolItem CurrentPlayVol
+        {
+            get
+            {
+                return _currentPlayVol;
+            }
+            set
+            {
+                if (_currentPlayVol != value)
+                {
+                    _currentPlayVol = value;
+                    RaisePropertyChanged(() => CurrentPlayVol);
+                }
+            }
+        }
+
+        //use for current exploring vol
+        private VolItem _currentViewVol;
+        public VolItem CurrentViewVol
+        {
+            get
+            {
+                return _currentViewVol;
+            }
+            set
+            {
+                if (_currentViewVol != value)
+                {
+                    _currentViewVol = value;
+                    RaisePropertyChanged(() => CurrentViewVol);
                 }
             }
         }
@@ -320,19 +360,19 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private int _currentIndex = -1;
-        public int CurrentIndex
+        private int _currentSongIndex = -1;
+        public int CurrentSongIndex
         {
             get
             {
-                return _currentIndex;
+                return _currentSongIndex;
             }
             set
             {
-                if (_currentIndex != value)
+                if (_currentSongIndex != value)
                 {
 
-                    RaisePropertyChanged(() => CurrentIndex);
+                    RaisePropertyChanged(() => CurrentSongIndex);
                 }
             }
         }
@@ -406,7 +446,7 @@ namespace LuoMusic.ViewModel
             {
                 Title = "分类",
                 Icon="\uE2AC",
-                TargetType = typeof(CategoryPage),
+                TargetType = typeof(VolTagListPage),
                 Index = VirtualKey.Number2,
                 IndexNum = "2"
             },
@@ -419,6 +459,27 @@ namespace LuoMusic.ViewModel
                 IndexNum = "3"
             },
         };
+
+        private int _currentNavIndex = 0;
+        public int CurrentNavIndex
+        {
+            get
+            {
+                return _currentNavIndex;
+            }
+            set
+            {
+                if (_currentNavIndex != value)
+                {
+                    _currentNavIndex = value;
+
+                    RaisePropertyChanged(() => CurrentNavIndex);
+
+                    AboutToUpdateSelectedNavIndex?.Invoke(this, value);
+
+                }
+            }
+        }
 
         private bool _needShowBack=false;
         public bool NeedShowBack
@@ -562,13 +623,13 @@ namespace LuoMusic.ViewModel
             switch (playmode)
             {
                 case 0:
-                    return "\uE1CD";
+                    return "\uE8EE";
                 case 1:
-                    return "\uE1CC";
+                    return "\uE8ED";
                 case 2:
                     return "\uE8B1";
                 default:
-                    return "\uE1CD";
+                    return "\uE8EE";
             }
         }
 
@@ -803,7 +864,7 @@ namespace LuoMusic.ViewModel
                 //        });
                 //    }
                 //}
-                CurrentIndex = e.CurrentIndex;
+                CurrentSongIndex = e.CurrentIndex;
 
 //                ApplicationView.GetForCurrentView().Title = CurrentPlayingDesc();
 

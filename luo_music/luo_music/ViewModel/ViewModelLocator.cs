@@ -33,7 +33,6 @@ namespace LuoMusic.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             var nav = new NavigationService();
-            nav.Configure(SecondPageKey, typeof(SecondPage));
             SimpleIoc.Default.Register<INavigationService>(() => nav);
 
             SimpleIoc.Default.Register<IDialogService, DialogService>();

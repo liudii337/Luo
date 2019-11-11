@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:LuoMusic.Model"
     xmlns:common="using:LuoMusic.Common"
+    xmlns:data="using:Luo.Shared.Data"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -71,11 +72,70 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <Style x:Key="TagGridViewItemContainerStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}" />
+            <Setter Property="TabNavigation" Value="Local" />
+            <Setter Property="IsHoldingEnabled" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="AllowDrop" Value="False" />
+            <Setter Property="UseSystemFocusVisuals" Value="False" />
+            <Setter Property="FocusVisualMargin" Value="0" />
+            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource GridViewItemFocusVisualPrimaryBrush}" />
+            <Setter Property="FocusVisualPrimaryThickness" Value="0" />
+            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource GridViewItemFocusVisualSecondaryBrush}" />
+            <Setter Property="FocusVisualSecondaryThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <ListViewItemPresenter
+                            x:Name="Root"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AllowFocusOnInteraction="False"
+                            CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
+                            CheckBrush="{ThemeResource GridViewItemCheckBrush}"
+                            CheckMode="{ThemeResource GridViewItemCheckMode}"
+                            ContentMargin="{TemplateBinding Padding}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Control.IsTemplateFocusTarget="True"
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                            DragBackground="{ThemeResource GridViewItemDragBackground}"
+                            DragForeground="{ThemeResource GridViewItemDragForeground}"
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                            FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
+                            FocusSecondaryBorderBrush="{ThemeResource GridViewItemFocusSecondaryBorderBrush}"
+                            FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                            FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
+                            FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
+                            FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
+                            FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
+                            PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
+                            PointerOverBackground="{x:Null}"
+                            PointerOverForeground="{ThemeResource GridViewItemBackgroundSelected}"
+                            PressedBackground="{x:Null}"
+                            ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+                            SelectedBackground="{x:Null}"
+                            SelectedForeground="{ThemeResource GridViewItemBackgroundSelected}"
+                            SelectedPointerOverBackground="{x:Null}"
+                            SelectedPressedBackground="{x:Null}"
+                            SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
 
         <DataTemplate x:Key="VolItemTemplate" x:DataType="model:VolItem">
             <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded"  SizeChanged="RootGrid_SizeChanged"
-                  Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="2">
+                  Margin="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="2">
                 <Image Name="Cover" Source="{x:Bind Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                 <Grid Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0.5">
                     <Grid.Background>
@@ -95,19 +155,41 @@
 
     <Grid>
         <Grid  Margin="0,0,0,0">
-            <common:AdaptiveGridView x:Name="VolListGridView" ItemsSource="{Binding TagDataVM.DataList}" 
+            <common:AdaptiveGridView x:Name="VolListGridView" Grid.Row="1"
+                                     ItemsSource="{Binding TagDataVM.DataList}" 
                                      ItemTemplate="{StaticResource VolItemTemplate}"
                                      ItemContainerStyle="{StaticResource AdaptiveGridViewItemContainerStyle}"
                                      ItemClick="ListView_ItemClick" 
                                      IsItemClickEnabled="True" 
                                      SelectionMode="None" 
                                      IncrementalLoadingTrigger="Edge"
-                                     MinItemHeight="250"
-                                     MinItemWidth="360"
+                                     MinItemHeight="220"
+                                     MinItemWidth="320"
+                                     Padding="8,0,8,0"
                       HorizontalAlignment="Stretch">
+                <common:AdaptiveGridView.Header>
+                    <GridView x:Name="TagGrid" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        ItemsSource="{Binding LuoVolTags}" 
+                        ItemContainerStyle="{StaticResource TagGridViewItemContainerStyle}"
+                        SelectedIndex="{Binding CurrentTagIndex,Mode=TwoWay}" >
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="data:LuoVolTag">
+                                <Grid Margin="0,0,0,0" Width="50">
+                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </common:AdaptiveGridView.Header>
+                <common:AdaptiveGridView.Footer>
+                    <Grid Height="40">
+                        <TextBlock Text="—— 已经落在最低处了 ——" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </common:AdaptiveGridView.Footer>
             </common:AdaptiveGridView>
 
-            </Grid>
+        </Grid>
         <!--<Border Background="{StaticResource SystemControlAcrylicElementBrush}" Opacity="0.95" Canvas.ZIndex="-1"/>
         <Image Source="{Binding TagDataVM.VolCover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Canvas.ZIndex="-2"/>-->
     </Grid>

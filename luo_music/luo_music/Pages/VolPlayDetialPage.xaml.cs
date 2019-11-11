@@ -23,11 +23,11 @@ namespace LuoMusic.Pages
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class VolDetialPage : Page
+    public sealed partial class VolPlayDetialPage : Page
     {
         public MainViewModel MainVM => (MainViewModel)DataContext;
 
-        public VolDetialPage()
+        public VolPlayDetialPage()
         {
             this.InitializeComponent();
         }
@@ -37,9 +37,9 @@ namespace LuoMusic.Pages
             LuoVolSong item = (LuoVolSong)e.ClickedItem;
             //MainVM.CurrentSong = item;
             //Player.Source=MediaSource.CreateFromUri(new Uri(item.SongUrl));
-            if((MainVM.CurrentPlayVol==MainVM.CurrentVol) && (MainVM.CurrentSong == item))
+            if ((MainVM.CurrentPlayVol == MainVM.CurrentVol) && (MainVM.CurrentSong == item))
             {
-                if(MainVM.IsPlaying)
+                if (MainVM.IsPlaying)
                 {
                     MainVM.player.Pause();
                 }

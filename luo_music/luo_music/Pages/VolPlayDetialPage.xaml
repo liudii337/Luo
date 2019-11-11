@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="LuoMusic.Pages.VolDetialPage"
+    x:Class="LuoMusic.Pages.VolPlayDetialPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LuoMusic.Pages"
@@ -62,10 +62,10 @@
         <ScrollViewer>
             <Grid MaxWidth="800" HorizontalAlignment="Center" Margin="20,20,20,20" >
                 <StackPanel>
-                    <Image Source="{Binding CurrentVol.Vol.Cover}"/>
+                    <Image Source="{Binding CurrentPlayVol.Vol.Cover}"/>
                     <Grid Margin="0,10,0,10">
-                        <TextBlock Text="{Binding CurrentVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
-                        <ListView ItemsSource="{Binding CurrentVol.Vol.Tags}" VerticalAlignment="Center" HorizontalAlignment="Right" IsItemClickEnabled="False" SelectionMode="None" ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}">
+                        <TextBlock Text="{Binding CurrentPlayVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
+                        <ListView ItemsSource="{Binding CurrentPlayVol.Vol.Tags}" VerticalAlignment="Center" HorizontalAlignment="Right" IsItemClickEnabled="False" SelectionMode="None" ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding }" VerticalAlignment="Center"/>
@@ -73,8 +73,8 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                    <TextBlock Text="{Binding CurrentVol.Vol.Description}" FontFamily="Microsoft JhengHei" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="16"/>
-                    <ListView x:Name="SongListView" ItemsSource="{Binding CurrentVol.Vol.VolSongs}"
+                    <TextBlock Text="{Binding CurrentPlayVol.Vol.Description}" FontFamily="Microsoft JhengHei" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="16"/>
+                    <ListView x:Name="SongListView" ItemsSource="{Binding CurrentPlayVol.Vol.VolSongs}"
                               ItemTemplate="{StaticResource LuoVolSongTemplate_w}"
                               Margin="0,10,0,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentSongIndex,Mode=OneWay,FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
                         <ListView.ItemContainerStyle>

@@ -73,7 +73,7 @@
 
         <DataTemplate x:Key="VolItemTemplate" x:DataType="model:VolItem">
             <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" SizeChanged="RootGrid_SizeChanged" 
-                  Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="2">
+                  Margin="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="2">
                 <Image Name="Cover" Source="{x:Bind Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                 <Grid Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0.5">
                     <Grid.Background>
@@ -97,8 +97,9 @@
                                      IsItemClickEnabled="True" 
                                      SelectionMode="None" 
                                      IncrementalLoadingTrigger="Edge"
-                                     MinItemHeight="250"
-                                     MinItemWidth="360"
+                                     MinItemHeight="220"
+                                     MinItemWidth="320"
+                                     Padding="8, 0, 8, 0"
                       HorizontalAlignment="Stretch">
             </common:AdaptiveGridView>
 

@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Data;
 using Luo.Shared.Convertor;
+using LuoMusic.Common;
 
 namespace LuoMusic
 {
@@ -33,7 +34,20 @@ namespace LuoMusic
                 MainVM.RunClock();
             };
 
+            MainVM.AboutToUpdateSelectedNavIndex += MainVM_AboutToUpdateSelectedNavIndex;
+
+            MainFrame.Navigate((MainVM.HamList[0] as HamPanelItem).TargetType);
+
             //LuoVolFactory.getlist();
+        }
+
+        private void MainVM_AboutToUpdateSelectedNavIndex(object sender, int e)
+        {
+            var index = e;
+            if (index < 0)
+                return;
+
+            MainFrame.Navigate((MainVM.HamList[index] as HamPanelItem).TargetType);
         }
 
         private void SystemNavigationManagerBackRequested(object sender, BackRequestedEventArgs e)
@@ -55,7 +69,6 @@ namespace LuoMusic
         {
             VolListPage.MainNavigateToEvent += VolListPage_MainNavigateToEvent;
             VolTagListPage.MainNavigateToEvent += VolTagListPage_MainNavigateToEvent;
-            CategoryPage.MainNavigateToEvent += CategoryPage_MainNavigateToEvent;
         }
 
         private void VolTagListPage_MainNavigateToEvent(Type page)
@@ -91,31 +104,14 @@ namespace LuoMusic
 
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            HamPane.SelectionChanged -= HamPane_SelectionChanged;
             if(MainFrame.Content.GetType()==typeof(VolDetialPage))
             {
                 MainVM.NeedShowBack = true;
             }
-            else if(MainFrame.Content.GetType() == typeof(VolTagListPage))
+            else 
             {
-                MainVM.NeedShowBack = true;
+                MainVM.NeedShowBack = false;
             }
-            else
-            {
-                var index = MainVM.HamList.FindIndex(a => a.TargetType == MainFrame.Content.GetType());
-                HamPane.SelectedIndex = index;
-            }
-            HamPane.SelectionChanged += HamPane_SelectionChanged;
-        }
-
-        private void HamPane_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var list = sender as ListView;
-            var index = HamPane.SelectedIndex;
-            if (index < 0)
-                return;
-
-            MainFrame.Navigate((MainVM.HamList[index] as HamPanelItem).TargetType);
         }
 
         private void BackButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -140,11 +136,6 @@ namespace LuoMusic
         private void TitleBar_Loaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SetTitleBar(TitleBar);
-        }
-
-        private void HamPane_Loaded(object sender, RoutedEventArgs e)
-        {
-            HamPane.SelectedIndex = 0;
         }
 
         private void HamPane_ItemClick(object sender, ItemClickEventArgs e)
@@ -176,6 +167,52 @@ namespace LuoMusic
         private void MainSlider_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainVM.ChangePlayPosition(TimeSpan.FromSeconds(MainSlider.Value));
+        }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            GoBack();
+        }
+
+        private void MainNavigation_TitleClicked(object sender, TitleClickEventArg e)
+        {
+            if (e.NewIndex == e.OldIndex)
+            {
+                if (MainFrame.Content.GetType() == typeof(VolListPage))
+                {
+                    VolListPage._volListPage.ScrollToTop();
+                }
+                if (MainFrame.Content.GetType() == typeof(VolTagListPage))
+                {
+                    VolTagListPage._volTagListPage.ScrollToTop();
+                }
+                if (MainFrame.Content.GetType() == typeof(VolDetialPage))
+                {
+                    GoBack();
+                }
+            }
+        }
+
+        private void RelateVol_Click(object sender, RoutedEventArgs e)
+        {
+            if(MainVM.CurrentPlayVol != null)
+            {
+                if (MainFrame.Content.GetType() != typeof(VolPlayDetialPage))
+                {
+                    if((MainVM.CurrentPlayVol == MainVM.CurrentVol)&&(MainFrame.Content.GetType() == typeof(VolDetialPage)))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        MainFrame.Navigate(typeof(VolPlayDetialPage));
+                    }
+                }
+                else
+                {
+                    GoBack();
+                }
+            }
         }
     }
 }

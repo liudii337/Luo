@@ -1,6 +1,7 @@
 ﻿using LuoMusic.Common.Composition;
 using LuoMusic.Model;
 using LuoMusic.ViewModel;
+using JP.Utils.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,12 +31,15 @@ namespace LuoMusic.Pages
     {
         public MainViewModel MainVM => (MainViewModel)DataContext;
 
+        public static VolTagListPage _volTagListPage;
+
         private Compositor _compositor;
 
 
         public VolTagListPage()
         {
             this.InitializeComponent();
+            _volTagListPage = this;
             this._compositor = this.GetVisual().Compositor;
             NavigationCacheMode = NavigationCacheMode.Enabled;
         }
@@ -135,5 +139,9 @@ namespace LuoMusic.Pages
             return scaleAnimation;
         }
 
+        public void ScrollToTop()
+        {
+            VolListGridView.GetScrollViewer().ChangeView(null, 0, null);
+        }
     }
 }
