@@ -29,11 +29,6 @@ namespace LuoMusic
 
             SetSliderBinding();
 
-            Loaded += (s, e) =>
-            {
-                MainVM.RunClock();
-            };
-
             MainVM.AboutToUpdateSelectedNavIndex += MainVM_AboutToUpdateSelectedNavIndex;
 
             MainFrame.Navigate((MainVM.HamList[0] as HamPanelItem).TargetType);
@@ -61,7 +56,6 @@ namespace LuoMusic
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            MainVM.StopClock();
             base.OnNavigatingFrom(e);
         }
 
@@ -69,6 +63,12 @@ namespace LuoMusic
         {
             VolListPage.MainNavigateToEvent += VolListPage_MainNavigateToEvent;
             VolTagListPage.MainNavigateToEvent += VolTagListPage_MainNavigateToEvent;
+            HeartPage.MainNavigateToEvent += HeartPage_MainNavigateToEvent;
+        }
+
+        private void HeartPage_MainNavigateToEvent(Type page)
+        {
+            MainFrame.Navigate(page);
         }
 
         private void VolTagListPage_MainNavigateToEvent(Type page)
@@ -91,7 +91,6 @@ namespace LuoMusic
             VolItem item = (VolItem)e.ClickedItem;
             await item.GetVolDetialAsync();
             MainVM.CurrentVol = item;
-            MainVM.StopClock();
         }
 
         private async void ListView_ItemClick_1(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)

@@ -8,156 +8,19 @@
     xmlns:model="using:LuoMusic.Model"
     xmlns:common="using:LuoMusic.Common"
     xmlns:data="using:Luo.Shared.Data"
+    xmlns:uc="using:LuoMusic.Pages.UC"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Page.Resources>
 
-        <Style x:Key="AdaptiveGridViewItemContainerStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}" />
-            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}" />
-            <Setter Property="TabNavigation" Value="Local" />
-            <Setter Property="IsHoldingEnabled" Value="True" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
-            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
-            <Setter Property="AllowDrop" Value="False" />
-            <Setter Property="UseSystemFocusVisuals" Value="False" />
-            <Setter Property="FocusVisualMargin" Value="0" />
-            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource GridViewItemFocusVisualPrimaryBrush}" />
-            <Setter Property="FocusVisualPrimaryThickness" Value="0" />
-            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource GridViewItemFocusVisualSecondaryBrush}" />
-            <Setter Property="FocusVisualSecondaryThickness" Value="0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <ListViewItemPresenter
-                            x:Name="Root"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            AllowFocusOnInteraction="False"
-                            CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
-                            CheckBrush="{ThemeResource GridViewItemCheckBrush}"
-                            CheckMode="{ThemeResource GridViewItemCheckMode}"
-                            ContentMargin="{TemplateBinding Padding}"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            Control.IsTemplateFocusTarget="True"
-                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                            DragBackground="{ThemeResource GridViewItemDragBackground}"
-                            DragForeground="{ThemeResource GridViewItemDragForeground}"
-                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                            FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
-                            FocusSecondaryBorderBrush="{ThemeResource GridViewItemFocusSecondaryBorderBrush}"
-                            FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
-                            FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
-                            FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
-                            FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
-                            FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
-                            PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
-                            PointerOverBackground="{x:Null}"
-                            PointerOverForeground="{x:Null}"
-                            PressedBackground="{x:Null}"
-                            ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
-                            SelectedBackground="{x:Null}"
-                            SelectedForeground="{x:Null}"
-                            SelectedPointerOverBackground="{x:Null}"
-                            SelectedPressedBackground="{x:Null}"
-                            SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <Style x:Key="TagGridViewItemContainerStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}" />
-            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}" />
-            <Setter Property="TabNavigation" Value="Local" />
-            <Setter Property="IsHoldingEnabled" Value="True" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
-            <Setter Property="MinHeight" Value="30" />
-            <Setter Property="AllowDrop" Value="False" />
-            <Setter Property="UseSystemFocusVisuals" Value="False" />
-            <Setter Property="FocusVisualMargin" Value="0" />
-            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource GridViewItemFocusVisualPrimaryBrush}" />
-            <Setter Property="FocusVisualPrimaryThickness" Value="0" />
-            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource GridViewItemFocusVisualSecondaryBrush}" />
-            <Setter Property="FocusVisualSecondaryThickness" Value="0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <ListViewItemPresenter
-                            x:Name="Root"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            AllowFocusOnInteraction="False"
-                            CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
-                            CheckBrush="{ThemeResource GridViewItemCheckBrush}"
-                            CheckMode="{ThemeResource GridViewItemCheckMode}"
-                            ContentMargin="{TemplateBinding Padding}"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            Control.IsTemplateFocusTarget="True"
-                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                            DragBackground="{ThemeResource GridViewItemDragBackground}"
-                            DragForeground="{ThemeResource GridViewItemDragForeground}"
-                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                            FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
-                            FocusSecondaryBorderBrush="{ThemeResource GridViewItemFocusSecondaryBorderBrush}"
-                            FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
-                            FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}"
-                            FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}"
-                            FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}"
-                            FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}"
-                            PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
-                            PointerOverBackground="{x:Null}"
-                            PointerOverForeground="{ThemeResource GridViewItemBackgroundSelected}"
-                            PressedBackground="{x:Null}"
-                            ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
-                            SelectedBackground="{x:Null}"
-                            SelectedForeground="{ThemeResource GridViewItemBackgroundSelected}"
-                            SelectedPointerOverBackground="{x:Null}"
-                            SelectedPressedBackground="{x:Null}"
-                            SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-
-        <DataTemplate x:Key="VolItemTemplate" x:DataType="model:VolItem">
-            <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded"  SizeChanged="RootGrid_SizeChanged"
-                  Margin="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="2">
-                <Image Name="Cover" Source="{x:Bind Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Grid Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0.5">
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                            <GradientStop Color="#00000000"/>
-                            <GradientStop Color="Black" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                </Grid>
-                <TextBlock Text="{x:Bind TitleString}" Foreground="White" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            </Grid>
-        </DataTemplate>
-
-
     </Page.Resources>
-
 
     <Grid>
         <Grid  Margin="0,0,0,0">
             <common:AdaptiveGridView x:Name="VolListGridView" Grid.Row="1"
                                      ItemsSource="{Binding TagDataVM.DataList}" 
-                                     ItemTemplate="{StaticResource VolItemTemplate}"
                                      ItemContainerStyle="{StaticResource AdaptiveGridViewItemContainerStyle}"
                                      ItemClick="ListView_ItemClick" 
                                      IsItemClickEnabled="True" 
@@ -170,17 +33,28 @@
                 <common:AdaptiveGridView.Header>
                     <GridView x:Name="TagGrid" HorizontalAlignment="Left" VerticalAlignment="Center"
                         ItemsSource="{Binding LuoVolTags}" 
+                        Padding="0,5,0,5"
                         ItemContainerStyle="{StaticResource TagGridViewItemContainerStyle}"
                         SelectedIndex="{Binding CurrentTagIndex,Mode=TwoWay}" >
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolTag">
-                                <Grid Margin="0,0,0,0" Width="50">
+                                <Grid Margin="8,0,8,0">
                                     <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <common:WrapPanel Padding="0,0,0,0" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
                     </GridView>
                 </common:AdaptiveGridView.Header>
+                <common:AdaptiveGridView.ItemTemplate>
+                    <DataTemplate x:DataType="model:VolItem">
+                        <uc:VolItemTemplate />
+                    </DataTemplate>
+                </common:AdaptiveGridView.ItemTemplate>
                 <common:AdaptiveGridView.Footer>
                     <Grid Height="40">
                         <TextBlock Text="—— 已经落在最低处了 ——" 

@@ -5,10 +5,39 @@
     xmlns:local="using:LuoMusic.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:LuoMusic.Model"
+    xmlns:common="using:LuoMusic.Common"
+    xmlns:uc="using:LuoMusic.Pages.UC"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        
+    </Page.Resources>
 
     <Grid>
-        <TextBlock Text="施工中" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
+        <Grid  Margin="0,0,0,0">
+            <common:AdaptiveGridView x:Name="VolListGridView" ItemsSource="{Binding HeartVM.HeartVols}" 
+                                     ItemContainerStyle="{StaticResource AdaptiveGridViewItemContainerStyle}"
+                                     ItemClick="VolListGridView_ItemClick"
+                                     IsItemClickEnabled="True" 
+                                     SelectionMode="None" 
+                                     IncrementalLoadingTrigger="Edge"
+                                     MinItemHeight="220"
+                                     MinItemWidth="320"
+                                     Padding="8, 0, 8, 0"
+                                     HorizontalAlignment="Stretch">
+                <common:AdaptiveGridView.ItemTemplate>
+                    <DataTemplate x:DataType="model:VolItem">
+                        <uc:VolItemTemplate />
+                    </DataTemplate>
+                </common:AdaptiveGridView.ItemTemplate>
+            </common:AdaptiveGridView>
+
+        </Grid>
+        <!--<Border Background="{StaticResource SystemControlAcrylicElementBrush}" Opacity="0.95" Canvas.ZIndex="-1"/>
+        <Image Source="{Binding DataVM.VolCover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Canvas.ZIndex="-2"/>-->
     </Grid>
+
 </Page>

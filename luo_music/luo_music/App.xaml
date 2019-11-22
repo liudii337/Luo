@@ -10,13 +10,16 @@
              RequestedTheme="Light">
 
     <Application.Resources>
-        
-        <!--Global View Model Locator-->
-        <vm:ViewModelLocator x:Key="Locator"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ResourceDictionary/StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--Global View Model Locator-->
+            <vm:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
 
-        <!--VolListViewItemContainerStyle-->
-
-
+            <!--VolListViewItemContainerStyle-->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

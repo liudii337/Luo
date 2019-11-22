@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,6 +65,7 @@ namespace Luo.Shared.Data
         }
 
         private ObservableCollection<string> tags;
+        [IgnoreDataMember]
         public ObservableCollection<string> Tags
         {
             get
@@ -98,6 +100,7 @@ namespace Luo.Shared.Data
         }
 
         private string description;
+        [IgnoreDataMember]
         public string Description
         {
             get
@@ -166,9 +169,11 @@ namespace Luo.Shared.Data
 
         }
 
+        [IgnoreDataMember]
         public bool IsDetailGet = false;
 
         private ObservableCollection<LuoVolSong> volSongs;
+        [IgnoreDataMember]
         public ObservableCollection<LuoVolSong> VolSongs
         {
             get
@@ -183,6 +188,10 @@ namespace Luo.Shared.Data
                     RaisePropertyChanged(() => VolSongs);
                 }
             }
+        }
+
+        public LuoVol()
+        {
         }
 
         public LuoVol(string _cover,string _volnum, string _volurl, string _title, string _commentcount, string _favdcount)

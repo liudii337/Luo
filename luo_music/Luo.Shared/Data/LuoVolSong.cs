@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -133,6 +134,7 @@ namespace Luo.Shared.Data
         public bool IsOnline = true;
 
         private bool isPlaying = false;
+        [IgnoreDataMember]
         public bool IsPlaying
         {
             get
@@ -159,6 +161,9 @@ namespace Luo.Shared.Data
             return s == true ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
         }
 
+        public LuoVolSong()
+        {
+        }
 
         public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
         {

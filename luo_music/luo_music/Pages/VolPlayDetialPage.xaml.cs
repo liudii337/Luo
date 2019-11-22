@@ -35,9 +35,7 @@ namespace LuoMusic.Pages
         private async void ListView_ItemClick_1(object sender, ItemClickEventArgs e)
         {
             LuoVolSong item = (LuoVolSong)e.ClickedItem;
-            //MainVM.CurrentSong = item;
-            //Player.Source=MediaSource.CreateFromUri(new Uri(item.SongUrl));
-            if ((MainVM.CurrentPlayVol == MainVM.CurrentVol) && (MainVM.CurrentSong == item))
+            if (MainVM.CurrentSong == item)
             {
                 if (MainVM.IsPlaying)
                 {
@@ -50,8 +48,7 @@ namespace LuoMusic.Pages
             }
             else
             {
-                MainVM.CurrentPlayVol = MainVM.CurrentVol;
-                await MainVM.InstantPlayAsync(MainVM.CurrentVol.Vol.VolSongs, MainVM.CurrentVol.Vol.VolSongs.IndexOf(item));
+                await MainVM.InstantPlayAsync(MainVM.CurrentPlayVol.Vol.VolSongs, MainVM.CurrentPlayVol.Vol.VolSongs.IndexOf(item));
             }
         }
 
@@ -75,19 +72,6 @@ namespace LuoMusic.Pages
                     return;
                 }
             }
-
-            //var ab = (LuoVolSong)e.AddedItems[0];
-            //var _item = SongListView.ContainerFromItem(ab) as ListViewItem;
-            ////var test= _item.ContentTemplate.GetElement()
-            //Storyboard sb = _item.Resources["test"] as Storyboard;
-            //sb.Begin();
-            //if (e.RemovedItems.Count()!=0)
-            //{
-            //    var cd = (LuoVolSong)e.RemovedItems[0];
-
-            //}
-
-            
         }
     }
 }

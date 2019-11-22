@@ -1,7 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using Luo.Shared;
 using Luo.Shared.Data;
 using Luo.Shared.Service;
+using LuoMusic.ViewModel;
+using LuoMusic.ViewModel.DataViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +19,14 @@ namespace LuoMusic.Model
 {
     public class VolItem : ModelBase
     {
-        //[IgnoreDataMember]
-        //public DownloadsViewModel DownloadsVM
-        //{
-        //    get
-        //    {
-        //        return SimpleIoc.Default.GetInstance<DownloadsViewModel>();
-        //    }
-        //}
+        [IgnoreDataMember]
+        public MainViewModel MainVM
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<MainViewModel>();
+            }
+        }
 
         private LuoVol _vol;
         public LuoVol Vol
@@ -115,25 +118,31 @@ namespace LuoMusic.Model
 
         //public string ShareText => $"Share {Image.Owner.Name}'s amazing photo from MyerSplash app. {Image.Urls.Full}";
 
-        
 
         private VolService _service = new VolService(null, new LuoVolFactory(),
             CancellationTokenSourceFactory.CreateDefault());
 
         public VolItem()
         {
-            //BitmapSource = new CachedBitmapSource();
         }
 
-        public VolItem(LuoVol image)
+        public VolItem(LuoVol vol)
         {
-            Vol = image;
+            Vol = vol;
             //BitmapSource = new CachedBitmapSource();
         }
 
         public void Init()
         {
             TitleString = $"Vol.{Vol.VolNum} {Vol.Title}";
+            if (MainVM.HeartVM.IsHeartedVol(Vol))
+            {
+                IsHeartVol = true;
+            }
+            else
+            {
+                IsHeartVol = false;
+            }
         }
 
         private string _titleString;
@@ -151,6 +160,32 @@ namespace LuoMusic.Model
                     RaisePropertyChanged(() => TitleString);
                 }
             }
+        }
+
+        private bool _isHeartVol=false;
+        public bool IsHeartVol
+        {
+            get
+            {
+                return _isHeartVol;
+            }
+            set
+            {
+                if (_isHeartVol != value)
+                {
+                    _isHeartVol = value;
+                    if (value)
+                    {
+                        MainVM.HeartVM.AddVol(this);
+                    }
+                    else
+                    {
+                        MainVM.HeartVM.RemoveVol(this);
+                    }
+                    RaisePropertyChanged(() => IsHeartVol);
+                }
+            }
+
         }
 
         //public string GetFileNameForDownloading()

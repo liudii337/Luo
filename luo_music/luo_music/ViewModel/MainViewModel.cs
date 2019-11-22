@@ -34,13 +34,6 @@ namespace LuoMusic.ViewModel
     {
         private readonly IDataService _dataService;
         private readonly INavigationService _navigationService;
-        private string _clock = "Starting...";
-        private int _counter;
-        private RelayCommand _incrementCommand;
-        private RelayCommand<string> _navigateCommand;
-        private bool _runClock;
-        private RelayCommand _sendMessageCommand;
-        private RelayCommand _showDialogCommand;
         private string _welcomeTitle = string.Empty;
         public IPlayer player;
 
@@ -48,116 +41,9 @@ namespace LuoMusic.ViewModel
 
 
         #region Previous
-        public string Clock
-        {
-            get
-            {
-                return _clock;
-            }
-            set
-            {
-                Set(ref _clock, value);
-            }
-        }
 
-        public RelayCommand IncrementCommand
-        {
-            get
-            {
-                return _incrementCommand
-                    ?? (_incrementCommand = new RelayCommand(
-                    () =>
-                    {
-                        WelcomeTitle = string.Format("Counter clicked {0} times", ++_counter);
-                    }));
-            }
-        }
 
-        public RelayCommand<string> NavigateCommand
-        {
-            get
-            {
-                return _navigateCommand
-                       ?? (_navigateCommand = new RelayCommand<string>(
-                           p => _navigationService.NavigateTo(ViewModelLocator.SecondPageKey, p),
-                           p => !string.IsNullOrEmpty(p)));
-            }
-        }
 
-        public RelayCommand SendMessageCommand
-        {
-            get
-            {
-                return _sendMessageCommand
-                    ?? (_sendMessageCommand = new RelayCommand(
-                    () =>
-                    {
-                        Messenger.Default.Send(
-                            new NotificationMessageAction<string>(
-                                "Testing",
-                                reply =>
-                                {
-                                    WelcomeTitle = reply;
-                                }));
-                    }));
-            }
-        }
-
-        public RelayCommand ShowDialogCommand
-        {
-            get
-            {
-                return _showDialogCommand
-                       ?? (_showDialogCommand = new RelayCommand(
-                           async () =>
-                           {
-                               var dialog = ServiceLocator.Current.GetInstance<IDialogService>();
-                               await dialog.ShowMessage("Hello Universal Application", "it works...");
-                           }));
-            }
-        }
-
-        public string WelcomeTitle
-        {
-            get
-            {
-                return _welcomeTitle;
-            }
-
-            set
-            {
-                Set(ref _welcomeTitle, value);
-            }
-        }
-
-        public void RunClock()
-        {
-            _runClock = true;
-
-            Task.Run(async () =>
-            {
-                while (_runClock)
-                {
-                    try
-                    {
-                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        {
-                            Clock = DateTime.Now.ToString("HH:mm:ss");
-                        });
-
-                        await Task.Delay(1000);
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-            });
-        }
-
-        public void StopClock()
-        {
-            _runClock = false;
-        }
         #endregion
 
         private CancellationTokenSourceFactory _ctsFactory;
@@ -184,19 +70,8 @@ namespace LuoMusic.ViewModel
         {
             _dataService = dataService;
             _navigationService = navigationService;
-            Initialize();
 
-            DataVM = new VolDataViewModel(this,
-                new VolService(Request.GetAllVol_w, NormalFactory, CtsFactory));
-
-            LuoVolTags = LuoVolFactory.GetVolTagList();
-            DataVM.RefreshAsync();
-
-            TagDataVM = new VolDataViewModel(this,
-                new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
-
-
-            TagDataVM.RefreshAsync();
+            var task = Initialize();
 
             player = new Player();
             PlayMode = 0;
@@ -216,20 +91,29 @@ namespace LuoMusic.ViewModel
         {
             try
             {
-                LuoVols = await _dataService.GetVolList();
-                var item = await _dataService.GetData();
-                WelcomeTitle = item.Title;
+                //LuoVols = await _dataService.GetVolList();
+                //var item = await _dataService.GetData();
+
+                HeartVM = new HeartViewModel();
+                await HeartVM.RestoreListAsync();
+
+                DataVM = new VolDataViewModel(this,
+                    new VolService(Request.GetAllVol_w, NormalFactory, CtsFactory));
+
+                LuoVolTags = LuoVolFactory.GetVolTagList();
+                DataVM.RefreshAsync();
+
+                TagDataVM = new VolDataViewModel(this,
+                    new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
+
+                TagDataVM.RefreshAsync();
+
             }
             catch (Exception ex)
             {
                 // Report error here
-                WelcomeTitle = ex.Message;
             }
-
-
         }
-
-
 
         private ObservableCollection<LuoVol> _luoVols;
         public ObservableCollection<LuoVol> LuoVols
@@ -278,6 +162,23 @@ namespace LuoMusic.ViewModel
                 {
                     _tagDataVM = value;
                     RaisePropertyChanged(() => TagDataVM);
+                }
+            }
+        }
+
+        private HeartViewModel _heartVM;
+        public HeartViewModel HeartVM
+        {
+            get
+            {
+                return _heartVM;
+            }
+            set
+            {
+                if (_heartVM != value)
+                {
+                    _heartVM = value;
+                    RaisePropertyChanged(() => HeartVM);
                 }
             }
         }

@@ -105,7 +105,9 @@
     <Compile Include="Common\Composition\CompositionAnimationBuilder.cs" />
     <Compile Include="Common\Composition\CompositionExtensions.cs" />
     <Compile Include="Common\IncrementalLoadingCollection.cs" />
+    <Compile Include="Common\StarButton.cs" />
     <Compile Include="Common\TopNavigationControl.cs" />
+    <Compile Include="Common\WrapPanel.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -121,6 +123,9 @@
     <Compile Include="Pages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\UC\VolItemTemplate.xaml.cs">
+      <DependentUpon>VolItemTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\VolPlayDetialPage.xaml.cs">
       <DependentUpon>VolPlayDetialPage.xaml</DependentUpon>
     </Compile>
@@ -135,6 +140,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\DataViewModel\DataViewModelBase.cs" />
+    <Compile Include="ViewModel\DataViewModel\HeartViewModel.cs" />
     <Compile Include="ViewModel\DataViewModel\VolDataViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -219,6 +225,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\UC\VolItemTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\VolPlayDetialPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -234,6 +244,10 @@
     <Page Include="Pages\VolTagListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionary\StyleDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

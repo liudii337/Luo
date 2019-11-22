@@ -61,30 +61,34 @@
     <Grid>
         <ScrollViewer>
             <Grid MaxWidth="800" HorizontalAlignment="Center" Margin="20,20,20,20" >
-                <StackPanel>
-                    <Image Source="{Binding CurrentPlayVol.Vol.Cover}"/>
-                    <Grid Margin="0,10,0,10">
-                        <TextBlock Text="{Binding CurrentPlayVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
-                        <ListView ItemsSource="{Binding CurrentPlayVol.Vol.Tags}" VerticalAlignment="Center" HorizontalAlignment="Right" IsItemClickEnabled="False" SelectionMode="None" ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding }" VerticalAlignment="Center"/>
-                                </DataTemplate>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" Source="{Binding CurrentPlayVol.Vol.Cover}"/>
+                <Grid Grid.Row="1" Margin="0,10,0,10">
+                    <TextBlock Text="{Binding CurrentPlayVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
+                    <ListView ItemsSource="{Binding CurrentPlayVol.Vol.Tags}" VerticalAlignment="Center" HorizontalAlignment="Right" IsItemClickEnabled="False" SelectionMode="None" ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding }" VerticalAlignment="Center"/>
+                            </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </Grid>
-                    <TextBlock Text="{Binding CurrentPlayVol.Vol.Description}" FontFamily="Microsoft JhengHei" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="16"/>
-                    <ListView x:Name="SongListView" ItemsSource="{Binding CurrentPlayVol.Vol.VolSongs}"
+                </Grid>
+                <TextBlock Grid.Row="2" Text="{Binding CurrentPlayVol.Vol.Description}"  FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="15"/>
+                <ListView x:Name="SongListView" Grid.Row="3" ItemsSource="{Binding CurrentPlayVol.Vol.VolSongs}"
                               ItemTemplate="{StaticResource LuoVolSongTemplate_w}"
                               Margin="0,10,0,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentSongIndex,Mode=OneWay,FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Padding" Value="0,0,0,0" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                </StackPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0,0,0,0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
             </Grid>
         </ScrollViewer>
         <Border Background="Black" Opacity="0.1" Canvas.ZIndex="-1">

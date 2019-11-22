@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LuoMusic.Model;
+using LuoMusic.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +24,27 @@ namespace LuoMusic.Pages
     /// </summary>
     public sealed partial class HeartPage : Page
     {
+        public MainViewModel MainVM => (MainViewModel)DataContext;
+
+        public delegate void NavigateHandel(Type page);
+        public static event NavigateHandel MainNavigateToEvent;
+
         public HeartPage()
         {
             this.InitializeComponent();
+        }
+
+        private void VolListGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            VolItem item = (VolItem)e.ClickedItem;
+
+            if (!item.Vol.IsDetailGet)
+            {
+                item.GetVolDetialAsync();
+            }
+
+            MainVM.CurrentVol = item;
+            MainNavigateToEvent(typeof(VolDetialPage));
         }
     }
 }
