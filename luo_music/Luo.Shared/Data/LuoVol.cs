@@ -289,15 +289,24 @@ namespace Luo.Shared.Data
             var b = "";
             if (a != null)
             {
-                foreach (var i in a)
+                if (a.Count == 1)
                 {
-                    if (i.InnerText == "br")
+                    b = a[0].InnerHtml.HtmlParse_w();
+                }
+                else
+                {
+                    foreach (var i in a)
                     {
-                        b = b + "\n";
-                    }
-                    else
-                    {
-                        b = b + i.InnerText + "\n";
+                        if (i.InnerText == "br")
+                        {
+                            b = b + "\n";
+                        }
+                        else
+                        {
+                            b = b + i.InnerText + "\n";
+                        }
+                        if (i.InnerText.Contains("Cover"))
+                        { break; }
                     }
                 }
             }
@@ -318,7 +327,7 @@ namespace Luo.Shared.Data
             {
                 foreach (var i in vol_tags)
                 {
-                    Tags.Add(i.InnerText.Replace("&nbsp", ""));
+                    Tags.Add("#"+ i.InnerText.Replace("&nbsp", ""));
                 }
             }
 
@@ -327,12 +336,10 @@ namespace Luo.Shared.Data
             var script = doc.DocumentNode.Descendants("script").ToArray()[1].OuterHtml;
 
             int b1 = script.IndexOf("[");//找a的位置
-            int b2 = script.IndexOf("]");//找b的位置
+            int b2 = script.LastIndexOf("]");//找b的位置
             var jsonString = (script.Substring(b1)).Substring(0, b2 - b1 + 1);
 
             var list = SimpleSong.FromJson(jsonString);
-
-            var repeatFlag = 0;
 
             foreach (var i in list)
             {
@@ -341,10 +348,7 @@ namespace Luo.Shared.Data
                 var _artist = i.Author;
                 var _songsrc = i.Src.OriginalString;
 
-                if(_index=="01")
-                { repeatFlag++; }
-
-                if(repeatFlag==1)
+                if(!VolSongs.Any(p=>p.Index==_index))
                 {
                     VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _songsrc));
                 }

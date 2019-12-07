@@ -18,7 +18,7 @@
 
     <Grid>
         <Grid  Margin="0,0,0,0">
-            <common:AdaptiveGridView x:Name="VolListGridView" ItemsSource="{Binding HeartVM.HeartVols}" 
+            <common:AdaptiveGridView x:Name="VolListGridView" ItemsSource="{x:Bind MainVM.HeartVM.HeartVols, Mode=OneWay}" 
                                      ItemContainerStyle="{StaticResource AdaptiveGridViewItemContainerStyle}"
                                      ItemClick="VolListGridView_ItemClick"
                                      IsItemClickEnabled="True" 

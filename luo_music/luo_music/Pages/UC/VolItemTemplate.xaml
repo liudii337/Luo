@@ -9,11 +9,11 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" SizeChanged="RootGrid_SizeChanged"
+    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" SizeChanged="RootGrid_SizeChanged" PointerEntered="RootGrid_PointerEntered" PointerExited="RootGrid_PointerExited"
                   Margin="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="1">
-        <Image Name="Cover" Source="{x:Bind volItem.Vol.Cover, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Image x:Name="Cover" Source="{Binding Vol.Cover, Mode=OneWay}" Stretch="UniformToFill"/>
         <Grid x:Name="MaskBorder" Background="#35000000"/>
-        <Grid Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0.5">
+        <Grid Height="50" VerticalAlignment="Bottom" Opacity="0.5">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#00000000"/>
@@ -21,10 +21,10 @@
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
-        <TextBlock Text="{x:Bind volItem.TitleString, Mode=OneWay}" Foreground="White" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{x:Bind volItem.IsHeartVol, Mode=TwoWay}"
+        <TextBlock Text="{Binding TitleString, Mode=OneWay}" Foreground="White" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Segoe UI"/>
+        <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding IsHeartVol, Mode=TwoWay}"
                               Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,13" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE249;" FontSize="14" Opacity="0.8"/>
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="14" Opacity="0.8"/>
         </ToggleButton>
     </Grid>
 

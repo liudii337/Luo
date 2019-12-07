@@ -98,8 +98,6 @@ namespace LuoMusic.ViewModel.DataViewModel
 
         public HeartViewModel()
         {
-            HeartSongs = new ObservableCollection<LuoVolSong>();
-            HeartVols = new ObservableCollection<VolItem>();
             //var task = RestoreListAsync();
         }
 
@@ -196,38 +194,64 @@ namespace LuoMusic.ViewModel.DataViewModel
                                 //item.IsHeartVol=true;
                             }
                         }
+                        else
+                        {
+                            HeartVols = new ObservableCollection<VolItem>();
+                        }
                     }
                     catch (Exception e)
                     {
-                        var a=e.Message;
+                        HeartVols = new ObservableCollection<VolItem>();
+                        var a =e.Message;
                     }
+                }
+                else
+                {
+                    HeartVols = new ObservableCollection<VolItem>();
                 }
             }
 
             //Restore Song
-            file = await ApplicationData.Current.LocalFolder.CreateFileAsync(CACHED_Song_FILE_NAME,
+            var songfile = await ApplicationData.Current.LocalFolder.CreateFileAsync(CACHED_Song_FILE_NAME,
                 CreationCollisionOption.OpenIfExists);
-            if (file != null)
+            if (songfile != null)
             {
-                var str = await FileIO.ReadTextAsync(file);
+                var str = await FileIO.ReadTextAsync(songfile);
                 if (!string.IsNullOrEmpty(str))
                 {
-                    var list = JsonConvert.DeserializeObject<ObservableCollection<LuoVolSong>>(str, new JsonSerializerSettings()
+                    try
                     {
-                        Error = (s, e) =>
+                        var list = JsonConvert.DeserializeObject<ObservableCollection<LuoVolSong>>(str, new JsonSerializerSettings()
                         {
-                            var msg = e.ErrorContext.Error.Message;
-                        },
-                        TypeNameHandling = TypeNameHandling.All
-                    });
-                    if (list != null)
-                    {
-                        HeartSongs = list;
-                        foreach (var item in list)
+                            Error = (s, e) =>
+                            {
+                                var msg = e.ErrorContext.Error.Message;
+                            },
+                            TypeNameHandling = TypeNameHandling.All
+                        });
+                        if (list != null)
                         {
-                            //HeartSongs.Add(item);
+                            HeartSongs = list;
+                            foreach (var item in list)
+                            {
+                                //HeartSongs.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            HeartSongs = new ObservableCollection<LuoVolSong>();
                         }
                     }
+                    catch (Exception e)
+                    {
+                        var a = e.Message;
+                        HeartSongs = new ObservableCollection<LuoVolSong>();
+                    }
+
+                }
+                else
+                {
+                    HeartSongs = new ObservableCollection<LuoVolSong>();
                 }
             }
         }

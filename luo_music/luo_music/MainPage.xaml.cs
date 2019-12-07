@@ -86,14 +86,14 @@ namespace LuoMusic
             MainFrame.Navigate(page);
         }
 
-        private async void ListView_ItemClick(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             VolItem item = (VolItem)e.ClickedItem;
             await item.GetVolDetialAsync();
             MainVM.CurrentVol = item;
         }
 
-        private async void ListView_ItemClick_1(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        private async void ListView_ItemClick_1(object sender, ItemClickEventArgs e)
         {
             LuoVolSong item = (LuoVolSong)e.ClickedItem;
             //MainVM.CurrentSong = item;
@@ -113,7 +113,7 @@ namespace LuoMusic
             }
         }
 
-        private void BackButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             GoBack();
         }
@@ -185,7 +185,7 @@ namespace LuoMusic
                 {
                     VolTagListPage._volTagListPage.ScrollToTop();
                 }
-                if (MainFrame.Content.GetType() == typeof(VolDetialPage))
+                if (MainFrame.Content.GetType() == typeof(VolDetialPage) || MainFrame.Content.GetType() == typeof(VolPlayDetialPage))
                 {
                     GoBack();
                 }

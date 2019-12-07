@@ -75,8 +75,8 @@
                             <DataTemplate>
                                 <TextBlock Text="{Binding }" VerticalAlignment="Center"/>
                             </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
                 <TextBlock Grid.Row="2" Text="{Binding CurrentPlayVol.Vol.Description}"  FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="15"/>
                 <ListView x:Name="SongListView" Grid.Row="3" ItemsSource="{Binding CurrentPlayVol.Vol.VolSongs}"
@@ -92,7 +92,7 @@
             </Grid>
         </ScrollViewer>
         <Border Background="Black" Opacity="0.1" Canvas.ZIndex="-1">
-            <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
+            <Image Source="{Binding CurrentPlayVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
         </Border>
 
     </Grid>

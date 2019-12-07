@@ -162,7 +162,7 @@ namespace LuoMusic.Model
             }
         }
 
-        private bool _isHeartVol=false;
+        private bool _isHeartVol = true;
         public bool IsHeartVol
         {
             get

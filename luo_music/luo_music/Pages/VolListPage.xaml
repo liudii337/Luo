@@ -18,7 +18,7 @@
 
     <Grid>
         <Grid  Margin="0,0,0,0">
-            <common:AdaptiveGridView x:Name="VolListGridView" ItemsSource="{Binding DataVM.DataList}" 
+            <common:AdaptiveGridView x:Name="VolListGridView" ItemsSource="{x:Bind MainVM.DataVM.DataList, Mode=OneWay}" 
                                      ItemContainerStyle="{StaticResource AdaptiveGridViewItemContainerStyle}"
                                      ItemClick="ListView_ItemClick" 
                                      IsItemClickEnabled="True" 
@@ -27,7 +27,7 @@
                                      MinItemHeight="220"
                                      MinItemWidth="320"
                                      Padding="8, 0, 8, 0"
-                      HorizontalAlignment="Stretch">
+                      HorizontalAlignment="Stretch" FontFamily="Segoe UI">
                 <common:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="model:VolItem">
                         <uc:VolItemTemplate />

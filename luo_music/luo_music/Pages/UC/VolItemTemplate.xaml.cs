@@ -37,14 +37,10 @@ namespace LuoMusic.Pages.UC
 
         private void VolItemTemplate_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            var rootGrid = RootGrid;
-            var volitem = rootGrid.DataContext as VolItem;
-
-            var btn = rootGrid.FindName("HeartButton") as ToggleButton;
-            var buttonVisual = btn.GetVisual();
-            if (volitem != null)
+            var buttonVisual = HeartButton.GetVisual();
+            if (volItem != null)
             {
-                if (volitem.IsHeartVol)
+                if (volItem.IsHeartVol)
                 {
                     buttonVisual.Opacity = 1f;
                 }
@@ -53,28 +49,21 @@ namespace LuoMusic.Pages.UC
                     buttonVisual.Opacity = 0f;
                 }
             }
-            Bindings.Update();
+            //Bindings.Update();
         }
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            var rootGrid = sender as Grid;
-
-            rootGrid.PointerEntered += RootGrid_PointerEntered;
-            rootGrid.PointerExited += RootGrid_PointerExited;
-
             // Set Maskborder
-            var maskBorder = rootGrid.Children[1] as FrameworkElement;
-            var maskVisual = maskBorder.GetVisual();
+            var maskVisual = MaskBorder.GetVisual();
             maskVisual.Opacity = 0f;
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var rootGrid = sender as Grid;
-            rootGrid.Clip = new RectangleGeometry()
+            RootGrid.Clip = new RectangleGeometry()
             {
-                Rect = new Rect(0, 0, rootGrid.ActualWidth, rootGrid.ActualHeight)
+                Rect = new Rect(0, 0, RootGrid.ActualWidth, RootGrid.ActualHeight)
             };
         }
 
@@ -84,14 +73,8 @@ namespace LuoMusic.Pages.UC
             {
                 return;
             }
-            var rootGrid = sender as Grid;
-            var maskBorder = rootGrid.Children[1] as FrameworkElement;
-            var img = rootGrid.Children[0] as FrameworkElement;
-            var btn = rootGrid.FindName("HeartButton") as FrameworkElement;
 
-            var volitem = rootGrid.DataContext as VolItem;
-
-            ToggleItemPointOverAnimation(maskBorder, img, btn, volitem, true);
+            ToggleItemPointOverAnimation(MaskBorder, Cover, HeartButton, volItem, true);
         }
 
         private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
@@ -100,14 +83,8 @@ namespace LuoMusic.Pages.UC
             {
                 return;
             }
-            var rootGrid = sender as Grid;
-            var maskBorder = rootGrid.Children[1] as FrameworkElement;
-            var img = rootGrid.Children[0] as FrameworkElement;
-            var btn = rootGrid.FindName("HeartButton") as FrameworkElement;
 
-            var volitem = rootGrid.DataContext as VolItem;
-
-            ToggleItemPointOverAnimation(maskBorder, img, btn, volitem, false);
+            ToggleItemPointOverAnimation(MaskBorder, Cover, HeartButton, volItem, false);
         }
 
         private void ToggleItemPointOverAnimation(FrameworkElement mask, FrameworkElement img, FrameworkElement btn, VolItem volItem, bool show)
