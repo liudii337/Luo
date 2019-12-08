@@ -22,8 +22,9 @@
             </Grid.Background>
         </Grid>
         <TextBlock Text="{Binding TitleString, Mode=OneWay}" Foreground="White" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Segoe UI"/>
-        <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding IsHeartVol, Mode=TwoWay}"
-                              Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,13" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding IsHeartVol, Mode=TwoWay}" 
+                      ToolTipService.ToolTip="{x:Bind volItem.IsHeartVolToString(volItem.IsHeartVol),Mode=OneWay}"
+                      Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,13" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="14" Opacity="0.8"/>
         </ToggleButton>
     </Grid>

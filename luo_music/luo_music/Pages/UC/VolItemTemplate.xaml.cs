@@ -49,7 +49,7 @@ namespace LuoMusic.Pages.UC
                     buttonVisual.Opacity = 0f;
                 }
             }
-            //Bindings.Update();
+            Bindings.Update();
         }
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)

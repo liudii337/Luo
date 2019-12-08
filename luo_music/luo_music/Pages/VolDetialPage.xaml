@@ -57,10 +57,12 @@
             </Grid>
         </DataTemplate>
 
+
+
     </Page.Resources>
 
     <Grid>
-        <ScrollViewer>
+        <ScrollViewer Style="{StaticResource ScrollViewerCommonStyle}">
             <Grid MaxWidth="800" HorizontalAlignment="Center" Margin="20,20,20,20" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -73,25 +75,27 @@
                 <Grid Grid.Row="1" Margin="0,10,0,5">
                     <RelativePanel >
                         <TextBlock x:Name="TitleBlock" Text="{Binding CurrentVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
-                        <GridView ItemsSource="{Binding CurrentVol.Vol.Tags}" Height="28" Margin="5,0,0,0"
-                              ItemContainerStyle="{StaticResource TagGridViewItemContainerStyle}"
+                        <ListView ItemsSource="{Binding CurrentVol.Vol.Tags}" Height="22" Margin="5,0,0,0"
+                              ItemContainerStyle="{StaticResource TagListViewItemStyle}"
                               RelativePanel.RightOf="TitleBlock" RelativePanel.AlignBottomWith="TitleBlock"
                               IsItemClickEnabled="False" SelectionMode="None">
-                            <GridView.ItemTemplate>
+                            <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="20" BorderThickness="1" BorderBrush="Gray" CornerRadius="10" Margin="2,0,2,0" VerticalAlignment="Bottom">
                                         <TextBlock Text="{Binding }" FontSize="12" VerticalAlignment="Center" Margin="5,1,5,1"/>
                                     </Grid>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
-                            <GridView.ItemsPanel>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <common:WrapPanel Padding="0,0,0,0" />
                                 </ItemsPanelTemplate>
-                            </GridView.ItemsPanel>
-                        </GridView>
+                            </ListView.ItemsPanel>
+                        </ListView>
                     </RelativePanel>
-                    <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding CurrentVol.IsHeartVol, Mode=TwoWay}" Foreground="Black"
+                    <ToggleButton x:Name="HeartButton" IsThreeState="False" Foreground="Black"
+                                  IsChecked="{Binding CurrentVol.IsHeartVol, Mode=TwoWay}" 
+                                  ToolTipService.ToolTip="{x:Bind MainVM.CurrentVol.IsHeartVolToString(MainVM.CurrentVol.IsHeartVol),Mode=OneWay}"
                               Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="16" Opacity="0.9"/>
                     </ToggleButton>

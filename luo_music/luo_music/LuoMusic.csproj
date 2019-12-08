@@ -105,7 +105,6 @@
     <Compile Include="Common\Composition\CompositionAnimationBuilder.cs" />
     <Compile Include="Common\Composition\CompositionExtensions.cs" />
     <Compile Include="Common\IncrementalLoadingCollection.cs" />
-    <Compile Include="Common\StarButton.cs" />
     <Compile Include="Common\TopNavigationControl.cs" />
     <Compile Include="Common\WrapPanel.cs" />
     <Compile Include="Design\DesignDataService.cs" />

@@ -518,6 +518,10 @@ namespace LuoMusic.ViewModel
         {
             return isplaying == true ? "\uE103" : "\uE102";
         }
+        public string PlayPauseToString(bool isplaying)
+        {
+            return isplaying == true ? "暂停" : "播放";
+        }
 
         public string PlayModeToIcon(int playmode)
         {
@@ -531,6 +535,20 @@ namespace LuoMusic.ViewModel
                     return "\uE8B1";
                 default:
                     return "\uE8EE";
+            }
+        }
+        public string PlayModeToString(int playmode)
+        {
+            switch (playmode)
+            {
+                case 0:
+                    return "循环播放";
+                case 1:
+                    return "单曲循环";
+                case 2:
+                    return "随机播放";
+                default:
+                    return "循环播放";
             }
         }
 

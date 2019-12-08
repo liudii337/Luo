@@ -188,6 +188,12 @@ namespace LuoMusic.Model
 
         }
 
+        public string IsHeartVolToString(bool isHeartVol)
+        {
+            return isHeartVol == true ? "已收藏" : "收藏此期刊";
+        }
+
+
         //public string GetFileNameForDownloading()
         //{
         //    var fileName = $"{Image.Owner.Name}  {Image.SimpleCreateTimeString}.jpg";
