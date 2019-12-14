@@ -6,6 +6,7 @@
              xmlns:local="using:LuoMusic"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="using:LuoMusic.Common"
              mc:Ignorable="d ignore"
              RequestedTheme="Light">
 
@@ -13,13 +14,15 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ResourceDictionary/StyleDictionary.xaml" />
+                <ResourceDictionary Source="/ResourceDictionary/DimentionDictionary.xaml" />
+                <ResourceDictionary Source="/ResourceDictionary/ColorDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--Global View Model Locator-->
             <vm:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
 
-            <!--VolListViewItemContainerStyle-->
+            <common:AppSettings x:Key="AppSettings" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

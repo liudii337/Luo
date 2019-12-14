@@ -101,6 +101,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AdaptiveGridView.cs" />
+    <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Common\ColorToBrushConverter.cs" />
     <Compile Include="Common\Composition\CompositionAnimationBuilder.cs" />
     <Compile Include="Common\Composition\CompositionExtensions.cs" />
@@ -241,6 +242,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\VolTagListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionary\ColorDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionary\DimentionDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

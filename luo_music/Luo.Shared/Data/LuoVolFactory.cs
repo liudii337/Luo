@@ -60,7 +60,6 @@ namespace Luo.Shared.Data
             return vollist;
         }
 
-
         public static ObservableCollection<LuoVolTag> GetVolTagListFromHtml(string html)
         {
             var voltaglist = new ObservableCollection<LuoVolTag>();
@@ -113,11 +112,34 @@ namespace Luo.Shared.Data
             voltaglist.Add(new LuoVolTag() { Name = "实验", KeySrc = "experimental", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a810230daa52.jpg!/fwfh/640x452" });
             voltaglist.Add(new LuoVolTag() { Name = "华语流行", KeySrc = "mandarin-pop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/586ebc4d7d8d8.jpg!/fwfh/640x452" });
             voltaglist.Add(new LuoVolTag() { Name = "后朋克", KeySrc = "post-punk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5908c47b4707c.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "人声", KeySrc = "vocal", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/57862dc457a86.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "品牌", KeySrc = "brand", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a02c66d3722b.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "史诗", KeySrc = "epic", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5908c47b4707c.jpg!/fwfh/640x452" });
+
+            //voltaglist.Add(new LuoVolTag() { Name = "人声", KeySrc = "vocal", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/57862dc457a86.jpg!/fwfh/640x452" });
+            //voltaglist.Add(new LuoVolTag() { Name = "品牌", KeySrc = "brand", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a02c66d3722b.jpg!/fwfh/640x452" });
 
             return voltaglist;
         }
+
+        public static ObservableCollection<LuoVolTag> GetVolNumList()
+        {
+            var volnumlist = new ObservableCollection<LuoVolTag>();
+
+            volnumlist.Add(new LuoVolTag() { Name = "999-901", KeySrc = "901_1000.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c75756c47c2f.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "900-801", KeySrc = "801_900.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c66bc566af6f.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "800-701", KeySrc = "701_800.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5b462da311903.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "700-601", KeySrc = "601_700.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a6631d52b3c2.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "600-501", KeySrc = "501_600.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a539ddc66e86.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "500-401", KeySrc = "401_500.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a3560ee1c750.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "400-301", KeySrc = "301_400.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/58dd1a7d983b7.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "300-201", KeySrc = "201_300.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/59ceb6e4d65e9.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "200-101", KeySrc = "101_200.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/599d8afcb0c3a.jpg!/fwfh/640x452" });
+            volnumlist.Add(new LuoVolTag() { Name = "100-1", KeySrc = "1_100.html", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5ac68b6c67a01.jpg!/fwfh/640x452" });
+            //volnumlist.Add(new LuoVolTag() { Name = "音乐电台", KeySrc = "r/", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5ac68b6c67a01.jpg!/fwfh/640x452" });
+            //volnumlist.Add(new LuoVolTag() { Name = "其他", KeySrc = "e/", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5ac68b6c67a01.jpg!/fwfh/640x452" });
+
+            return volnumlist;
+        }
+
 
         public async static Task<ObservableCollection<LuoVol>> getlist()
         {
@@ -147,9 +169,14 @@ namespace Luo.Shared.Data
                 var cover = i.SelectSingleNode("./a/img").GetAttributeValue("src", "").Replace("_min", "");
 
                 var Node1 = i.SelectSingleNode("./div/p/a");
-                var volnum = Node1.GetAttributeValue("href", "").Replace("/", "");
-                var volurl = "https://www.luoow.com/" + volnum +"/";
+
+                //var volnum = Node1.GetAttributeValue("href", "").Replace("/", "");
+                var volnum = StringHelper.SpliteForm2String(Node1.InnerText, ".", " ");
+                var volurl = "https://www.luoow.com" + Node1.GetAttributeValue("href", "");
                 var title = Node1.GetAttributeValue("title", "");
+
+                //Special for /e and /r
+
 
                 var vol = new LuoVol(cover, volnum, volurl, title);
 

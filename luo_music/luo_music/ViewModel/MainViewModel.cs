@@ -21,6 +21,7 @@ using LuoMusic.Pages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 using System.Runtime.Serialization;
+using LuoMusic.Common;
 
 namespace LuoMusic.ViewModel
 {
@@ -97,13 +98,17 @@ namespace LuoMusic.ViewModel
                 HeartVM = new HeartViewModel();
                 await HeartVM.RestoreListAsync();
 
-                DataVM = new VolDataViewModel(this,
-                    new VolService(Request.GetAllVol_w, NormalFactory, CtsFactory));
+                //DataVM = new VolDataViewModel(this, new VolService(Request.GetAllVol_w, NormalFactory, CtsFactory));
 
                 LuoVolTags = LuoVolFactory.GetVolTagList();
+                LuoVolNums = LuoVolFactory.GetVolNumList();
+
+                DataVM = new VolDataViewModel(this, 
+                    new VolService(Request.GetNumVol_w(LuoVolNums[_currentNumIndex].KeySrc), NormalFactory, CtsFactory));
+
                 DataVM.RefreshAsync();
 
-                TagDataVM = new VolDataViewModel(this,
+                TagDataVM = new VolDataViewModel(this, 
                     new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
 
                 TagDataVM.RefreshAsync();
@@ -131,6 +136,24 @@ namespace LuoMusic.ViewModel
                 }
             }
         }
+        #region AllVolPage
+
+        private ObservableCollection<LuoVolTag> _luoVolNums;
+        public ObservableCollection<LuoVolTag> LuoVolNums
+        {
+            get
+            {
+                return _luoVolNums;
+            }
+            set
+            {
+                if (_luoVolNums != value)
+                {
+                    _luoVolNums = value;
+                    RaisePropertyChanged(() => LuoVolNums);
+                }
+            }
+        }
 
         private VolDataViewModel _dataVM;
         public VolDataViewModel DataVM
@@ -149,22 +172,41 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private VolDataViewModel _tagDataVM;
-        public VolDataViewModel TagDataVM
+        private int _currentNumIndex = 0;
+        public int CurrentNumIndex
         {
             get
             {
-                return _tagDataVM;
+                return _currentNumIndex;
             }
             set
             {
-                if (_tagDataVM != value)
+                if (_currentNumIndex != value)
                 {
-                    _tagDataVM = value;
-                    RaisePropertyChanged(() => TagDataVM);
+
+                    _currentNumIndex = value;
+
+                    if (_currentNumIndex != -1)
+                    {
+                        //TagDataVM = new VolDataViewModel(this,
+                        //    new VolService(Request.GetTagVol(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
+                        DataVM = new VolDataViewModel(this,
+                            new VolService(Request.GetNumVol_w(LuoVolNums[_currentNumIndex].KeySrc), NormalFactory, CtsFactory));
+                    }
+
+                    RaisePropertyChanged(() => CurrentNumIndex);
+
+                    if (DataVM != null)
+                    {
+                        DataVM.RefreshAsync();
+                    }
                 }
             }
         }
+
+
+        #endregion
+
 
         private HeartViewModel _heartVM;
         public HeartViewModel HeartVM
@@ -293,6 +335,23 @@ namespace LuoMusic.ViewModel
                 {
                     _luoVolTags = value;
                     RaisePropertyChanged(() => LuoVolTags);
+                }
+            }
+        }
+
+        private VolDataViewModel _tagDataVM;
+        public VolDataViewModel TagDataVM
+        {
+            get
+            {
+                return _tagDataVM;
+            }
+            set
+            {
+                if (_tagDataVM != value)
+                {
+                    _tagDataVM = value;
+                    RaisePropertyChanged(() => TagDataVM);
                 }
             }
         }
@@ -509,6 +568,25 @@ namespace LuoMusic.ViewModel
             }
         }
 
+        private int _volume = AppSettings.Instance.Volume;
+        public int Volume
+        {
+            get
+            {
+                return _volume;
+            }
+            set
+            {
+                if (_volume != value)
+                {
+                    _volume = value;
+                    RaisePropertyChanged(() => Volume);
+                    AppSettings.Instance.Volume = value;
+                    player.ChangeVolume(value);
+                }
+            }
+        }
+
         public Visibility VisibilityTrans(bool s)
         {
             return s == true ? Visibility.Collapsed : Visibility.Visible;
@@ -552,6 +630,22 @@ namespace LuoMusic.ViewModel
             }
         }
 
+        public string VolumeToIcon(int d)
+        {
+            if (d == 0)
+            {
+                return "\uE198";
+            }
+            if (d < 33)
+            {
+                return "\uE993";
+            }
+            if (d < 66)
+            {
+                return "\uE994";
+            }
+            return "\uE995";
+        }
 
         private double _bufferProgress;
         public double BufferProgress

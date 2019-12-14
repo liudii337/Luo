@@ -76,6 +76,19 @@ namespace Luo.Shared.Service
             return result;
         }
 
+        internal async Task<string> GetNumVolsAsync_w(int page, int pageCount, CancellationToken token, string url)
+        {
+            if (page == 1)
+            {
+                var result = await HttpRequestAsync_w(url);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         internal async Task<string> GetTagVolsAsync_w(int page, int pageCount, CancellationToken token, string url)
         {
             if(page==1)

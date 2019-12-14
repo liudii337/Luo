@@ -11,6 +11,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI;
 using Windows.UI.Popups;
 using Luo.Shared.Extension;
+using LuoMusic.Common;
 
 namespace LuoMusic
 {
@@ -24,6 +25,14 @@ namespace LuoMusic
             InitializeComponent();
             Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
+        }
+
+        public static AppSettings AppSettings
+        {
+            get
+            {
+                return Current.Resources["AppSettings"] as AppSettings;
+            }
         }
 
         private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)

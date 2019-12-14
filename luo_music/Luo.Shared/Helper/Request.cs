@@ -55,6 +55,11 @@ namespace Luo.Shared.Helper
             }
         }
 
+        public static string GetNumVol_w(string num)
+        {
+            return $"https://{HOST_w}/{num}";
+        }
+
         //example: tag="世界音乐"
         public static string GetTagVol_w(string tag)
         {

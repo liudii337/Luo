@@ -5,6 +5,8 @@
     xmlns:local="using:LuoMusic.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fcu="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
+    xmlns:cu="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,5)"
     xmlns:data="using:Luo.Shared.Data"
     xmlns:common="using:LuoMusic.Common"
     mc:Ignorable="d"
@@ -90,7 +92,8 @@
                             </ListView.ItemsPanel>
                         </ListView>
                     </RelativePanel>
-                    <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding CurrentVol.IsHeartVol, Mode=TwoWay}" Foreground="Black"
+                    <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding CurrentPlayVol.IsHeartVol, Mode=TwoWay}" Foreground="Black"
+                                  ToolTipService.ToolTip="{x:Bind MainVM.CurrentPlayVol.IsHeartVolToString(MainVM.CurrentPlayVol.IsHeartVol),Mode=OneWay}"
                               Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="16" Opacity="0.9"/>
                     </ToggleButton>
@@ -108,7 +111,10 @@
                 </ListView>
             </Grid>
         </ScrollViewer>
-        <Border Background="Black" Opacity="0.1" Canvas.ZIndex="-1">
+        <Border Background="Black" 
+                cu:Opacity="0.1"
+                fcu:Opacity="0"
+                Canvas.ZIndex="-1">
             <Image Source="{Binding CurrentPlayVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
         </Border>
 

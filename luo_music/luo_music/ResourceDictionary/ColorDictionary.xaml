@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LuoMusic.ResourceDictionary">
+    
+    <Color x:Key="ListButtonSelected">#7A363636</Color>
+    <Color x:Key="ListButtonPressed">#14FFFFFF</Color>
+    <Color x:Key="ListButtonPointOver">#22FFFFFF</Color>
+
+</ResourceDictionary>

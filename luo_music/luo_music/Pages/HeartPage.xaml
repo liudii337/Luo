@@ -10,7 +10,7 @@
     xmlns:common="using:LuoMusic.Common"
     xmlns:uc="using:LuoMusic.Pages.UC"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{x:Null}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Page.Resources>

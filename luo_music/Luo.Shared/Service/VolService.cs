@@ -39,7 +39,8 @@ namespace Luo.Shared.Service
             // check if it's tag request
             if(!RequestUrl.Contains("tag"))
             {
-                var result = await _cloudService.GetVolsAsync_w(Offset, Count, GetCancellationToken(), RequestUrl);
+                //var result = await _cloudService.GetVolsAsync_w(Offset, Count, GetCancellationToken(), RequestUrl);
+                var result = await _cloudService.GetNumVolsAsync_w(Offset, Count, GetCancellationToken(), RequestUrl);
                 if (result != null)
                 {
                     //工厂加工，获得成品

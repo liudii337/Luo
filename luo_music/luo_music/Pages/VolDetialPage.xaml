@@ -5,10 +5,12 @@
     xmlns:local="using:LuoMusic.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fcu="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
+    xmlns:cu="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,5)"
     xmlns:data="using:Luo.Shared.Data"
     xmlns:common="using:LuoMusic.Common"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{x:Null}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Page.Resources>
@@ -114,7 +116,10 @@
                 </ListView>
             </Grid>
         </ScrollViewer>
-        <Border Background="Black" Opacity="0.1" Canvas.ZIndex="-1">
+        <Border Background="Black" 
+                cu:Opacity="0.1"
+                fcu:Opacity="0"
+                Canvas.ZIndex="-1">
             <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
         </Border>
 

@@ -4,6 +4,8 @@
       xmlns:ignore="http://www.galasoft.ch/ignore"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:fcu="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
+      xmlns:cu="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,5)"
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:data="using:Luo.Shared.Data"
@@ -20,7 +22,9 @@
         <convertor:DoubleTimespanConvertor x:Key="DoubleTimespanConvertor"/>
     </Page.Resources>
 
-    <Grid x:Name="Root" Background="{x:Null}">
+    <Grid x:Name="Root" 
+          cu:Background="{ThemeResource SystemChromeMediumLowColor}"
+          fcu:Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
             <RowDefinition Height="*"/>
@@ -61,8 +65,8 @@
 
         <!--<Grid Grid.Column="1" Grid.Row="0" Background="White"/>-->
 
-        <Grid x:Name="NowPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              Grid.Row="2" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+        <Grid x:Name="NowPanel" Grid.Row="2"
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -74,28 +78,35 @@
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
                         Command="{x:Bind MainVM.GoPrevious}" ToolTipService.ToolTip="上一曲" 
-                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
-                        Width="48" Height="48" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                        cu:Style="{StaticResource MainButtonCompatStyle}"
+                        fcu:Style="{StaticResource MainButtonStyle}"
+                        Width="{StaticResource MainButtonSize}" 
+                        Height="{StaticResource MainButtonSize}" 
+                        Margin="{StaticResource ButtonsStackMargin}" 
+                        HorizontalAlignment="Center" VerticalAlignment="Stretch">
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE100;" />
                     </Button.Content>
                 </Button>
                 <Button AccessKey="P" x:Name="PlayPause"
                         Command="{x:Bind MainVM.PlayPause}" ToolTipService.ToolTip="{x:Bind MainVM.PlayPauseToString(MainVM.IsPlaying),Mode=OneWay}"
-                        Width="48" Height="48" Margin="4" 
-                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        cu:Style="{StaticResource MainButtonCompatStyle}"
+                        fcu:Style="{StaticResource MainButtonStyle}"
+                        Width="{StaticResource MainButtonSize}" 
+                        Height="{StaticResource MainButtonSize}" 
+                        Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayPauseToIcon(MainVM.IsPlaying),Mode=OneWay}"/>
                     </Button.Content>
                 </Button>
                 <Button AccessKey="]" x:Uid="Next" x:Name="Next"
-                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
                         Command="{x:Bind MainVM.GoNext}"  ToolTipService.ToolTip="下一曲"
-                        Width="48" Height="48" Margin="4" 
+                        cu:Style="{StaticResource MainButtonCompatStyle}"
+                        fcu:Style="{StaticResource MainButtonStyle}"
+                        Width="{StaticResource MainButtonSize}" 
+                        Height="{StaticResource MainButtonSize}" 
+                        Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE101;" />
@@ -146,49 +157,88 @@
                             Background="{ThemeResource AppBarBackgroundThemeBrush}" 
                             Value="{x:Bind MainVM.BufferProgress, Mode=OneWay}"/>
 
-                    <Slider Style="{StaticResource PlayerSliderStyle}" Grid.Row="1"
-                            Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
-                            Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
+                    <Slider x:Name="MainSlider" Grid.Row="1"
+                            Style="{StaticResource PlayerSliderStyle}" 
+                            cu:Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                            cu:Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
+                            fcu:Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                            fcu:Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                            Maximum="{x:Bind MainVM.TotalDuration, Mode=OneWay,Converter={StaticResource DoubleTimespanConvertor}}"
+                            Maximum="{x:Bind MainVM.TotalDuration, Mode=OneWay, Converter={StaticResource DoubleTimespanConvertor}}"
                             PointerReleased="MainSlider_PointerReleased"
                             IsThumbToolTipEnabled="False"                    
-                            x:Name="MainSlider"/>
+                            />
 
                 </Grid>
             </Grid>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button AccessKey="P" x:Name="RelateVol"
+                <Button x:Name="Volume" x:Uid="VolumeButton" ToolTipService.ToolTip="音量" 
+                        cu:Style="{StaticResource MainButtonCompatStyle}"
+                        fcu:Style="{StaticResource MainButtonStyle}"
+                        Width="{StaticResource MainButtonSize}" 
+                        Height="{StaticResource MainButtonSize}" 
+                        Margin="{StaticResource ButtonsStackMargin}" 
+                        HorizontalAlignment="Center" VerticalAlignment="Stretch" FontFamily="Segoe MDL2 Assets">
+                    <Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.VolumeToIcon(MainVM.Volume), Mode=OneWay}" />
+                    </Button.Content>
+                    <Button.Flyout>
+                        <Flyout>
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="MinWidth" Value="30"/>
+                                    <Setter Property="MinHeight" Value="100"/>
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <Grid Width="30">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Margin="2" TextAlignment="Center" 
+                                           VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="None" MaxLines="1" 
+                                           FontSize="16"
+                                           HorizontalAlignment="Center" 
+                                           Text="{x:Bind MainVM.Volume, Mode=OneWay}"/>
+                                <Slider Grid.Row="1" IsThumbToolTipEnabled="False" Orientation="Vertical" Style="{StaticResource PlayerSliderStyle}"
+                                        cu:Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                        cu:Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
+                                        fcu:Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                                        fcu:Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
+                                        Height="100" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+                                        Minimum="0" Maximum="100" StepFrequency="1" Value="{x:Bind MainVM.Volume, Mode=TwoWay}"/>
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
+                <Button x:Name="RelateVol"
                         Click="RelateVol_Click"  ToolTipService.ToolTip="当前播放期刊"
-                        Width="48" Height="48" Margin="4" 
-                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        cu:Style="{StaticResource MainButtonCompatStyle}"
+                        fcu:Style="{StaticResource MainButtonStyle}"
+                        Width="{StaticResource MainButtonSize}" 
+                        Height="{StaticResource MainButtonSize}" 
+                        Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE93C;" />
                     </Button.Content>
                 </Button>
-                <Button AccessKey="P" x:Name="PlayMode"
+
+                <Button x:Name="PlayMode"
                         Command="{x:Bind MainVM.NextPlayMode}" ToolTipService.ToolTip="{x:Bind MainVM.PlayModeToString(MainVM.PlayMode),Mode=OneWay}"
-                        Width="48" Height="48" Margin="4" 
-                        BorderBrush="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}"
-                        Background="{ThemeResource SystemControlTransparentRevealBackgroundBrush}"
+                        cu:Style="{StaticResource MainButtonCompatStyle}"
+                        fcu:Style="{StaticResource MainButtonStyle}"
+                        Width="{StaticResource MainButtonSize}" 
+                        Height="{StaticResource MainButtonSize}" 
+                        Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayModeToIcon(MainVM.PlayMode),Mode=OneWay}"/>
                     </Button.Content>
                 </Button>
             </StackPanel>
-
-
-
-
-
-
-
-
         </Grid>
-
     </Grid>
 </Page>

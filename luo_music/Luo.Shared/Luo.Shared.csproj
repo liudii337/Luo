@@ -117,6 +117,7 @@
     <Compile Include="Extension\EnumrableExtesion.cs" />
     <Compile Include="Extension\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="Helper\Tools.cs" />
     <Compile Include="PlaybackEngine\IPlayer.cs" />
     <Compile Include="PlaybackEngine\Player.cs" />
     <Compile Include="Service\CloudService.cs" />
