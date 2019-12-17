@@ -10,7 +10,7 @@
     xmlns:data="using:Luo.Shared.Data"
     xmlns:common="using:LuoMusic.Common"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{x:Null}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Page.Resources>
@@ -112,8 +112,7 @@
             </Grid>
         </ScrollViewer>
         <Border Background="Black" 
-                cu:Opacity="0.1"
-                fcu:Opacity="0"
+                Opacity="0.1"
                 Canvas.ZIndex="-1">
             <Image Source="{Binding CurrentPlayVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
         </Border>

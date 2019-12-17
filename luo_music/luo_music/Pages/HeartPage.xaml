@@ -36,6 +36,14 @@
                     </DataTemplate>
                 </common:AdaptiveGridView.ItemTemplate>
             </common:AdaptiveGridView>
+            <Grid Height="60" VerticalAlignment="Center" Visibility="{x:Bind MainVM.HeartVM.NoVolItemVisibility, Mode=OneWay}">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="这里空空如也" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="快去收藏自己喜欢的音乐吧" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
 
         </Grid>
         <!--<Border Background="{StaticResource SystemControlAcrylicElementBrush}" Opacity="0.95" Canvas.ZIndex="-1"/>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace LuoMusic.ViewModel.DataViewModel
 {
@@ -13,19 +14,36 @@ namespace LuoMusic.ViewModel.DataViewModel
         protected MainViewModel _mainViewModel;
         protected VolServiceBase _volService;
 
-        private string volcover="";
-        public string VolCover
+        private Visibility _footerLoadingVisibility=Visibility.Visible;
+        public Visibility FooterLoadingVisibility
         {
             get
             {
-                return volcover;
+                return _footerLoadingVisibility;
             }
             set
             {
-                if (volcover != value)
+                if (_footerLoadingVisibility != value)
                 {
-                    volcover = value;
-                    RaisePropertyChanged(() => VolCover);
+                    _footerLoadingVisibility = value;
+                    RaisePropertyChanged(() => FooterLoadingVisibility);
+                }
+            }
+        }
+
+        private Visibility _endVisiblity=Visibility.Collapsed;
+        public Visibility EndVisibility
+        {
+            get
+            {
+                return _endVisiblity;
+            }
+            set
+            {
+                if (_endVisiblity != value)
+                {
+                    _endVisiblity = value;
+                    RaisePropertyChanged(() => EndVisibility);
                 }
             }
         }
@@ -57,28 +75,28 @@ namespace LuoMusic.ViewModel.DataViewModel
 
         protected void UpdateHintVisibility(IEnumerable<VolItem> list)
         {
-            ////_mainViewModel.FooterLoadingVisibility = Visibility.Collapsed;
+            FooterLoadingVisibility = Visibility.Collapsed;
             ////_mainViewModel.FooterReloadVisibility = Visibility.Collapsed;
             ////_mainViewModel.NoNetworkHintVisibility = Visibility.Collapsed;
-            ////_mainViewModel.EndVisibility = Visibility.Collapsed;
+            EndVisibility = Visibility.Collapsed;
 
-            //// No items at all
-            //if (DataList.Count == 0)
-            //{
-            //    if (list.Count() == 0)
-            //    {
-            //        //_mainViewModel.NoItemHintVisibility = Visibility.Visible;
-            //    }
-            //}
-            //else
-            //{
-            //    //_mainViewModel.NoItemHintVisibility = Visibility.Collapsed;
-            //    //VolCover = DataList[0].Vol.Cover;
-            //    if (list.Count() == 0)
-            //    {
-            //        //_mainViewModel.EndVisibility = Visibility.Visible;
-            //    }
-            //}
+            // No items at all
+            if (DataList.Count == 0)
+            {
+                if (list == null || list.Count() == 0)
+                {
+                    //_mainViewModel.NoItemHintVisibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                //_mainViewModel.NoItemHintVisibility = Visibility.Collapsed;
+                //VolCover = DataList[0].Vol.Cover;
+                if (list == null || list.Count() == 0)
+                {
+                    EndVisibility = Visibility.Visible;
+                }
+            }
         }
 
         protected async override Task<IEnumerable<VolItem>> GetList(int pageIndex)
@@ -89,8 +107,8 @@ namespace LuoMusic.ViewModel.DataViewModel
                 {
                     var task = RunOnUiThread(() =>
                     {
-                        //_mainViewModel.FooterLoadingVisibility = Visibility.Visible;
-                        //_mainViewModel.EndVisibility = Visibility.Collapsed;
+                        FooterLoadingVisibility = Visibility.Visible;
+                        EndVisibility = Visibility.Collapsed;
                         //_mainViewModel.NoItemHintVisibility = Visibility.Collapsed;
                     });
                 }
@@ -169,10 +187,6 @@ namespace LuoMusic.ViewModel.DataViewModel
 
         protected override void RefreshCompleted()
         {
-            if (DataList.Count > 0)
-            {
-                VolCover = DataList[0].Vol.Cover;
-            }
         }
     }
 }

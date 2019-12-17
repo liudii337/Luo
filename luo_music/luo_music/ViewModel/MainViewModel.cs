@@ -136,6 +136,7 @@ namespace LuoMusic.ViewModel
                 }
             }
         }
+
         #region AllVolPage
 
         private ObservableCollection<LuoVolTag> _luoVolNums;
@@ -203,7 +204,6 @@ namespace LuoMusic.ViewModel
                 }
             }
         }
-
 
         #endregion
 
@@ -664,7 +664,7 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private TimeSpan _currentPosition;
+        private TimeSpan _currentPosition=new TimeSpan(0,0,0);
         public TimeSpan CurrentPosition
         {
             get

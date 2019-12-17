@@ -58,8 +58,20 @@
                     </DataTemplate>
                 </common:AdaptiveGridView.ItemTemplate>
                 <common:AdaptiveGridView.Footer>
-                    <Grid Height="40">
+                    <Grid>
+                        <Grid Height="50" Visibility="{x:Bind MainVM.TagDataVM.FooterLoadingVisibility, Mode=OneWay}">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <ProgressRing Foreground="{ThemeResource SystemBaseHighColor}" IsActive="True" />
+                                <TextBlock
+                                    x:Uid="LoadingTextBlock"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource SystemBaseHighColor}"
+                                    Text="加载中..." />
+                            </StackPanel>
+                        </Grid>
                         <TextBlock Text="—— 已经落在最低处了 ——" 
+                                   Visibility="{x:Bind MainVM.TagDataVM.EndVisibility, Mode=OneWay}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                 </common:AdaptiveGridView.Footer>

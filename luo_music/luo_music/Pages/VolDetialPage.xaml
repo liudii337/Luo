@@ -117,8 +117,7 @@
             </Grid>
         </ScrollViewer>
         <Border Background="Black" 
-                cu:Opacity="0.1"
-                fcu:Opacity="0"
+                Opacity="0.1"
                 Canvas.ZIndex="-1">
             <Image Source="{Binding CurrentVol.Vol.Cover}" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  />
         </Border>
