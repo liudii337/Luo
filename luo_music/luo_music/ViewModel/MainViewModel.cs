@@ -75,7 +75,6 @@ namespace LuoMusic.ViewModel
             var task = Initialize();
 
             player = new Player();
-            PlayMode = 0;
 
             Task.Run(() =>
             {
@@ -531,7 +530,7 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private int _playMode;
+        private int _playMode = 0;
         public int PlayMode
         {
             get
@@ -551,16 +550,19 @@ namespace LuoMusic.ViewModel
                         IsLoop = true;
                         IsOneLoop = false;
                         IsShuffle = false;
+                        ToastService.SendToast("循环播放");
                         break;
                     case 1:
                         IsLoop = true;
                         IsOneLoop = true;
                         IsShuffle = false;
+                        ToastService.SendToast("单曲循环");
                         break;
                     case 2:
                         IsLoop = true;
                         IsOneLoop = false;
                         IsShuffle = true;
+                        ToastService.SendToast("随机播放");
                         break;
                     default:
                         break;

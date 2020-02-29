@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using JP.Utils.Debug;
 using Luo.Shared.Data;
+using LuoMusic.Common;
 using LuoMusic.Model;
 using Newtonsoft.Json;
 using System;
@@ -274,11 +275,18 @@ namespace LuoMusic.ViewModel.DataViewModel
         public void AddVol(VolItem item)
         {
             if (!IsHeartedVol(item))
-            { HeartVols.Add(item); }
+            {
+                HeartVols.Add(item);
+                ToastService.SendToast("期刊已收藏");
+            }
         }
         public void RemoveVol(VolItem item)
         {
-            HeartVols.Remove(item);
+            if(IsHeartedVol(item))
+            {
+                HeartVols.Remove(item);
+                ToastService.SendToast("已取消收藏");
+            }
         }
 
         public void AddSong(LuoVolSong item)

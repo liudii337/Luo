@@ -44,7 +44,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="LuoVolSongTemplate_w" x:DataType="data:LuoVolSong">
-            <Grid Height="48" Margin="5,5,0,5" x:Name="root">
+            <Grid Height="48" Margin="0,5,0,5" x:Name="root">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48"/>
                     <ColumnDefinition Width="*"/>
@@ -65,7 +65,7 @@
 
     <Grid>
         <ScrollViewer Style="{StaticResource ScrollViewerCommonStyle}">
-            <Grid MaxWidth="800" HorizontalAlignment="Center" Margin="20,20,20,20" >
+            <Grid MaxWidth="700" HorizontalAlignment="Center" Margin="16" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -105,8 +105,8 @@
 
                 <TextBlock Grid.Row="2" Text="{Binding CurrentVol.Vol.Description}" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" Margin="0,5,0,5" FontSize="15"/>
                 <ListView x:Name="SongListView" Grid.Row="3" ItemsSource="{Binding CurrentVol.Vol.VolSongs}"
-                              ItemTemplate="{StaticResource LuoVolSongTemplate_w}"
-                              Margin="0,5,0,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentSongIndex, Mode=OneWay, FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
+                              ItemTemplate="{StaticResource LuoVolSongTemplate_w}" ScrollViewer.VerticalScrollMode="Disabled"
+                              Margin="-15,5,-15,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentSongIndex, Mode=OneWay, FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

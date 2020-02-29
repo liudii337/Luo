@@ -72,5 +72,27 @@ namespace LuoMusic.Pages
             VolListGridView.GetScrollViewer().ChangeView(null, 0, null);
         }
 
+        private void NextPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(MainVM.CurrentNumIndex < MainVM.LuoVolNums.Count-1)
+            {
+                MainVM.CurrentNumIndex++;
+            }
+        }
+
+        private void LastPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainVM.CurrentNumIndex > 0)
+            {
+                MainVM.CurrentNumIndex--;
+            }
+        }
+
+        private void NumGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            NextPageButton.Visibility = (MainVM.CurrentNumIndex < MainVM.LuoVolNums.Count - 1) == true ? Visibility.Visible : Visibility.Collapsed;
+            LastPageButton.Visibility = (MainVM.CurrentNumIndex > 0) == true ? Visibility.Visible : Visibility.Collapsed;
+
+        }
     }
 }

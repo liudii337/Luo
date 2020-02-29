@@ -36,7 +36,8 @@
                         ItemsSource="{Binding LuoVolNums}" 
                         Padding="0,5,0,5"
                         ItemContainerStyle="{StaticResource TagGridViewItemContainerStyle}"
-                        SelectedIndex="{Binding CurrentNumIndex,Mode=TwoWay}">
+                        SelectedIndex="{Binding CurrentNumIndex,Mode=TwoWay}"
+                        SelectionChanged="NumGrid_SelectionChanged">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolTag">
                                 <Grid Margin="8,0,8,0">
@@ -57,8 +58,8 @@
                     </DataTemplate>
                 </common:AdaptiveGridView.ItemTemplate>
                 <common:AdaptiveGridView.Footer>
-                    <Grid>
-                        <Grid Height="50" Visibility="{x:Bind MainVM.DataVM.FooterLoadingVisibility, Mode=OneWay}">
+                    <Grid  Height="80" Margin="8,0,8,0">
+                        <Grid Visibility="{x:Bind MainVM.DataVM.FooterLoadingVisibility, Mode=OneWay}">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <ProgressRing Foreground="{ThemeResource SystemBaseHighColor}" IsActive="True" />
                                 <TextBlock
@@ -69,9 +70,37 @@
                                     Text="加载中..." />
                             </StackPanel>
                         </Grid>
-                        <TextBlock Text="—— 已经落在最低处了 ——" 
-                                   Visibility="{x:Bind MainVM.DataVM.EndVisibility, Mode=OneWay}"
+                        <StackPanel Visibility="{x:Bind MainVM.DataVM.EndVisibility, Mode=OneWay}"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Button x:Name="LastPageButton" Click="LastPageButton_Click"
+                                        Margin="8" ToolTipService.ToolTip="上一页"
+                                        Style="{StaticResource ButtonCommonStyle}"
+                                    VerticalAlignment="Center">
+                                    <Grid>
+                                        <Ellipse Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Fill="Black"
+                                            Opacity="0.2"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{ThemeResource SystemAccentColor}" Glyph="&#xE0A6;" FontWeight="Bold" />
+                                    </Grid>
+                                </Button>
+                                <Button x:Name="NextPageButton" Click="NextPageButton_Click"
+                                        Margin="8" ToolTipService.ToolTip="下一页"
+                                    Style="{StaticResource ButtonCommonStyle}"
+                                    VerticalAlignment="Center">
+                                    <Grid>
+                                        <Ellipse Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Fill="Black"
+                                            Opacity="0.2"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{ThemeResource SystemAccentColor}" Glyph="&#xE0AB;" FontWeight="Bold" />
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+                            <TextBlock Text="—— 已经落在最低处了 ——" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                        </StackPanel>
                     </Grid>
                 </common:AdaptiveGridView.Footer>
             </common:AdaptiveGridView>

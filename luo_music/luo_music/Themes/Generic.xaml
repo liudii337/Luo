@@ -28,4 +28,55 @@
         </Setter>
     </Style>
 
+
+    <Style TargetType="local:ToastService">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ToastService">
+                    <Grid x:Name="RootGrid">
+                        <Grid.Resources>
+                            <Storyboard x:Name="ShowStory">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="150"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <CircleEase EasingMode="EaseOut" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Name="HideStory">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="150">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <CircleEase EasingMode="EaseOut" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </Grid.Resources>
+                        <Grid x:Name="border"
+                              Margin="0,0,0,100"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom">
+                            <Grid.RenderTransform>
+                                <CompositeTransform />
+                            </Grid.RenderTransform>
+                            <Border
+                                Background="{ThemeResource ComboBoxPressedHighlightThemeBrush}"
+                                CornerRadius="2"
+                                Opacity="1" />
+                            <TextBlock
+                                x:Name="ContentTB"
+                                Margin="20,10"
+                                FontSize="14"
+                                Foreground="Black"
+                                Text="{TemplateBinding ContentText}" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
