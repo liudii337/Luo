@@ -11,9 +11,11 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Media.Streaming.Adaptive;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
+using Windows.Web.Http;
 
 namespace Luo.Shared.PlaybackEngine
 {
@@ -84,7 +86,7 @@ namespace Luo.Shared.PlaybackEngine
             {
                 startVolume = startVolume + step;
                 ChangeVolume(startVolume);
-                await Task.Delay(25);
+                await Task.Delay(15);
             } while (startVolume != goalVolume);           
         }
 
@@ -458,8 +460,29 @@ namespace Luo.Shared.PlaybackEngine
         {
             //if (item.IsOnline)
             //{
-                var mediaSource = MediaSource.CreateFromUri(new Uri(item.SongUrl));
-                mediaSource.CustomProperties["SONG"] = item;
+
+            //HttpClient client = new HttpClient();
+
+            //client.DefaultRequestHeaders.Add("Cookie", CookieHelper.GetCookie());
+
+            //HttpRandomAccessStream stream = await HttpRandomAccessStream.CreateAsync(client, new Uri(item.SongUrl));
+
+            //var mediaSource = MediaSource.CreateFromStream(stream, stream.ContentType);
+
+            ////AdaptiveMediaSourceCreationResult result = await AdaptiveMediaSource.CreateFromUriAsync(new Uri(item.SongUrl), client);
+
+            ////if (result.Status == AdaptiveMediaSourceCreationStatus.Success)
+            ////{
+            ////    mediaSource = MediaSource.CreateFromAdaptiveMediaSource( result.MediaSource;
+            ////}
+            //var httpmanager = new HttpCookieManager();
+
+
+            //HttpContext.Current.Response.Cookies.Add(httpCookie);
+            var mediaSource = MediaSource.CreateFromUri(new Uri(item.SongUrl));
+
+
+            mediaSource.CustomProperties["SONG"] = item;
                 var mediaPlaybackItem = new MediaPlaybackItem(mediaSource);
                 var props = mediaPlaybackItem.GetDisplayProperties();
 
@@ -696,7 +719,7 @@ namespace Luo.Shared.PlaybackEngine
                     mediaPlaybackList.StartingItem = mediaPlaybackList.Items.First();
                     break;
                 }
-                await Task.Delay(500);
+                await Task.Delay(200);
             }
 
             MediaPlayer.Play();

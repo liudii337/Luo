@@ -25,6 +25,48 @@
     <Grid x:Name="Root" 
           cu:Background="{ThemeResource SystemChromeMediumLowColor}"
           fcu:Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Previous.Visibility" Value="Visible"/>
+                        <Setter Target="ModePanel.Visibility" Value="Visible"/>
+                        <Setter Target="PositionText.Visibility" Value="Visible"/>
+                        <Setter Target="MainSlider.Visibility" Value="Visible"/>
+                        <Setter Target="MainSliderBuffer.Visibility" Value="Visible"/>
+                        <Setter Target="WideTitle.Visibility" Value="Visible"/>
+                        <Setter Target="NarrowProgressBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="NarrowTitle.Visibility" Value="Collapsed"/>
+                        <Setter Target="NarrowArtist.Visibility" Value="Collapsed"/>
+
+                        <Setter Target="ControlPanel.(Grid.Column)" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Previous.Visibility" Value="Collapsed"/>
+                        <Setter Target="ModePanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="PositionText.Visibility" Value="Collapsed"/>
+                        <Setter Target="MainSlider.Visibility" Value="Collapsed"/>
+                        <Setter Target="MainSliderBuffer.Visibility" Value="Collapsed"/>
+                        <Setter Target="WideTitle.Visibility" Value="Collapsed"/>
+                        <Setter Target="NarrowProgressBar.Visibility" Value="Visible"/>
+                        <Setter Target="NarrowTitle.Visibility" Value="Visible"/>
+                        <Setter Target="NarrowArtist.Visibility" Value="Visible"/>
+
+                        <Setter Target="ControlPanel.(Grid.Column)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
             <RowDefinition Height="*"/>
@@ -73,8 +115,15 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
+            <ProgressBar x:Name="NarrowProgressBar" Grid.ColumnSpan="3" 
+                         HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                         Height="0.5" Opacity="0.5"
+                         Background="Transparent"
+                         Foreground="{ThemeResource SystemAccentColor}"
+                         Value="{x:Bind MainVM.PositionToValue(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="0"
+
+            <StackPanel x:Name="ControlPanel" Orientation="Horizontal" Grid.Column="0"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
                         Command="{x:Bind MainVM.GoPrevious}" ToolTipService.ToolTip="上一曲" 
@@ -120,15 +169,24 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image Margin="4" x:Name="Artwork" Width="48" Height="48"
-                       Grid.Column="0"
-                               VerticalAlignment="Center"
-                               Stretch="Uniform" Source="{Binding CurrentSong.AlbumImage,Mode=OneWay, FallbackValue='/Assets/DefaultCover.png'}"/>
+                       Grid.Column="0" VerticalAlignment="Center"
+                       Stretch="UniformToFill" Source="{Binding CurrentPlayVol.Vol.Cover,Mode=OneWay, FallbackValue='/Assets/DefaultCover.png'}"/>
                 <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Height="50" Margin="4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="NarrowTitle" Grid.Row="0" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}"  
+                                           TextWrapping="NoWrap"
+                                           FontSize="14"
+                                           Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
+                                           TextTrimming="CharacterEllipsis" />
+                    <TextBlock x:Name="NarrowArtist" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay, FallbackValue='独立，不独于世'}" 
+                                           Style="{ThemeResource BodyTextBlockStyle}" 
+                                           MaxLines="1" FontSize="14" VerticalAlignment="Center"
+                                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+
+                    <StackPanel x:Name="WideTitle" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}"  
                                            TextWrapping="NoWrap"
                                            FontSize="14"
@@ -142,6 +200,7 @@
                                            MaxLines="1" FontSize="14" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
+                    
                     <TextBlock x:Name="PositionText" 
                             Grid.Row="0" 
                             HorizontalAlignment="Right" 
@@ -149,7 +208,7 @@
                             FontSize="14"
                             Margin="4"
                             Text="{x:Bind PositionToString(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
-                    <ProgressBar Grid.Row="1" 
+                    <ProgressBar x:Name="MainSliderBuffer" Grid.Row="1" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
                             Height="4" 
                             Opacity="0.5"
@@ -172,7 +231,7 @@
                 </Grid>
             </Grid>
 
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel x:Name="ModePanel" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="Volume" x:Uid="VolumeButton" ToolTipService.ToolTip="音量" 
                         cu:Style="{StaticResource MainButtonCompatStyle}"
                         fcu:Style="{StaticResource MainButtonStyle}"

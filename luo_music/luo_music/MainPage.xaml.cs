@@ -33,7 +33,33 @@ namespace LuoMusic
 
             MainFrame.Navigate((MainVM.HamList[0] as HamPanelItem).TargetType);
 
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnMainPageBackRequested;
+
             //LuoVolFactory.getlist();
+        }
+
+        private void OnMainPageBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (MainFrame != null && MainFrame.CanGoBack)
+            {
+                e.Handled = true;
+                MainFrame.GoBack();
+                UpdateNavIndex();
+            }
+        }
+
+        private void UpdateNavIndex()
+        {
+            if(MainFrame.Content.GetType() != typeof(VolDetialPage) && MainFrame.Content.GetType() != typeof(VolPlayDetialPage))
+            {
+                if (MainVM.HamList[MainVM.CurrentNavIndex].TargetType != MainFrame.Content.GetType())
+                {
+                    var currentNavIndex = MainVM.HamList.IndexOf(MainVM.HamList.Find(p => p.TargetType == MainFrame.Content.GetType()));
+                    MainVM.CurrentNavIndex = currentNavIndex;
+                }
+            }
+            else
+            { return; }
         }
 
         private void MainVM_AboutToUpdateSelectedNavIndex(object sender, int e)
@@ -41,8 +67,12 @@ namespace LuoMusic
             var index = e;
             if (index < 0)
                 return;
-
-            MainFrame.Navigate((MainVM.HamList[index] as HamPanelItem).TargetType);
+            if(MainVM.HamList[MainVM.CurrentNavIndex].TargetType != MainFrame.Content.GetType())
+            {
+                MainFrame.Navigate((MainVM.HamList[index] as HamPanelItem).TargetType);
+            }
+            else
+            { return; }
         }
 
         private void SystemNavigationManagerBackRequested(object sender, BackRequestedEventArgs e)

@@ -22,6 +22,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 using System.Runtime.Serialization;
 using LuoMusic.Common;
+using System.Threading;
+using Windows.Web.Http.Filters;
+using Windows.Web.Http;
+using System.Net;
 
 namespace LuoMusic.ViewModel
 {
@@ -39,13 +43,6 @@ namespace LuoMusic.ViewModel
         public IPlayer player;
 
         public event EventHandler<int> AboutToUpdateSelectedNavIndex;
-
-
-        #region Previous
-
-
-
-        #endregion
 
         private CancellationTokenSourceFactory _ctsFactory;
         public CancellationTokenSourceFactory CtsFactory
@@ -112,11 +109,30 @@ namespace LuoMusic.ViewModel
 
                 TagDataVM.RefreshAsync();
 
+                SetPlayerCookie();
+
+                var timer = new DispatcherTimer();
+                timer.Interval = new TimeSpan(0, 0, 6);
+                timer.Tick += Timer_Tick;
+                timer.Start();
             }
             catch (Exception ex)
             {
                 // Report error here
             }
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            SetPlayerCookie();
+        }
+
+        private static void SetPlayerCookie()
+        {
+            HttpCookie cookie = new HttpCookie("name", "luoow.wxwenku.com", "/");
+            cookie.Value = CookieHelper.GetCookiestring();
+            HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
+            bool replaced = filter.CookieManager.SetCookie(cookie);
         }
 
         private ObservableCollection<LuoVol> _luoVols;
