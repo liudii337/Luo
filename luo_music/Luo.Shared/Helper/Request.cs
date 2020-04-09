@@ -66,6 +66,16 @@ namespace Luo.Shared.Helper
             return $"https://{HOST_w}/tag/{tag}";
         }
 
+        public static string GetSongListJson(string songSourceNum)
+        {
+            return $"https://{HOST_w}/ajax?m=163music&c2={songSourceNum}";
+        }
+
+        // https://www.luoow.com/ajax?m=163music_item&c2=
+        public static string GetSongUrlById(string songId)
+        {
+            return $"https://{HOST_w}/ajax?m=163music_item&c2={songId}";
+        }
 
         //public static string SearchImages => $"http://{HOST}/search/photos?";
 

@@ -29,6 +29,23 @@ namespace Luo.Shared.Data
             }
         }
 
+        private string songId;
+        public string SongId
+        {
+            get
+            {
+                return songId;
+            }
+            set
+            {
+                if (songId != value)
+                {
+                    songId = value;
+                    RaisePropertyChanged(() => SongId);
+                }
+            }
+        }
+
         private string index;
         public string Index
         {
@@ -165,22 +182,22 @@ namespace Luo.Shared.Data
         {
         }
 
-        public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
-        {
-            VolNum = _vol;
-            Index = _index;
-            Name = _name;
-            Artist = _artist;
-            Album = _album;
-            AlbumImage = _albumimage;
-            SongUrl = SongUriFormat(_vol, _index);
-        }
+        //public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
+        //{
+        //    VolNum = _vol;
+        //    Index = _index;
+        //    Name = _name;
+        //    Artist = _artist;
+        //    Album = _album;
+        //    AlbumImage = _albumimage;
+        //    SongUrl = SongUriFormat(_vol, _index);
+        //}
 
-        private string SongUriFormat(string _vol, string _index)
-        {
-            var vol = int.Parse(_vol);
-            return string.Format("http://mp3-cdn2.luoo.net/low/luoo/radio{0}/{1}.mp3", vol, _index);
-        }
+        //private string SongUriFormat(string _vol, string _index)
+        //{
+        //    var vol = int.Parse(_vol);
+        //    return string.Format("http://mp3-cdn2.luoo.net/low/luoo/radio{0}/{1}.mp3", vol, _index);
+        //}
 
         public LuoVolSong(string _vol, string _index, string _name, string _artist, string _songurl)
         {
@@ -192,6 +209,18 @@ namespace Luo.Shared.Data
             AlbumImage = "";
             SongUrl = _songurl;
         }
+
+        public LuoVolSong(string _vol, string _index, string _name, string _artist, string _cover, string _songid)
+        {
+            VolNum = _vol;
+            Index = _index;
+            Name = _name;
+            Artist = _artist;
+            Album = "";
+            AlbumImage = _cover;
+            SongId = _songid;
+        }
+
 
         //example: http://192.168.73.132/luoow.wxwenku.com/999/07._Froesche_Die_Schröders.mp3
         private string SongUriFormat_w(string _vol, string _index, string _name)

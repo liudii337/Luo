@@ -329,7 +329,7 @@ namespace LuoMusic.ViewModel
             {
                 if (_currentSongIndex != value)
                 {
-
+                    _currentSongIndex = value;
                     RaisePropertyChanged(() => CurrentSongIndex);
                 }
             }

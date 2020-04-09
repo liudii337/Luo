@@ -318,6 +318,15 @@ namespace Luo.Shared.PlaybackEngine
                 var item = items[0];
                 var mediaPlaybackItem = await GetMediaPlaybackItemAsync(item);
 
+                while(mediaPlaybackItem == null)
+                {
+                    startIndex = startIndex++;
+                    if(startIndex==items.Count)
+                    { startIndex = 0; }
+                    item = items[startIndex];
+                    mediaPlaybackItem = await GetMediaPlaybackItemAsync(item);
+                }
+
                 mediaPlaybackList.Items.Add(mediaPlaybackItem);
                 mediaPlaybackList.StartingItem = mediaPlaybackItem;
 
@@ -337,11 +346,19 @@ namespace Luo.Shared.PlaybackEngine
                     startIndex = items.Count - 1;
                 }
                 var item = items[startIndex];
+                var mediaPlaybackItem = await GetMediaPlaybackItemAsync(item);
+
+                while (mediaPlaybackItem == null)
+                {
+                    startIndex = startIndex + 1;
+                    if (startIndex == items.Count)
+                    { startIndex = 0; }
+                    item = items[startIndex];
+                    mediaPlaybackItem = await GetMediaPlaybackItemAsync(item);
+                }
 
                 var listBefore = items.Take(startIndex);
                 var listAfter = items.TakeLast(items.Count - 1 - startIndex);
-
-                var mediaPlaybackItem = await GetMediaPlaybackItemAsync(item);
 
                 mediaPlaybackList.Items.Add(mediaPlaybackItem);
                 mediaPlaybackList.StartingItem = mediaPlaybackItem;
@@ -427,6 +444,9 @@ namespace Luo.Shared.PlaybackEngine
                     if (newComing)
                         return;
 
+                    if (mediaPlaybackItem == null)
+                        continue;
+
                     mediaPlaybackList.Items.Insert(0, mediaPlaybackItem);
                 }
                 catch (FileNotFoundException)
@@ -446,6 +466,9 @@ namespace Luo.Shared.PlaybackEngine
 
                     if (newComing)
                         return;
+
+                    if (mediaPlaybackItem == null)
+                        continue;
 
                     mediaPlaybackList.Items.Add(mediaPlaybackItem);
                 }
@@ -476,20 +499,31 @@ namespace Luo.Shared.PlaybackEngine
             ////    mediaSource = MediaSource.CreateFromAdaptiveMediaSource( result.MediaSource;
             ////}
             //var httpmanager = new HttpCookieManager();
-
-
             //HttpContext.Current.Response.Cookies.Add(httpCookie);
-            var mediaSource = MediaSource.CreateFromUri(new Uri(item.SongUrl));
+            var songUrl = "";
+            if (item.SongId.IsNullorEmpty())
+            {
+                songUrl = item.SongUrl;
+            }
+            else
+            {
+                HttpClient client = new HttpClient();
+                var result = await client.GetAsync(new Uri(Request.GetSongUrlById(item.SongId)));
+                songUrl = result.Content.ToString().Replace("{\"url\":\"", "").Replace("\"}", "").Replace("\n", "").Replace("\\", "");
+                if(songUrl.Contains("null"))
+                { return null; }
+            }
 
+            var mediaSource = MediaSource.CreateFromUri(new Uri(songUrl));
 
             mediaSource.CustomProperties["SONG"] = item;
-                var mediaPlaybackItem = new MediaPlaybackItem(mediaSource);
-                var props = mediaPlaybackItem.GetDisplayProperties();
+            var mediaPlaybackItem = new MediaPlaybackItem(mediaSource);
+            var props = mediaPlaybackItem.GetDisplayProperties();
 
-                await WritePropertiesAsync(item, props, item.AlbumImage);
+            await WritePropertiesAsync(item, props, item.AlbumImage);
 
-                mediaPlaybackItem.ApplyDisplayProperties(props);
-                return mediaPlaybackItem;
+            mediaPlaybackItem.ApplyDisplayProperties(props);
+            return mediaPlaybackItem;
             //}
             //else
             //{

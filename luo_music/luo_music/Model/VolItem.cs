@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Ioc;
 using Luo.Shared;
 using Luo.Shared.Data;
+using Luo.Shared.Helper;
 using Luo.Shared.Service;
 using LuoMusic.ViewModel;
 using LuoMusic.ViewModel.DataViewModel;
@@ -135,6 +136,7 @@ namespace LuoMusic.Model
         public void Init()
         {
             TitleString = $"Vol.{Vol.VolNum} {Vol.Title}";
+            NumString = $"Vol.{Vol.VolNum}";
             if (MainVM.HeartVM.IsHeartedVol(Vol))
             {
                 IsHeartVol = true;
@@ -161,6 +163,24 @@ namespace LuoMusic.Model
                 }
             }
         }
+
+        private string _numString;
+        public string NumString
+        {
+            get
+            {
+                return _numString;
+            }
+            set
+            {
+                if (_numString != value)
+                {
+                    _numString = value;
+                    RaisePropertyChanged(() => NumString);
+                }
+            }
+        }
+
 
         private bool _isHeartVol = true;
         public bool IsHeartVol
@@ -301,6 +321,19 @@ namespace LuoMusic.Model
             {
                 // 暂用新的API
                 Vol.GetDetailVol_w(result);
+                // Check isOnline or file
+                // Get Song Json
+                var songJson = "";
+                if(Vol.IsVolSongOnline)
+                {
+                    var songSourceNum = Vol.GetVolSongSource(result);
+                    songJson = await _service.GetVolDetailHtmlAsync(Request.GetSongListJson(songSourceNum));
+                }
+                else
+                {
+                    songJson = Vol.GetVolSongFileJson(result);
+                }
+                Vol.AddSongsFromJson(songJson);
             }
             //if (result.IsRequestSuccessful)
             //{

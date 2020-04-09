@@ -167,6 +167,10 @@ namespace Luo.Shared.Data
                 //http://luoow.wxwenku.com/100/cover.jpg
                 //http://luoow.wxwenku.com/99/cover_min.jpg
                 var cover = i.SelectSingleNode("./a/img").GetAttributeValue("src", "").Replace("_min", "");
+                if(!cover.Contains("http:"))
+                {
+                    cover ="http:" + cover;
+                }
 
                 var Node1 = i.SelectSingleNode("./div/p/a");
 

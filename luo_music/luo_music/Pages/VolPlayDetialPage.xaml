@@ -71,34 +71,49 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Image Grid.Row="0" Source="{Binding CurrentPlayVol.Vol.Cover}"/>
-                <Grid Grid.Row="1" Margin="0,10,0,5">
-                    <RelativePanel >
-                        <TextBlock x:Name="TitleBlock" Text="{Binding CurrentPlayVol.TitleString}" FontSize="24" HorizontalAlignment="Left"/>
-                        <ListView ItemsSource="{Binding CurrentPlayVol.Vol.Tags}" Height="22" Margin="5,0,0,0"
-                              ItemContainerStyle="{StaticResource TagListViewItemStyle}"
-                              RelativePanel.RightOf="TitleBlock" RelativePanel.AlignBottomWith="TitleBlock"
-                              IsItemClickEnabled="False" SelectionMode="None">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Height="20" BorderThickness="1" BorderBrush="Gray" CornerRadius="10" Margin="2,0,2,0" VerticalAlignment="Bottom">
-                                        <TextBlock Text="{Binding }" FontSize="12" VerticalAlignment="Center" Margin="5,1,5,1"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <common:WrapPanel Padding="0,0,0,0" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                        </ListView>
-                    </RelativePanel>
-                    <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding CurrentPlayVol.IsHeartVol, Mode=TwoWay}" Foreground="Black"
+                <Grid Grid.Row="1" Margin="0,10,0,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                <TextBlock x:Name="NumBlock" Text="{Binding CurrentPlayVol.Vol.VolNum,Converter={StaticResource StringFormatConverter},ConverterParameter='Vol. {0:N0}'}" FontSize="20" VerticalAlignment="Bottom" FontFamily="Segoe UI"/>
+                                <ListView ItemsSource="{Binding CurrentPlayVol.Vol.Tags}" Margin="5,0,0,0" VerticalAlignment="Bottom"
+                                    ItemContainerStyle="{StaticResource TagListViewItemStyle}"
+                                    IsItemClickEnabled="False" SelectionMode="None" FontFamily="Segoe UI">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding }" FontSize="13" VerticalAlignment="Center" Margin="5,1,5,1"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <common:WrapPanel Padding="0,0,0,0" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </StackPanel>
+                            <TextBlock x:Name="TitleBlock" Grid.Row="1" 
+                                       Text="{Binding CurrentPlayVol.Vol.Title}" FontSize="24" 
+                                       HorizontalAlignment="Left"/>
+                        </Grid>
+                        <ToggleButton x:Name="HeartButton" Grid.Column="2" IsThreeState="False" Foreground="Black"
+                                  IsChecked="{Binding CurrentPlayVol.IsHeartVol, Mode=TwoWay}" 
                                   ToolTipService.ToolTip="{x:Bind MainVM.CurrentPlayVol.IsHeartVolToString(MainVM.CurrentPlayVol.IsHeartVol),Mode=OneWay}"
-                              Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="16" Opacity="0.9"/>
-                    </ToggleButton>
+                              Style="{StaticResource ToggleStarStyle}" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe UI">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="20" Opacity="0.9"/>
+                        </ToggleButton>
+
+                    </Grid>
                 </Grid>
-                <TextBlock Grid.Row="2" Text="{Binding CurrentPlayVol.Vol.Description}"  FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="15"/>
+                
+                <TextBlock Grid.Row="2" Text="{Binding CurrentPlayVol.Vol.Description}"  FontFamily="Segoe UI" TextWrapping="Wrap" Margin="0,10,0,10" FontSize="15"/>
                 <ListView x:Name="SongListView" Grid.Row="3" ItemsSource="{Binding CurrentPlayVol.Vol.VolSongs}"
                               ItemTemplate="{StaticResource LuoVolSongTemplate_w}" ScrollViewer.VerticalScrollMode="Disabled"
                               Margin="-15,5,-15,10" IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentSongIndex,Mode=OneWay,FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">

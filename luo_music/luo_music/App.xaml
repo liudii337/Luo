@@ -23,6 +23,8 @@
                              d:IsDataSource="True" />
 
             <common:AppSettings x:Key="AppSettings" />
+
+            <common:StringFormatConverter x:Key="StringFormatConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

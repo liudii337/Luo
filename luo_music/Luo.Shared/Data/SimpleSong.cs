@@ -12,11 +12,14 @@ namespace Luo.Shared.Data
         [JsonProperty("src")]
         public Uri Src { get; set; }
 
-        [JsonProperty("author")]
-        public string Author { get; set; }
+        [JsonProperty("song_id")]
+        public string SongId { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("author")]
+        public string Author { get; set; }
 
         [JsonProperty("cover")]
         public string Cover { get; set; }

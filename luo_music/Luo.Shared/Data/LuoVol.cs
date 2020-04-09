@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Luo.Shared.Data
@@ -167,6 +168,24 @@ namespace Luo.Shared.Data
                 }
             }
 
+        }
+
+        private bool isVolSongOnline;
+        [IgnoreDataMember]
+        public bool IsVolSongOnline
+        {
+            get
+            {
+                return isVolSongOnline;
+            }
+            set
+            {
+                if (isVolSongOnline != value)
+                {
+                    isVolSongOnline = value;
+                    RaisePropertyChanged(() => IsVolSongOnline);
+                }
+            }
         }
 
         [IgnoreDataMember]
@@ -331,33 +350,119 @@ namespace Luo.Shared.Data
                 }
             }
 
-            VolSongs = new ObservableCollection<LuoVolSong>();
+            var script = doc.DocumentNode.Descendants("script").ToArray()[3].OuterHtml;
 
-            var script = doc.DocumentNode.Descendants("script").ToArray()[1].OuterHtml;
+            IsVolSongOnline = script.Contains("cloud");
 
-            int b1 = script.IndexOf("[");//找a的位置
-            int b2 = script.LastIndexOf("]");//找b的位置
-            var jsonString = (script.Substring(b1)).Substring(0, b2 - b1 + 1);
+            //if (script != null)
+            //{
+            //    var SourceNum = Regex.Replace(script, @"[^\d.\d]", "");
+            //}
 
-            var list = SimpleSong.FromJson(jsonString);
+            //int b1 = script.IndexOf("[");//找a的位置
+            //int b2 = script.LastIndexOf("]");//找b的位置
+            //var jsonString = (script.Substring(b1)).Substring(0, b2 - b1 + 1);
 
-            foreach (var i in list)
-            {
-                var _index = i.Name.Substring(0, 2);
-                var _name = i.Name.Substring(4);
-                var _artist = i.Author;
-                var _songsrc = i.Src.OriginalString;
+            //var list = SimpleSong.FromJson(jsonString);
 
-                if(!VolSongs.Any(p=>p.Index==_index))
-                {
-                    VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _songsrc));
-                }
-            }
+            //foreach (var i in list)
+            //{
+            //    var _index = i.Name.Substring(0, 2);
+            //    var _name = i.Name.Substring(4);
+            //    var _artist = i.Author;
+            //    var _songsrc = i.Src.OriginalString;
+
+            //    if(!VolSongs.Any(p=>p.Index==_index))
+            //    {
+            //        VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _songsrc));
+            //    }
+            //}
 
             //check if there is repeat volSongs
 
             IsDetailGet = true;
         }
 
+        public string GetVolSongFileJson(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            var script = doc.DocumentNode.Descendants("script").ToArray()[3].OuterHtml;
+
+            int b1 = script.IndexOf("[");//找a的位置
+            int b2 = script.LastIndexOf("]");//找b的位置
+            var jsonString = (script.Substring(b1)).Substring(0, b2 - b1 + 1);
+            return jsonString;
+        }
+
+        public string GetVolSongSource(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            var script = doc.DocumentNode.Descendants("script").ToArray()[3].OuterHtml;
+            var SourceNum = "";
+            if (script != null)
+            {
+                SourceNum = Regex.Replace(script, @"[^\d.\d]", "");
+                return SourceNum;
+            }
+            else
+                return null;
+        }
+
+        public void AddSongsFromJson(string songJson)
+        {
+            var list = SimpleSong.FromJson(songJson);
+
+            if (VolSongs == null)
+            { VolSongs = new ObservableCollection<LuoVolSong>(); }
+            else
+            { VolSongs.Clear(); }
+
+            if(IsVolSongOnline)
+            {
+                foreach (var i in list)
+                {
+                    var _index = string.Format("{0:D2}", list.IndexOf(i)+1);
+                    var _name = i.Name;
+                    var _artist = i.Author;
+                    var _cover = i.Cover;
+                    var _songid = i.SongId;
+
+                    if (!VolSongs.Any(p => p.Index == _index))
+                    {
+                        VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _cover, _songid));
+                    }
+                }
+            }
+            else
+            {
+                foreach (var i in list)
+                {
+                    var _index = i.Name.Substring(0, 2);
+                    var _name = i.Name.Substring(4);
+                    var _artist = i.Author;
+                    var _cover = Cover;
+                    var _songsrc = i.Src.OriginalString;
+
+                    if(!VolSongs.Any(p => p.Index == _index))
+                    {
+                        VolSongs.Add(new LuoVolSong() {
+                            VolNum = VolNum,
+                            Index = _index,
+                            Name = _name,
+                            Artist = _artist,
+                            Album = "",
+                            AlbumImage = _cover,
+                            SongUrl = _songsrc
+                        });
+                    }
+                }
+            }
+
+
+        }
     }
 }
