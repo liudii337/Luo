@@ -12,6 +12,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Data;
 using Luo.Shared.Convertor;
 using LuoMusic.Common;
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Luo.Shared.Helper;
 
 namespace LuoMusic
 {
@@ -35,6 +40,7 @@ namespace LuoMusic
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnMainPageBackRequested;
 
+            Tools.SetStatusBar();
             //LuoVolFactory.getlist();
         }
 
@@ -164,7 +170,14 @@ namespace LuoMusic
 
         private void TitleBar_Loaded(object sender, RoutedEventArgs e)
         {
-            Window.Current.SetTitleBar(TitleBar);
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            {
+                Window.Current.SetTitleBar(TitleBar);
+            }
+            //if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            //{
+            //    TitleBar.Visibility = Visibility.Collapsed;
+            //}
         }
 
         private void HamPane_ItemClick(object sender, ItemClickEventArgs e)
@@ -243,5 +256,6 @@ namespace LuoMusic
                 }
             }
         }
+
     }
 }

@@ -12,6 +12,8 @@ using Windows.UI;
 using Windows.UI.Popups;
 using Luo.Shared.Extension;
 using LuoMusic.Common;
+using Luo.Shared.Helper;
+using Windows.UI.Core.Preview;
 
 namespace LuoMusic
 {
@@ -87,6 +89,8 @@ namespace LuoMusic
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += App_CloseRequested;
             }
 
             if (e.PrelaunchActivated == false)
@@ -102,6 +106,8 @@ namespace LuoMusic
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+
+                SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += App_CloseRequested;
             }
             DispatcherHelper.Initialize();
 
@@ -110,10 +116,17 @@ namespace LuoMusic
                 HandleNotificationMessage);
 
             RegisterExceptionHandlingSynchronizationContext();
+
+        }
+
+        private void App_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        {
+            Tile.ClearTileNotification();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
+            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += App_CloseRequested;
             RegisterExceptionHandlingSynchronizationContext();
         }
 
@@ -147,19 +160,12 @@ namespace LuoMusic
                 Window.Current.Content = rootFrame;
             }
 
-
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = Colors.Black;
+            
 
             //if (ui != null) ui.ColorValuesChanged -= Ui_ColorValuesChanged;
             //ui = new UISettings();
             //ui.ColorValuesChanged += Ui_ColorValuesChanged;
             //titleBar.ButtonHoverBackgroundColor = ui.GetColorValue(UIColorType.Accent);
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
-
 
             // if you want not to have any window smaller than this size...
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Windows.Foundation.Size(320, 320));

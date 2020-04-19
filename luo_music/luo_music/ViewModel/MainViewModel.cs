@@ -72,6 +72,7 @@ namespace LuoMusic.ViewModel
             var task = Initialize();
 
             player = new Player();
+            PlayMode = 0;
 
             Task.Run(() =>
             {
@@ -329,7 +330,7 @@ namespace LuoMusic.ViewModel
             {
                 if (_currentSongIndex != value)
                 {
-                    _currentSongIndex = value;
+
                     RaisePropertyChanged(() => CurrentSongIndex);
                 }
             }
@@ -546,7 +547,7 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private int _playMode = 0;
+        private int _playMode;
         public int PlayMode
         {
             get
@@ -877,105 +878,104 @@ namespace LuoMusic.ViewModel
                     //    await CurrentArtwork.SetSourceAsync(await thumb.OpenReadAsync());
                     //}
 
-                    //var task = Task.Run(() =>
+                    var task = Task.Run(() =>
+                    {
+                        Tile.ShowTileNotification(CurrentSong.Name, CurrentSong.Artist, CurrentSong.AlbumImage, CurrentPlayVol.Vol.VolNum, CurrentPlayVol.Vol.Title, CurrentPlayVol.Vol.Cover);
+                    });
+                    //if (e.Items is IReadOnlyList<Song> l)
                     //{
-                    //    Tile.SendNormal(CurrentTitle, CurrentAlbum, string.Join(Consts.CommaSeparator, p.Performers ?? new string[] { }), p.PicturePath);
-                    //});
+                    //    NowListPreview = $"{e.CurrentIndex + 1}/{l.Count}";
+                    //    NowPlayingList.Clear();
+                    //    for (int i = 0; i < l.Count; i++)
+                    //    {
+                    //        NowPlayingList.Add(new SongViewModel(l[i])
+                    //        {
+                    //            Index = (uint)i,
+                    //        });
+                    //    }
+                    //}
+                    CurrentSongIndex = e.CurrentIndex;
 
+                    //                ApplicationView.GetForCurrentView().Title = CurrentPlayingDesc();
+
+                    //                if (e.CurrentSong != null && Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Shell.AdaptiveCardBuilder"))
+                    //                {
+                    //                    var last = NowPlayingList.Count - 1 <= currentIndex;
+
+                    //                    string img0, img1;
+                    //                    img1 = null;
+
+                    //                    if (!NowPlayingList[currentIndex].IsOnline)
+                    //                    {
+                    //                                    //if (NowPlayingList[currentIndex].Song.PicturePath.IsNullorEmpty())
+                    //                                    //{
+                    //                                    //    img0 = Consts.BlackPlaceholder;
+                    //                                    //}
+                    //                                    //else
+                    //                                    //{
+                    //                                    //    img0 = $"ms-appdata:///temp/{NowPlayingList[currentIndex].Artwork.AbsoluteUri.Split('/').Last()}";
+                    //                                    //}
+                    //                                    img0 = null;
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        img0 = NowPlayingList[currentIndex].Artwork?.AbsoluteUri;
+                    //                    }
+
+                    //                    var otherArtwork = NowPlayingList.Where(a => a.Artwork?.AbsoluteUri != img0);
+
+                    //                    foreach (var item in otherArtwork)
+                    //                    {
+                    //                        if (!item.IsOnline)
+                    //                        {
+                    //                            img1 = null;
+                    //                        }
+                    //                        else
+                    //                        {
+                    //                            img1 = item.Artwork.AbsoluteUri;
+                    //                        }
+                    //                        break;
+                    //                    }
+
+                    //                    var json = await TimelineCard.AuthorAsync(currentTitle, currentAlbum, currentArtist, img0, img1, NowPlayingList.Count);
+
+                    //                    act.ActivationUri = new Uri("as-music:///?action=timeline-restore");
+
+                    //                    act.VisualElements.Content = AdaptiveCardBuilder.CreateAdaptiveCardFromJson(json);
+                    //                    act.VisualElements.DisplayText = Consts.Localizer.GetString("AppNameText");
+                    //                    act.VisualElements.Description = Consts.Localizer.GetString("TimelineTitle");
+                    //                    await act.SaveAsync();
+
+                    //                    var songs = NowPlayingList.Where(s => s.IsOnedrive || s.IsOnline).Select(s => s.Song).ToList();
+                    //#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                    //                                Task.Run(async () =>
+                    //                    {
+                    //                        if (songs.Count > 0)
+                    //                        {
+                    //                            var status = new PlayerStatus(songs, currentIndex, currentPosition);
+                    //                            await status.RoamingSaveAsync();
+                    //                        }
+                    //                        else
+                    //                        {
+                    //                            await PlayerStatus.ClearRoamingAsync();
+                    //                        }
+                    //                    });
+                    //#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+
+                    //                                await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                    //                    {
+                    //                        try
+                    //                        {
+                    //                                        //Dispose of any current UserActivitySession, and create a new one.
+                    //                                        (_currentActivity as UserActivitySession)?.Dispose();
+                    //                            _currentActivity = act.CreateSession();
+                    //                        }
+                    //                        catch (Exception)
+                    //                        {
+                    //                        }
+                    //                    });
+                    //                }
                 }
-                //if (e.Items is IReadOnlyList<Song> l)
-                //{
-                //    NowListPreview = $"{e.CurrentIndex + 1}/{l.Count}";
-                //    NowPlayingList.Clear();
-                //    for (int i = 0; i < l.Count; i++)
-                //    {
-                //        NowPlayingList.Add(new SongViewModel(l[i])
-                //        {
-                //            Index = (uint)i,
-                //        });
-                //    }
-                //}
-                CurrentSongIndex = e.CurrentIndex;
-
-//                ApplicationView.GetForCurrentView().Title = CurrentPlayingDesc();
-
-//                if (e.CurrentSong != null && Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Shell.AdaptiveCardBuilder"))
-//                {
-//                    var last = NowPlayingList.Count - 1 <= currentIndex;
-
-//                    string img0, img1;
-//                    img1 = null;
-
-//                    if (!NowPlayingList[currentIndex].IsOnline)
-//                    {
-//                                    //if (NowPlayingList[currentIndex].Song.PicturePath.IsNullorEmpty())
-//                                    //{
-//                                    //    img0 = Consts.BlackPlaceholder;
-//                                    //}
-//                                    //else
-//                                    //{
-//                                    //    img0 = $"ms-appdata:///temp/{NowPlayingList[currentIndex].Artwork.AbsoluteUri.Split('/').Last()}";
-//                                    //}
-//                                    img0 = null;
-//                    }
-//                    else
-//                    {
-//                        img0 = NowPlayingList[currentIndex].Artwork?.AbsoluteUri;
-//                    }
-
-//                    var otherArtwork = NowPlayingList.Where(a => a.Artwork?.AbsoluteUri != img0);
-
-//                    foreach (var item in otherArtwork)
-//                    {
-//                        if (!item.IsOnline)
-//                        {
-//                            img1 = null;
-//                        }
-//                        else
-//                        {
-//                            img1 = item.Artwork.AbsoluteUri;
-//                        }
-//                        break;
-//                    }
-
-//                    var json = await TimelineCard.AuthorAsync(currentTitle, currentAlbum, currentArtist, img0, img1, NowPlayingList.Count);
-
-//                    act.ActivationUri = new Uri("as-music:///?action=timeline-restore");
-
-//                    act.VisualElements.Content = AdaptiveCardBuilder.CreateAdaptiveCardFromJson(json);
-//                    act.VisualElements.DisplayText = Consts.Localizer.GetString("AppNameText");
-//                    act.VisualElements.Description = Consts.Localizer.GetString("TimelineTitle");
-//                    await act.SaveAsync();
-
-//                    var songs = NowPlayingList.Where(s => s.IsOnedrive || s.IsOnline).Select(s => s.Song).ToList();
-//#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-//                                Task.Run(async () =>
-//                    {
-//                        if (songs.Count > 0)
-//                        {
-//                            var status = new PlayerStatus(songs, currentIndex, currentPosition);
-//                            await status.RoamingSaveAsync();
-//                        }
-//                        else
-//                        {
-//                            await PlayerStatus.ClearRoamingAsync();
-//                        }
-//                    });
-//#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-
-//                                await CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
-//                    {
-//                        try
-//                        {
-//                                        //Dispose of any current UserActivitySession, and create a new one.
-//                                        (_currentActivity as UserActivitySession)?.Dispose();
-//                            _currentActivity = act.CreateSession();
-//                        }
-//                        catch (Exception)
-//                        {
-//                        }
-//                    });
-//                }
             });
         }
 

@@ -12,7 +12,18 @@
     <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" SizeChanged="RootGrid_SizeChanged" PointerEntered="RootGrid_PointerEntered" PointerExited="RootGrid_PointerExited"
                   Margin="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="1">
         <Image x:Name="Cover" Source="{Binding Vol.Cover, Mode=OneWay}" Stretch="UniformToFill"/>
-        <Grid x:Name="MaskBorder" Background="#35000000"/>
+        <Grid x:Name="MaskBorder" Background="#35000000">
+            <Button x:Name="PlayVolButton" Click="PlayVolButton_Click"
+                    Style="{StaticResource ButtonCommonStyle}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid>
+                    <Ellipse Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"
+                             Fill="#FFEE5858"
+                             Opacity="1"/>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="35" Foreground="White" Glyph="&#xE102;" FontWeight="Bold" />
+                </Grid>
+            </Button>
+        </Grid>
         <Grid Height="50" VerticalAlignment="Bottom" Opacity="0.5">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -57,6 +58,10 @@ namespace LuoMusic.Pages.UC
             // Set Maskborder
             var maskVisual = MaskBorder.GetVisual();
             maskVisual.Opacity = 0f;
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                PlayVolButton.Visibility=Visibility.Collapsed;
+            }
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -129,6 +134,15 @@ namespace LuoMusic.Pages.UC
             fadeAnimation.Duration = TimeSpan.FromMilliseconds(500);
 
             return fadeAnimation;
+        }
+
+        private async void PlayVolButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!volItem.Vol.IsDetailGet)
+            { await volItem.GetVolDetialAsync(); }
+
+            volItem.MainVM.CurrentPlayVol = volItem;
+            await volItem.MainVM.InstantPlayAsync(volItem.Vol.VolSongs);
         }
     }
 }

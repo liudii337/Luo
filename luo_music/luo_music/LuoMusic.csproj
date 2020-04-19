@@ -291,7 +291,6 @@
       <Name>Luo.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

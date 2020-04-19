@@ -118,6 +118,7 @@
     <Compile Include="Extension\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Helper\CookieHelper.cs" />
+    <Compile Include="Helper\Tile.cs" />
     <Compile Include="Helper\Tools.cs" />
     <Compile Include="PlaybackEngine\IPlayer.cs" />
     <Compile Include="PlaybackEngine\Player.cs" />
@@ -142,7 +143,11 @@
       <Version>12.0.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

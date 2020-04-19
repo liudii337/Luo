@@ -350,7 +350,7 @@ namespace Luo.Shared.Data
                 }
             }
 
-            var script = doc.DocumentNode.Descendants("script").ToArray()[3].OuterHtml;
+            var script = doc.DocumentNode.Descendants("script").ToArray().First(p => p.OuterHtml.Contains("var player")).OuterHtml;
 
             IsVolSongOnline = script.Contains("cloud");
 
@@ -388,7 +388,7 @@ namespace Luo.Shared.Data
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
 
-            var script = doc.DocumentNode.Descendants("script").ToArray()[3].OuterHtml;
+            var script = doc.DocumentNode.Descendants("script").ToArray().First(p => p.OuterHtml.Contains("var player")).OuterHtml;
 
             int b1 = script.IndexOf("[");//找a的位置
             int b2 = script.LastIndexOf("]");//找b的位置
@@ -401,7 +401,7 @@ namespace Luo.Shared.Data
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
 
-            var script = doc.DocumentNode.Descendants("script").ToArray()[3].OuterHtml;
+            var script = doc.DocumentNode.Descendants("script").ToArray().First(p => p.OuterHtml.Contains("var player")).OuterHtml;
             var SourceNum = "";
             if (script != null)
             {
