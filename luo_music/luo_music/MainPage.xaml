@@ -70,7 +70,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="72"/>
+            <RowDefinition Height="68"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Transparent"
@@ -108,7 +108,8 @@
         <!--<Grid Grid.Column="1" Grid.Row="0" Background="White"/>-->
 
         <Grid x:Name="NowPanel" Grid.Row="2"
-              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              BorderBrush="Gray" BorderThickness="0,0.5,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -183,21 +184,21 @@
                                            TextTrimming="CharacterEllipsis" />
                     <TextBlock x:Name="NarrowArtist" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay, FallbackValue='独立，不独于世'}" 
                                            Style="{ThemeResource BodyTextBlockStyle}" 
-                                           MaxLines="1" FontSize="14" VerticalAlignment="Center"
+                                           MaxLines="1" FontSize="13" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                     <StackPanel x:Name="WideTitle" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}"  
                                            TextWrapping="NoWrap"
-                                           FontSize="14"
+                                           FontSize="13"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" MaxWidth="240"/>
 
-                        <TextBlock Text="-" FontSize="14" Margin="3,0,3,0" FontWeight="ExtraBold" />
+                        <TextBlock Text="-" FontSize="13" Margin="3,0,3,0" FontWeight="ExtraBold" />
 
                         <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay, FallbackValue='独立，不独于世'}" 
                                            Style="{ThemeResource BodyTextBlockStyle}" 
-                                           MaxLines="1" FontSize="14" VerticalAlignment="Center"
+                                           MaxLines="1" FontSize="13" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
                     
@@ -205,7 +206,7 @@
                             Grid.Row="0" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
-                            FontSize="14"
+                            FontSize="12"
                             Margin="4"
                             Text="{x:Bind PositionToString(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
                     <ProgressBar x:Name="MainSliderBuffer" Grid.Row="1" 

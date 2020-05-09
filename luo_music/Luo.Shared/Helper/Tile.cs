@@ -94,7 +94,7 @@ namespace Luo.Shared.Helper
             // And send the notification
             doc.LoadXml(songxml);
             var songnoti = new ScheduledTileNotification(doc, DateTime.Now.AddSeconds(1));
-            songnoti.ExpirationTime = DateTime.Now.AddMinutes(10);
+            songnoti.ExpirationTime = DateTime.Now.AddMinutes(5);
             updater.AddToSchedule(songnoti);
 
             doc.LoadXml(volxml);
