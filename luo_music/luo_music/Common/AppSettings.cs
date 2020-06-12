@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace LuoMusic.Common
 {
@@ -32,25 +35,89 @@ namespace LuoMusic.Common
         }
 
 
-        //public bool EnableTile
-        //{
-        //    get
-        //    {
-        //        return ReadSettings(nameof(EnableTile), true);
-        //    }
-        //    set
-        //    {
-        //        SaveSettings(nameof(EnableTile), value);
-        //        RaisePropertyChanged(() => EnableTile);
+        public bool EnableTile
+        {
+            get
+            {
+                return ReadSettings(nameof(EnableTile), true);
+            }
+            set
+            {
+                SaveSettings(nameof(EnableTile), value);
+                RaisePropertyChanged(() => EnableTile);
 
-        //        //Events.LogTile(value);
+                //Events.LogTile(value);
+            }
+        }
 
-        //        //if (!value)
-        //        //{
-        //        //    LiveTileUpdater.CleanUpTile();
-        //        //}
-        //    }
-        //}
+        public bool EnableTimeline
+        {
+            get
+            {
+                return ReadSettings(nameof(EnableTimeline), true);
+            }
+            set
+            {
+                SaveSettings(nameof(EnableTimeline), value);
+                RaisePropertyChanged(() => EnableTimeline);
+            }
+        }
+
+        private bool _isLight;
+        public bool IsLight
+        {
+            get
+            {
+                return _isLight;
+            }
+            set
+            {
+                _isLight = value;
+                //
+                Tools.SetStatusBar(IsLight);
+            }
+        }
+
+        public int ThemeMode
+        {
+            get
+            {
+                return ReadSettings(nameof(ThemeMode), SystemTheme);
+            }
+            set
+            {
+                SaveSettings(nameof(ThemeMode), value);
+                RaisePropertyChanged(() => ThemeMode);
+
+                ElementTheme theme;
+                switch (value)
+                {
+                    case LightTheme:
+                        theme = ElementTheme.Light;
+                        IsLight = true;
+                        break;
+                    case DarkTheme:
+                        theme = ElementTheme.Dark;
+                        IsLight = false;
+                        break;
+                    default:
+                        theme = ElementTheme.Default;
+                        break;
+                }
+                if (Window.Current.Content is FrameworkElement rootElement)
+                {
+                    rootElement.RequestedTheme = theme;
+
+                    // If the user switch to follow the system, then we apply the App's theme instead of element's theme.
+                    if (theme == ElementTheme.Default)
+                    {
+                        IsLight = Application.Current.RequestedTheme == ApplicationTheme.Light;
+                    }
+                }
+
+            }
+        }
+
 
         //public bool EnableScaleAnimation
         //{
@@ -122,10 +189,33 @@ namespace LuoMusic.Common
         //    }
         //}
 
+        private readonly UISettings _uiSettings;
 
         public AppSettings()
         {
             LocalSettings = ApplicationData.Current.LocalSettings;
+            ThemeMode = ThemeMode;
+
+            _uiSettings = new UISettings();
+            _uiSettings.ColorValuesChanged += Settings_ColorValuesChanged;
+
+        }
+
+        private async void Settings_ColorValuesChanged(UISettings sender, object args)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                UpdateThemeToSystemTheme();
+            });
+        }
+
+        private void UpdateThemeToSystemTheme()
+        {
+            if (ThemeMode == SystemTheme)
+            {
+                // Currently the theme of Application should be the same as System's.
+                IsLight = Application.Current.RequestedTheme == ApplicationTheme.Light;
+            }
         }
 
         /// <summary>

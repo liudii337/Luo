@@ -9,6 +9,7 @@
     xmlns:model="using:LuoMusic.Model"
     xmlns:common="using:LuoMusic.Common"
     xmlns:uc="using:LuoMusic.Pages.UC"
+    xmlns:animations="using:LuoMusic.Common.Composition"
     mc:Ignorable="d"
     Background="{x:Null}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -29,7 +30,8 @@
                                      MinItemHeight="220"
                                      MinItemWidth="320"
                                      Padding="8, 0, 8, 0"
-                                     HorizontalAlignment="Stretch">
+                                     HorizontalAlignment="Stretch"
+                                     animations:ReorderGridAnimation.Duration="360" >
                 <common:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="model:VolItem">
                         <uc:VolItemTemplate />

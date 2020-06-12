@@ -26,6 +26,9 @@ using System.Threading;
 using Windows.Web.Http.Filters;
 using Windows.Web.Http;
 using System.Net;
+using Windows.ApplicationModel.UserActivities;
+using AdaptiveCards;
+using Windows.UI.Shell;
 
 namespace LuoMusic.ViewModel
 {
@@ -43,6 +46,10 @@ namespace LuoMusic.ViewModel
         public IPlayer player;
 
         public event EventHandler<int> AboutToUpdateSelectedNavIndex;
+
+        // To support Timeline, we need to record user activity and create an adaptive card.
+        UserActivitySession _currentActivity;
+        AdaptiveCard apodTimelineCard;
 
         private CancellationTokenSourceFactory _ctsFactory;
         public CancellationTokenSourceFactory CtsFactory
@@ -81,6 +88,7 @@ namespace LuoMusic.ViewModel
                 player.PlaybackStatusChanged += Player_PlaybackStatusChanged;
                 player.PositionUpdated += Player_PositionUpdated;
             });
+
         }
 
 
@@ -134,6 +142,75 @@ namespace LuoMusic.ViewModel
             cookie.Value = CookieHelper.GetCookiestring();
             HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
             bool replaced = filter.CookieManager.SetCookie(cookie);
+        }
+
+        private async void CreatVolPlayTimelineAsync(VolItem volItem)
+        {
+            // First create the adaptive card.
+            CreateAdaptiveCardForTimeline(volItem);
+
+            // Second record the user activity.
+            await GenerateActivityAsync(volItem);
+        }
+
+        private void CreateAdaptiveCardForTimeline(VolItem volItem)
+        {
+            // Create an adaptive card specifically to reference this app in Windows 10 Timeline.
+            apodTimelineCard = new AdaptiveCard("1.0")
+            {
+                // Select a good background image.
+                BackgroundImage = new Uri(volItem.Vol.Cover)
+            };
+
+            // Add a heading to the card, which allows the heading to wrap to the next line if necessary.
+            var apodHeading = new AdaptiveTextBlock
+            {
+                Text = "Vol." + volItem.Vol.VolNum + " " + volItem.Vol.Title,
+                Size = AdaptiveTextSize.Large,
+                Weight = AdaptiveTextWeight.Bolder,
+                Wrap = true,
+                MaxLines = 2
+            };
+            apodTimelineCard.Body.Add(apodHeading);
+
+            // Add a description to the card, and note that it can wrap for several lines.
+            var apodDesc = new AdaptiveTextBlock
+            {
+                Text = volItem.Vol.Description,
+                Size = AdaptiveTextSize.Default,
+                Weight = AdaptiveTextWeight.Lighter,
+                Wrap = true,
+                MaxLines = 4,
+            };
+            apodTimelineCard.Body.Add(apodDesc);
+        }
+
+        private async Task GenerateActivityAsync(VolItem volItem)
+        {
+            // Get the default UserActivityChannel and query it for our UserActivity. If the activity doesn't exist, one is created.
+            UserActivityChannel channel = UserActivityChannel.GetDefault();
+
+            // The text here should be treated as a title for this activity and should be unique to this app.
+            UserActivity userActivity = await channel.GetOrCreateUserActivityAsync("LuoVol."+volItem.Vol.VolNum);
+
+            // Populate required properties: DisplayText and ActivationUri are required.
+            userActivity.VisualElements.DisplayText = "Luoo-UWP Timeline activities";
+
+            // The name in the ActivationUri must match the name in the protocol setting in the manifest file (except for the "://" part).
+            userActivity.ActivationUri = new Uri("luoo://?volnum="+volItem.Vol.VolNum);
+
+            // Build the adaptive card from a JSON string.
+            userActivity.VisualElements.Content = AdaptiveCardBuilder.CreateAdaptiveCardFromJson(apodTimelineCard.ToJson());
+
+            // Set the mime type of the user activity, in this case, an application.
+            userActivity.ContentType = "application/octet-stream";
+
+            // Save the new metadata.
+            await userActivity.SaveAsync();
+
+            // Dispose of any current UserActivitySession, and create a new one.
+            _currentActivity?.Dispose();
+            _currentActivity = userActivity.CreateSession();
         }
 
         private ObservableCollection<LuoVol> _luoVols;
@@ -877,11 +954,13 @@ namespace LuoMusic.ViewModel
                     //    var thumb = RandomAccessStreamReference.CreateFromUri(new Uri(Consts.BlackPlaceholder));
                     //    await CurrentArtwork.SetSourceAsync(await thumb.OpenReadAsync());
                     //}
-
-                    var task = Task.Run(() =>
+                    if(EnableTile)
                     {
-                        Tile.ShowTileNotification(CurrentSong.Name, CurrentSong.Artist, CurrentSong.AlbumImage, CurrentPlayVol.Vol.VolNum, CurrentPlayVol.Vol.Title, CurrentPlayVol.Vol.Cover);
-                    });
+                        var task = Task.Run(() =>
+                        {
+                            Tile.ShowTileNotification(CurrentSong.Name, CurrentSong.Artist, CurrentSong.AlbumImage, CurrentPlayVol.Vol.VolNum, CurrentPlayVol.Vol.Title, CurrentPlayVol.Vol.Cover);
+                        });
+                    }
                     //if (e.Items is IReadOnlyList<Song> l)
                     //{
                     //    NowListPreview = $"{e.CurrentIndex + 1}/{l.Count}";
@@ -975,6 +1054,20 @@ namespace LuoMusic.ViewModel
                     //                        }
                     //                    });
                     //                }
+                    if (e.CurrentSong != null && Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Shell.AdaptiveCardBuilder"))
+                    {
+                        try
+                        {
+                            if(EnableTimeline)
+                            {
+                                CreatVolPlayTimelineAsync(CurrentPlayVol);
+                            }
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
                 }
             });
         }
@@ -985,6 +1078,70 @@ namespace LuoMusic.ViewModel
             {
                 BufferProgress = 100 * e.Progress;
             });
+        }
+
+        #endregion
+
+        #region BasicSettings
+        private bool _enableTile = AppSettings.Instance.EnableTile;
+        public bool EnableTile
+        {
+            get
+            {
+                return _enableTile;
+            }
+            set
+            {
+                if (_enableTile != value)
+                {
+                    _enableTile = value;
+                    RaisePropertyChanged(() => EnableTile);
+                    AppSettings.Instance.EnableTile = value;
+
+                    if (!EnableTile)
+                    {
+                        Tile.ClearTileNotification();
+                    }
+                }
+            }
+        }
+
+        private bool _enableTimeline = AppSettings.Instance.EnableTimeline;
+        public bool EnableTimeline
+        {
+            get
+            {
+                return _enableTimeline;
+            }
+            set
+            {
+                if (_enableTimeline != value)
+                {
+                    _enableTimeline = value;
+                    RaisePropertyChanged(() => EnableTimeline);
+                    AppSettings.Instance.EnableTimeline = value;
+
+                }
+            }
+        }
+
+        private int _themeMode = AppSettings.Instance.ThemeMode;
+        public int ThemeMode
+        {
+            get
+            {
+                return _themeMode;
+            }
+            set
+            {
+                if (_themeMode != value)
+                {
+                    _themeMode = value;
+                    RaisePropertyChanged(() => ThemeMode);
+                    AppSettings.Instance.ThemeMode = value;
+
+                }
+            }
         }
 
         #endregion

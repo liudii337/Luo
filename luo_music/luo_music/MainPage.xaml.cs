@@ -22,11 +22,15 @@ namespace LuoMusic
 {
     public sealed partial class MainPage
     {
+        public static MainPage Current;
+
         public MainViewModel MainVM => (MainViewModel)DataContext;
 
         public MainPage()
         {
             InitializeComponent();
+
+            Current = this;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManagerBackRequested;
 
@@ -40,8 +44,18 @@ namespace LuoMusic
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnMainPageBackRequested;
 
-            Tools.SetStatusBar();
             //LuoVolFactory.getlist();
+        }
+
+        public async void NavigateByVolNum(string volnum)
+        {
+            var vol = new LuoVol() {
+                VolNum=volnum,
+                VolUrl= "https://www.luoow.com/"+volnum+"/"
+            };
+            MainVM.CurrentVol = new VolItem(vol);
+            await MainVM.CurrentVol.GetVolDetialAsync();
+            MainFrame.Navigate(typeof(VolDetialPage));
         }
 
         private void OnMainPageBackRequested(object sender, BackRequestedEventArgs e)
@@ -58,7 +72,7 @@ namespace LuoMusic
         {
             if(MainFrame.Content.GetType() != typeof(VolDetialPage) && MainFrame.Content.GetType() != typeof(VolPlayDetialPage))
             {
-                if (MainVM.HamList[MainVM.CurrentNavIndex].TargetType != MainFrame.Content.GetType())
+                if ((MainVM.CurrentNavIndex == -1) || (MainVM.HamList[MainVM.CurrentNavIndex].TargetType != MainFrame.Content.GetType()))
                 {
                     var currentNavIndex = MainVM.HamList.IndexOf(MainVM.HamList.Find(p => p.TargetType == MainFrame.Content.GetType()));
                     MainVM.CurrentNavIndex = currentNavIndex;
@@ -257,5 +271,32 @@ namespace LuoMusic
             }
         }
 
+        private void SettingBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(MainFrame.Content.GetType() == typeof(SettingPage))
+            {
+                GoBack();
+                UpdateNavIndex();
+            }
+            else
+            {
+                MainFrame.Navigate(typeof(SettingPage));
+                MainVM.CurrentNavIndex = -1;
+            }
+        }
+
+        private void MoreBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.Content.GetType() == typeof(AboutPage))
+            {
+                GoBack();
+                UpdateNavIndex();
+            }
+            else
+            {
+                MainFrame.Navigate(typeof(AboutPage));
+                MainVM.CurrentNavIndex = -1;
+            }
+        }
     }
 }

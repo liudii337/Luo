@@ -9,6 +9,7 @@
     xmlns:model="using:LuoMusic.Model"
     xmlns:common="using:LuoMusic.Common"
     xmlns:data="using:Luo.Shared.Data"
+    xmlns:animations="using:LuoMusic.Common.Composition"
     xmlns:uc="using:LuoMusic.Pages.UC"
     mc:Ignorable="d"
     Background="{x:Null}"
@@ -31,13 +32,14 @@
                                      MinItemHeight="220"
                                      MinItemWidth="320"
                                      Padding="8,0,8,0"
+                                     animations:ReorderGridAnimation.Duration="360"
                       HorizontalAlignment="Stretch">
                 <common:AdaptiveGridView.Header>
                     <GridView x:Name="TagGrid" HorizontalAlignment="Left" VerticalAlignment="Center"
                         ItemsSource="{Binding LuoVolTags}" 
                         Padding="0,5,0,5"
                         ItemContainerStyle="{StaticResource TagGridViewItemContainerStyle}"
-                        SelectedIndex="{Binding CurrentTagIndex,Mode=TwoWay}" >
+                        SelectedIndex="{Binding CurrentTagIndex,Mode=TwoWay}">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolTag">
                                 <Grid Margin="8,0,8,0">

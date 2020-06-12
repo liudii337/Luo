@@ -17,32 +17,63 @@ namespace Luo.Shared.Helper
             return Math.Abs(value1 - value2) < 0.0000001;
         }
 
-        public static void SetStatusBar()
+        public static void SetStatusBar(bool isLight)
         {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            if(isLight)
             {
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                if (titleBar != null)
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
                 {
-                    titleBar.ButtonBackgroundColor = Colors.Transparent;
-                    titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-                    titleBar.ButtonForegroundColor = Colors.Black;
+                    var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                    var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                    if (titleBar != null)
+                    {
+                        titleBar.ButtonBackgroundColor = Colors.Transparent;
+                        titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                        titleBar.ButtonForegroundColor = Colors.Black;
 
-                    coreTitleBar.ExtendViewIntoTitleBar = true;
+                        coreTitleBar.ExtendViewIntoTitleBar = true;
+                        var applicationView = ApplicationView.GetForCurrentView();
+                        applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                    }
+                }
+
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = StatusBar.GetForCurrentView();
+                    statusBar.ForegroundColor = Colors.Black;
+                    statusBar.BackgroundOpacity = 0;
+
                     var applicationView = ApplicationView.GetForCurrentView();
                     applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
                 }
             }
-
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            else
             {
-                var statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = Colors.Black;
-                statusBar.BackgroundOpacity = 0;
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+                {
+                    var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                    var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                    if (titleBar != null)
+                    {
+                        titleBar.ButtonBackgroundColor = Colors.Transparent;
+                        titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                        titleBar.ButtonForegroundColor = Colors.White;
 
-                var applicationView = ApplicationView.GetForCurrentView();
-                applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                        coreTitleBar.ExtendViewIntoTitleBar = true;
+                        var applicationView = ApplicationView.GetForCurrentView();
+                        applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                    }
+                }
+
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = StatusBar.GetForCurrentView();
+                    statusBar.ForegroundColor = Colors.White;
+                    statusBar.BackgroundOpacity = 0;
+
+                    var applicationView = ApplicationView.GetForCurrentView();
+                    applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                }
             }
         }
 

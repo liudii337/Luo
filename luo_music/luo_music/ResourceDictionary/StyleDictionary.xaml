@@ -891,7 +891,6 @@
 
     <Style x:Key="ToggleStarStyle" TargetType="ToggleButton" >
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="White" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0,0,0,0" />
@@ -1392,6 +1391,29 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SubTitleTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0,24,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style x:Key="SubContentTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style x:Key="SubContentRichTextBlockStyle" TargetType="RichTextBlock">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
 
 
 </ResourceDictionary>

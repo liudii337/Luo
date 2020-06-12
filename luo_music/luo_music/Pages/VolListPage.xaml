@@ -10,6 +10,7 @@
     xmlns:common="using:LuoMusic.Common"
     xmlns:uc="using:LuoMusic.Pages.UC"
     xmlns:data="using:Luo.Shared.Data"
+    xmlns:animations="using:LuoMusic.Common.Composition"
     mc:Ignorable="d"
     Background="{x:Null}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -30,7 +31,8 @@
                                      MinItemHeight="220"
                                      MinItemWidth="320"
                                      Padding="8, 0, 8, 0"
-                                     HorizontalAlignment="Stretch" FontFamily="Segoe UI">
+                                     HorizontalAlignment="Stretch" FontFamily="Segoe UI"
+                                     animations:ReorderGridAnimation.Duration="360">
                 <common:AdaptiveGridView.Header>
                     <GridView x:Name="NumGrid" HorizontalAlignment="Left" VerticalAlignment="Center"
                         ItemsSource="{Binding LuoVolNums}" 

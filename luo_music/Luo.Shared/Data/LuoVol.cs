@@ -299,6 +299,17 @@ namespace Luo.Shared.Data
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
 
+            if(Title.IsNullorEmpty())
+            {
+                var vol_title = doc.DocumentNode.SelectSingleNode("//div[@class='title']").InnerText;
+                Title=vol_title.Substring(vol_title.IndexOf(' ') + 1);
+            }
+
+            if (Cover.IsNullorEmpty())
+            {
+                Cover = doc.DocumentNode.SelectSingleNode("//img[@class='img-responsive']").GetAttributeValue("src", "");
+            }
+
             //查找节点
             //var vol_number = doc.DocumentNode.SelectSingleNode("//span[@class='vol-number rounded']").InnerText;
             //var vol_title = doc.DocumentNode.SelectSingleNode("//span[@class='vol-title']").InnerText;

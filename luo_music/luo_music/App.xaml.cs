@@ -29,6 +29,13 @@ namespace LuoMusic
             this.UnhandledException += OnUnhandledException;
         }
 
+        public static string GetAppVersion()
+        {
+            var packageVersion = Package.Current.Id.Version;
+            var version = $"{packageVersion.Major}.{packageVersion.Minor}.{packageVersion.Build}";
+            return version;
+        }
+
         public static AppSettings AppSettings
         {
             get
@@ -128,6 +135,31 @@ namespace LuoMusic
         {
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += App_CloseRequested;
             RegisterExceptionHandlingSynchronizationContext();
+
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                if (Window.Current.Content == null)
+                {
+                    CreateRootFrame(ApplicationExecutionState.NotRunning);
+
+                    rootFrame.Navigate(typeof(MainPage));
+
+                    Window.Current.Activate();
+                }
+
+                var a = args as ProtocolActivatedEventArgs;
+                var uri = a.Uri;
+
+                if (uri != null)
+                {
+                    var volnum = uri.Query.Replace("?volnum=", "");
+                    MainPage.Current?.NavigateByVolNum(volnum);
+                }
+            }
+            else
+            {
+                Window.Current.Activate();
+            }
         }
 
         private void HandleNotificationMessage(NotificationMessageAction<string> message)
@@ -135,7 +167,7 @@ namespace LuoMusic
             message.Execute("Success (from App.xaml.cs)!");
         }
 
-        private async void CreateRootFrame(ApplicationExecutionState previousExecutionState)
+        private void CreateRootFrame(ApplicationExecutionState previousExecutionState)
         {
             rootFrame = Window.Current.Content as Frame;
 

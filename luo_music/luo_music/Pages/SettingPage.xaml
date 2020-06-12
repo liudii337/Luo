@@ -6,9 +6,78 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{x:Null}">
+    Background="{x:Null}"
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid>
-        <TextBlock Text="施工中" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
+        <StackPanel Margin="0,20,0,0" MaxWidth="400" >
+            <TextBlock
+                        Style="{StaticResource SubTitleTextBlockStyle}"
+                        Text="设置" />
+            <Grid Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="动态磁贴" />
+                <ToggleSwitch
+                            Grid.Column="1"
+                            IsOn="{Binding EnableTile, Mode=TwoWay}"
+                    OnContent=""
+                    OffContent=""
+                    MinWidth="40"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="时间线记录" />
+                <ToggleSwitch
+                            Grid.Column="1"
+                            IsOn="{Binding EnableTimeline, Mode=TwoWay}"
+                            OnContent=""
+                            OffContent=""
+                            MinWidth="40"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="主题" />
+                <ComboBox SelectedIndex="{Binding ThemeMode, Mode=TwoWay}"
+                          Grid.Column="1" Width="120"
+                          Margin="0,0,12,0"
+                          HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <ComboBoxItem
+                            Content="亮"
+                             />
+                    <ComboBoxItem
+                            Content="暗"
+                             />
+                    <ComboBoxItem
+                            Content="跟随系统"
+                             />
+                </ComboBox>
+
+            </Grid>
+
+
+        </StackPanel>
+
     </Grid>
 </Page>

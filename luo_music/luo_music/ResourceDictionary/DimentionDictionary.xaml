@@ -6,7 +6,8 @@
     <x:Double x:Key="ThumbRadius">3</x:Double>
 
     <x:Double x:Key="MainButtonSize">48</x:Double>
-    <Thickness x:Key="ButtonsStackMargin">4</Thickness>
+    <x:Double x:Key="MediumFontSize">16</x:Double>
+    <Thickness x:Key="ButtonsStackMargin">2</Thickness>
     <Thickness x:Key="RevealThinkness">2</Thickness>
 
 </ResourceDictionary>

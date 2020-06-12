@@ -99,6 +99,7 @@ namespace Luo.Shared.Helper
 
             doc.LoadXml(volxml);
             var volnoti = new ScheduledTileNotification(doc, DateTime.Now.AddSeconds(5));
+            volnoti.ExpirationTime = DateTime.Now.AddHours(4);
             updater.AddToSchedule(volnoti);
         }
 
