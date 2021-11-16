@@ -63,7 +63,8 @@
                 <RichTextBlock Style="{StaticResource SubContentRichTextBlockStyle}">
                     <Paragraph>
                         本APP数据基于
-                        <Hyperlink NavigateUri="https://www.luoow.com/">落网记忆</Hyperlink> 网站
+                        <Hyperlink NavigateUri="https://www.luoow.com/">落网记忆</Hyperlink> 和
+                        <Hyperlink NavigateUri="https://www.waasaa.com/">挖沙</Hyperlink> 网站
                         ，开发基于个人兴趣，无广告不盈利。和各位落友一起期待落网早日回归！
                     </Paragraph>
                 </RichTextBlock>

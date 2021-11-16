@@ -36,6 +36,7 @@
                     <TextBlock Text="{Binding Name}" Grid.Row="0" VerticalAlignment="Center" FontSize="15"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
                         <TextBlock Text="{Binding Artist}" FontSize="13" Opacity="0.8"/>
+                        <TextBlock Text="·" FontSize="15" Margin="5,0,5,0" FontWeight="ExtraBold" Foreground="{x:Bind ColorTrans(IsPlaying),Mode=OneWay}"/>
                         <TextBlock Text="{Binding Album}" FontSize="13"/>
                     </StackPanel>
                 </Grid>

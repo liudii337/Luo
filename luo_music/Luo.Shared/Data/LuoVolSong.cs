@@ -175,7 +175,20 @@ namespace Luo.Shared.Data
 
         public Brush ColorTrans(bool s)
         {
-            return s == true ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
+            bool IsLight = true;
+            if (Window.Current.Content is FrameworkElement rootElement)
+            {
+                // If the user switch to follow the system, then we apply the App's theme instead of element's theme.
+                if (rootElement.RequestedTheme == ElementTheme.Default)
+                {
+                    IsLight = Application.Current.RequestedTheme == ApplicationTheme.Light;
+                }
+                else
+                {
+                    IsLight = rootElement.RequestedTheme == ElementTheme.Light;
+                }
+            }
+            return s == true ? new SolidColorBrush(Colors.Red) : new SolidColorBrush((IsLight ?  Colors.Black : Colors.White));
         }
 
         public LuoVolSong()
@@ -221,6 +234,16 @@ namespace Luo.Shared.Data
             SongId = _songid;
         }
 
+        public LuoVolSong(string _vol, string _index, string _name, string _artist, string _album, string _cover, string _songurl)
+        {
+            VolNum = _vol;
+            Index = _index;
+            Name = _name;
+            Artist = _artist;
+            Album = _album;
+            AlbumImage = _cover;
+            SongUrl = _songurl;
+        }
 
         //example: http://192.168.73.132/luoow.wxwenku.com/999/07._Froesche_Die_Schröders.mp3
         private string SongUriFormat_w(string _vol, string _index, string _name)

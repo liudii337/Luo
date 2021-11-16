@@ -425,55 +425,109 @@ namespace Luo.Shared.Data
 
         public void AddSongsFromJson(string songJson)
         {
-            var list = SimpleSong.FromJson(songJson);
-
             if (VolSongs == null)
             { VolSongs = new ObservableCollection<LuoVolSong>(); }
             else
             { VolSongs.Clear(); }
 
-            if(IsVolSongOnline)
-            {
-                foreach (var i in list)
-                {
-                    var _index = string.Format("{0:D2}", list.IndexOf(i)+1);
-                    var _name = i.Name;
-                    var _artist = i.Author;
-                    var _cover = i.Cover;
-                    var _songid = i.SongId;
+            var list = WashaSong.FromJson(songJson).Tracks;
 
-                    if (!VolSongs.Any(p => p.Index == _index))
-                    {
-                        VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _cover, _songid));
-                    }
-                }
-            }
-            else
+            foreach (var i in list)
             {
-                foreach (var i in list)
-                {
-                    var _index = i.Name.Substring(0, 2);
-                    var _name = i.Name.Substring(4);
-                    var _artist = i.Author;
-                    var _cover = Cover;
-                    var _songsrc = i.Src.OriginalString;
+                var _index = string.Format("{0:D2}", list.IndexOf(i) + 1);
+                var _name = i.Title;
+                var _artist = i.Meta == null ? "Unknown" : i.Meta.Artist;
+                var _album = i.Meta == null ? "Unknown" : i.Meta.Album;
+                var _cover = i.Image == null ? "" : i.Image.Src;
+                var _songurl = i.Src;
 
-                    if(!VolSongs.Any(p => p.Index == _index))
-                    {
-                        VolSongs.Add(new LuoVolSong() {
-                            VolNum = VolNum,
-                            Index = _index,
-                            Name = _name,
-                            Artist = _artist,
-                            Album = "",
-                            AlbumImage = _cover,
-                            SongUrl = _songsrc
-                        });
-                    }
+                if (!VolSongs.Any(p => p.Index == _index))
+                {
+                    VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _album, _cover, _songurl));
                 }
             }
 
 
+
+            //var list = SimpleSong.FromJson(songJson);
+
+            //if(IsVolSongOnline)
+            //{
+            //    foreach (var i in list)
+            //    {
+            //        var _index = string.Format("{0:D2}", list.IndexOf(i)+1);
+            //        var _name = i.Name;
+            //        var _artist = i.Author;
+            //        var _cover = i.Cover;
+            //        var _songid = i.SongId;
+
+            //        if (!VolSongs.Any(p => p.Index == _index))
+            //        {
+            //            VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _cover, _songid));
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (var i in list)
+            //    {
+            //        var _index = i.Name.Substring(0, 2);
+            //        var _name = i.Name.Substring(4);
+            //        var _artist = i.Author;
+            //        var _cover = Cover;
+            //        var _songsrc = i.Src.OriginalString;
+
+            //        if(!VolSongs.Any(p => p.Index == _index))
+            //        {
+            //            VolSongs.Add(new LuoVolSong() {
+            //                VolNum = VolNum,
+            //                Index = _index,
+            //                Name = _name,
+            //                Artist = _artist,
+            //                Album = "",
+            //                AlbumImage = _cover,
+            //                SongUrl = _songsrc
+            //            });
+            //        }
+            //    }
+            //}
+
+
+        }
+
+        //Get WashaVolDetailPageUri from WashaVolHtml
+        public string GetWashaVolDetailUri(string washaVolPageHtml)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(washaVolPageHtml);
+
+            //var vollist = new ObservableCollection<LuoVol>();
+
+
+            //look for the firstNode
+            var firstNode = doc.DocumentNode.SelectSingleNode("//a[@class='big-archive blog-post-image-link-block w-inline-block']");
+            if (firstNode.GetAttributeValue("title", "").Contains(VolNum))
+            { return firstNode.GetAttributeValue("href", ""); }
+
+            //look fir the listNode
+            var list = doc.DocumentNode.SelectNodes("//div[@class='blog-post-item w-col w-col-4 w-dyn-item']");
+
+            foreach (var i in list)
+            {
+                var title = i.SelectSingleNode("./a").GetAttributeValue("title", "");
+                if (title.Contains(VolNum))
+                { return i.SelectSingleNode("./a").GetAttributeValue("href", ""); }
+            }
+            return null;
+        }
+
+        //Get WashaVolSongListJson from washaVolDetailPageHtml
+        public string GetWashaVolSongListJson(string washaVolDetailPageHtml)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(washaVolDetailPageHtml);
+            var JsonNode = doc.DocumentNode.SelectSingleNode("//script[@class='wp-playlist-script']");
+            return JsonNode.InnerHtml.Replace("[]", "\"\"");
         }
     }
 }

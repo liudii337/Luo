@@ -324,10 +324,15 @@ namespace LuoMusic.Model
                 // Check isOnline or file
                 // Get Song Json
                 var songJson = "";
-                if(Vol.IsVolSongOnline)
+                if(true)
                 {
-                    var songSourceNum = Vol.GetVolSongSource(result);
-                    songJson = await _service.GetVolDetailHtmlAsync(Request.GetSongListJson(songSourceNum));
+                    //Change to Washa
+                    //var songSourceNum = Vol.GetVolSongSource(result);
+                    //songJson = await _service.GetVolDetailHtmlAsync(Request.GetSongListJson(songSourceNum));
+                    var WashaVolUriRequest = Request.GetWashaVolUrl(Vol.VolNum);
+                    var WashaVolHtml = await _service.GetVolDetailHtmlAsync(WashaVolUriRequest);
+                    var VolUri = Vol.GetWashaVolDetailUri(WashaVolHtml);
+                    songJson = Vol.GetWashaVolSongListJson(await _service.GetVolDetailHtmlAsync(VolUri));
                 }
                 else
                 {

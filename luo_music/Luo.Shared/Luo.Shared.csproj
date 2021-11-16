@@ -114,6 +114,7 @@
     <Compile Include="Data\LuoVolTag.cs" />
     <Compile Include="Data\ModelBase.cs" />
     <Compile Include="Data\SimpleSong.cs" />
+    <Compile Include="Data\WashaSong.cs" />
     <Compile Include="Extension\EnumrableExtesion.cs" />
     <Compile Include="Extension\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Extension\StringExtension.cs" />

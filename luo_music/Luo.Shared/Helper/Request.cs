@@ -77,6 +77,21 @@ namespace Luo.Shared.Helper
             return $"https://{HOST_w}/ajax?m=163music_item&c2={songId}";
         }
 
+        #region Washa
+        public static string WashaHOST => "https://www.waasaa.com/category/luoo";
+
+        public static string GetWashaVolUrl(string volNum)
+        {
+            var num = int.Parse(volNum);
+            int pageNum = (int)((1010 - num) / 19 + 1);
+            if (pageNum == 1)
+            { return WashaHOST; }
+            else
+            { return WashaHOST + "/page/" + pageNum; }
+        }
+
+        #endregion
+
         //public static string SearchImages => $"http://{HOST}/search/photos?";
 
         //public static string GetRandomImages => $"http://{HOST}/photos/random?";

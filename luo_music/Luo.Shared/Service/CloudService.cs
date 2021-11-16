@@ -53,12 +53,12 @@ namespace Luo.Shared.Service
 
         private async Task<string> HttpRequestAsync_w(string url)
         {
-            HttpClientHandler handler = new HttpClientHandler()
-            {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            };
-            var http = new HttpClient(handler);
-            http.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36");
+            //HttpClientHandler handler = new HttpClientHandler()
+            //{
+            //    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            //};
+            var http = new HttpClient();
+            http.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36 Edg/95.0.1020.44");
             var response = await http.GetAsync(url);
             http.Dispose();
             return response.Content.ReadAsStringAsync().Result;
