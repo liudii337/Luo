@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Luo.Shared.Helper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -393,6 +394,90 @@ namespace Luo.Shared.Data
 
             IsDetailGet = true;
         }
+
+        public void GetDetailVol_q(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            if (Title.IsNullorEmpty())
+            {
+                Title = doc.DocumentNode.SelectSingleNode("//div[@class='w-autp text-[24px] leading-[33.6px] my-[9px] text-base font-bold text-overflow']").InnerText; 
+            }
+
+            if (Cover.IsNullorEmpty())
+            {
+                Cover = doc.DocumentNode.SelectSingleNode("//img[@class='absolute top-50% left-0 transform-translate-y-[-50%] w-full h-auto object-cover object-c false']").GetAttributeValue("src", "");
+            }
+
+            var a = doc.DocumentNode.SelectSingleNode("//article[@class='mt-[24px] text-[15px] leading-[21px] text-base']").SelectNodes("./p");
+            var b = "";
+            if (a != null)
+            {
+                foreach (var i in a)
+                {
+                    if (i.InnerText == "br")
+                    {
+                        b = b + "\n";
+                    }
+                    else
+                    {
+                        b = b + i.InnerText + "\n";
+                    }
+                    if (i.InnerText.Contains("Cover"))
+                    { break; }
+                }
+            }
+            else
+            { b = doc.DocumentNode.SelectSingleNode("//article[@class='mt-[24px] text-[15px] leading-[21px] text-base']").InnerText; }
+
+            Description = b.Replace("&nbsp;", "");
+
+            //Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
+
+            Tags = new ObservableCollection<String>();
+            var vol_tags = doc.DocumentNode.SelectNodes("//span[@class='block w-fit py-[3px] px-[10px] rounded-[15px] bg-[rgba(0,0,0,0.05)] text-[rgba(0,0,0,0.7)] text-[12px] leading-[12px]']");
+
+            if (vol_tags != null)
+            {
+                foreach (var i in vol_tags)
+                {
+                    Tags.Add("#" + i.InnerText);
+                }
+            }
+
+            var keystring1 = "songList\":[";
+            var keystring2 = "}]}]]}],";
+            int startIndex = html.IndexOf("songList", 1) + keystring1.Length;
+            int endIndex = html.IndexOf(keystring2, 1) + 2;
+            var jsonstring = html.Substring(startIndex, endIndex - startIndex).Replace("\\", "");
+
+            if (VolSongs == null)
+            { VolSongs = new ObservableCollection<LuoVolSong>(); }
+            else
+            { VolSongs.Clear(); }
+
+            List<QueSong> QueSongList = JsonConvert.DeserializeObject<List<QueSong>>(jsonstring);
+
+            foreach (var i in QueSongList)
+            {
+                var _index = i.SongNo.ToString();
+                var _name = i.Title;
+                var _artist = i.Artist == null ? "Unknown" : i.Artist;
+                var _album = i.Album == null ? "Unknown" : i.Album;
+                var _cover = i.Pic.ToString() == null ? "" : i.Pic.ToString();
+                var _songurl = i.Src.ToString();
+
+                if (!VolSongs.Any(p => p.Index == _index))
+                {
+                    VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _album, _cover, _songurl));
+                }
+            }
+            //check if there is repeat volSongs
+
+            IsDetailGet = true;
+        }
+
 
         public string GetVolSongFileJson(string html)
         {

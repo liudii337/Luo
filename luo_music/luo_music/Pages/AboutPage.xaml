@@ -63,11 +63,30 @@
                 <RichTextBlock Style="{StaticResource SubContentRichTextBlockStyle}">
                     <Paragraph>
                         本APP数据基于
-                        <Hyperlink NavigateUri="https://www.luoow.com/">落网记忆</Hyperlink> 和
-                        <Hyperlink NavigateUri="https://www.waasaa.com/">挖沙</Hyperlink> 网站
-                        ，开发基于个人兴趣，无广告不盈利。和各位落友一起期待落网早日回归！
+                        <Hyperlink NavigateUri="https://www.luoow.com/">雀乐</Hyperlink>  网站
+                        ，开发基于个人兴趣，无广告不盈利。雀乐已经回归，扫描二维码下载手机APP~
                     </Paragraph>
                 </RichTextBlock>
+                
+                <StackPanel
+                        Margin="0,4,0,0"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical" Margin="12,0,12,0">
+                        <TextBlock Text="Andriod" Margin="2" HorizontalAlignment="Center"/>
+                        <Image Name="qrcode_android" Source="/Assets/qrcode_android.png"
+                            Width="122" Height="122" Margin="{StaticResource ButtonsStackMargin}"
+                            >
+                        </Image>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Margin="12,0,12,0">
+                        <TextBlock Text="Apple" Margin="2" HorizontalAlignment="Center"/>
+                        <Image Name="qrcode_apple" Source="/Assets/qrcode_apple.png"
+                            Width="122" Height="122" Margin="{StaticResource ButtonsStackMargin}"
+                            />
+                    </StackPanel>
+                </StackPanel>
                 
                 <TextBlock
                         x:Uid="FeedBackTitle"

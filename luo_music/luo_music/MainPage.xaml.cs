@@ -50,8 +50,8 @@ namespace LuoMusic
         public async void NavigateByVolNum(string volnum)
         {
             var vol = new LuoVol() {
-                VolNum=volnum,
-                VolUrl= "https://www.luoow.com/"+volnum+"/"
+                VolNum = volnum,
+                VolUrl = Request.GetNumVol_q(volnum)
             };
             MainVM.CurrentVol = new VolItem(vol);
             await MainVM.CurrentVol.GetVolDetialAsync();

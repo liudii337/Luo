@@ -14,8 +14,8 @@ namespace Luo.Shared.Data
     {
         public ObservableCollection<LuoVol> GetVols(string html)
         {
-            // 暂用新的API
-            return GetVolListFromHtml_w(html);
+            // 使用雀乐的API
+            return GetVolListFromHtml_q(html);
         }
 
         public static ObservableCollection<LuoVol>  GetVolListFromHtml(string html)
@@ -88,32 +88,32 @@ namespace Luo.Shared.Data
         {
             var voltaglist = new ObservableCollection<LuoVolTag>();
 
-            voltaglist.Add(new LuoVolTag() { Name = "摇滚", KeySrc = "rock", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c75756c47c2f.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "另类", KeySrc = "alternative", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c66bc566af6f.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "民谣", KeySrc = "folk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5b462da311903.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "流行", KeySrc = "pop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a6631d52b3c2.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "电子", KeySrc = "electronic", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a539ddc66e86.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "英伦", KeySrc = "britpop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a3560ee1c750.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "古典", KeySrc = "classical", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/58dd1a7d983b7.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "暗潮", KeySrc = "neo-wave", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/59ceb6e4d65e9.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "爵士", KeySrc = "jazz", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/599d8afcb0c3a.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "金属", KeySrc = "metal", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5ac68b6c67a01.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "后摇", KeySrc = "post-rock", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c45de0c05832.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "迷幻摇滚", KeySrc = "psychedelic-rock", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/59b6c378a8ecc.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "朋克", KeySrc = "punk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a2be90092c79.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "说唱", KeySrc = "hip-hop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5aaf89276cd7b.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "世界音乐", KeySrc = "world", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5981d54ad0002.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "硬核", KeySrc = "hardcore", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5919dd0de8923.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "氛围", KeySrc = "ambient", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5afc11b9a2f22.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "原声", KeySrc = "ost", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5b1401328623d.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "雷鬼", KeySrc = "reggae", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5895ce5348731.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "乡村", KeySrc = "country", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5818b04051236.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "蓝调", KeySrc = "blues", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5736055312e75.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "实验", KeySrc = "experimental", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a810230daa52.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "华语流行", KeySrc = "mandarin-pop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/586ebc4d7d8d8.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "后朋克", KeySrc = "post-punk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5908c47b4707c.jpg!/fwfh/640x452" });
-            voltaglist.Add(new LuoVolTag() { Name = "史诗", KeySrc = "epic", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5908c47b4707c.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "摇滚", KeySrc = "Rock", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c75756c47c2f.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "民谣", KeySrc = "Folk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5b462da311903.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "流行", KeySrc = "Pop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a6631d52b3c2.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "电子", KeySrc = "Electronic", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a539ddc66e86.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "英伦", KeySrc = "Britpop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a3560ee1c750.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "古典", KeySrc = "Classical", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/58dd1a7d983b7.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "暗潮", KeySrc = "DarkWave", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/59ceb6e4d65e9.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "爵士", KeySrc = "Jazz", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/599d8afcb0c3a.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "金属", KeySrc = "Metal", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5ac68b6c67a01.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "后摇", KeySrc = "Post-rock", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c45de0c05832.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "朋克", KeySrc = "Punk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a2be90092c79.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "说唱", KeySrc = "HipHop", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5aaf89276cd7b.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "世界音乐", KeySrc = "WorldMusic", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5981d54ad0002.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "氛围", KeySrc = "Ambient", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5afc11b9a2f22.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "原声", KeySrc = "Soundtrack", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5b1401328623d.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "雷鬼", KeySrc = "Reggae", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5895ce5348731.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "乡村", KeySrc = "Country", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5818b04051236.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "蓝调", KeySrc = "Blues", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5736055312e75.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "实验", KeySrc = "Experimental", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a810230daa52.jpg!/fwfh/640x452" });
+            voltaglist.Add(new LuoVolTag() { Name = "华语", KeySrc = "Mandarin", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/586ebc4d7d8d8.jpg!/fwfh/640x452" });
 
+            //voltaglist.Add(new LuoVolTag() { Name = "后朋克", KeySrc = "post-punk", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5908c47b4707c.jpg!/fwfh/640x452" });
+            //voltaglist.Add(new LuoVolTag() { Name = "史诗", KeySrc = "epic", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5908c47b4707c.jpg!/fwfh/640x452" });
+            //voltaglist.Add(new LuoVolTag() { Name = "迷幻摇滚", KeySrc = "psychedelic-rock", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/59b6c378a8ecc.jpg!/fwfh/640x452" });
+            //voltaglist.Add(new LuoVolTag() { Name = "硬核", KeySrc = "hardcore", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5919dd0de8923.jpg!/fwfh/640x452" });
+            //voltaglist.Add(new LuoVolTag() { Name = "另类", KeySrc = "alternative", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c66bc566af6f.jpg!/fwfh/640x452" });
             //voltaglist.Add(new LuoVolTag() { Name = "人声", KeySrc = "vocal", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/57862dc457a86.jpg!/fwfh/640x452" });
             //voltaglist.Add(new LuoVolTag() { Name = "品牌", KeySrc = "brand", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a02c66d3722b.jpg!/fwfh/640x452" });
 
@@ -183,6 +183,31 @@ namespace Luo.Shared.Data
 
 
                 var vol = new LuoVol(cover, volnum, volurl, title);
+
+                vollist.Add(vol);
+            }
+
+            return vollist;
+        }
+
+        public static ObservableCollection<LuoVol> GetVolListFromHtml_q(string html)
+        {
+            var vollist = new ObservableCollection<LuoVol>();
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            //查找节点
+            var list = doc.DocumentNode.SelectNodes("//div[@class='flex flex-col w-[712px] rounded-[6px] bg-base ']");
+
+            foreach (var i in list)
+            {
+                var cover = i.SelectSingleNode(".//img[@class='absolute top-50% left-0 transform-translate-y-[-50%] w-full h-auto object-cover object-c group-hover:transform-scale-103 transition-transform-300']").GetAttributeValue("src", "");
+                var volnumtext = i.SelectSingleNode(".//p[@class='w-full h-15px ml-5px text-15px font-normal leading-15px text-#000/90 text-left']").InnerText;
+                var volnum = Convert.ToInt16(volnumtext).ToString();
+                var volurl = "https://www.indie.cn/vol/" + volnum;
+                var title = i.SelectSingleNode(".//p[@class='absolute bottom-[23px] left-[23px] text-[#fff] text-[20px] leading-[33.6px] font-500']").InnerText;
+                var vol = new LuoVol(cover, volnum, volurl, title);
+                vol.Description = i.SelectSingleNode(".//p[@class='w-full mt-[15px] mb-[12px] text-[15px] leading-[24px] font-500 text-base cursor-pointer text-overflow-2']").InnerText;     //补充一个简短介绍
 
                 vollist.Add(vol);
             }

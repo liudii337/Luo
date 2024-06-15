@@ -1,4 +1,5 @@
 ﻿using Luo.Shared.Data;
+using Luo.Shared.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Luo.Shared.Service
             //网络请求获得原料
             // 暂用新的API
             // check if it's tag request
-            if(!RequestUrl.Contains("tag"))
+            if(RequestUrl.Contains("all"))
             {
                 //var result = await _cloudService.GetVolsAsync_w(Offset, Count, GetCancellationToken(), RequestUrl);
                 var result = await _cloudService.GetNumVolsAsync_w(Offset, Count, GetCancellationToken(), RequestUrl);
@@ -95,5 +96,31 @@ namespace Luo.Shared.Service
                 }
             }
         }
+
+        public async Task<LuoVol> GetLatestVolAsync()
+        {
+            // 获取最新一期Vol信息
+            var result = await _cloudService.GetNumVolsAsync_w(1, 0, GetCancellationToken(), Request.GetAllVol_q);
+            if (result != null)
+            {
+                //工厂加工，获得成品
+                var volList = _VolFactory.GetVols(result);
+                // to realize 20 each time
+                if (volList != null)
+                {
+                    return volList[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
+
     }
 }

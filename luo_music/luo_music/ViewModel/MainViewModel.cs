@@ -47,10 +47,6 @@ namespace LuoMusic.ViewModel
 
         public event EventHandler<int> AboutToUpdateSelectedNavIndex;
 
-        // To support Timeline, we need to record user activity and create an adaptive card.
-        UserActivitySession _currentActivity;
-        AdaptiveCard apodTimelineCard;
-
         private CancellationTokenSourceFactory _ctsFactory;
         public CancellationTokenSourceFactory CtsFactory
         {
@@ -109,21 +105,21 @@ namespace LuoMusic.ViewModel
                 LuoVolNums = LuoVolFactory.GetVolNumList();
 
                 DataVM = new VolDataViewModel(this, 
-                    new VolService(Request.GetNumVol_w(LuoVolNums[_currentNumIndex].KeySrc), NormalFactory, CtsFactory));
+                    new VolService(Request.GetAllVol_q, NormalFactory, CtsFactory));
 
                 DataVM.RefreshAsync();
 
                 TagDataVM = new VolDataViewModel(this, 
-                    new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
+                    new VolService(Request.GetTagVol_q(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
 
                 TagDataVM.RefreshAsync();
 
                 SetPlayerCookie();
 
-                var timer = new DispatcherTimer();
-                timer.Interval = new TimeSpan(0, 0, 6);
-                timer.Tick += Timer_Tick;
-                timer.Start();
+                //var timer = new DispatcherTimer();
+                //timer.Interval = new TimeSpan(0, 0, 6);
+                //timer.Tick += Timer_Tick;
+                //timer.Start();
             }
             catch (Exception ex)
             {
@@ -131,10 +127,10 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private void Timer_Tick(object sender, object e)
-        {
-            SetPlayerCookie();
-        }
+        //private void Timer_Tick(object sender, object e)
+        //{
+        //    SetPlayerCookie();
+        //}
 
         private static void SetPlayerCookie()
         {
@@ -142,75 +138,6 @@ namespace LuoMusic.ViewModel
             cookie.Value = CookieHelper.GetCookiestring();
             HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
             bool replaced = filter.CookieManager.SetCookie(cookie);
-        }
-
-        private async void CreatVolPlayTimelineAsync(VolItem volItem)
-        {
-            // First create the adaptive card.
-            CreateAdaptiveCardForTimeline(volItem);
-
-            // Second record the user activity.
-            await GenerateActivityAsync(volItem);
-        }
-
-        private void CreateAdaptiveCardForTimeline(VolItem volItem)
-        {
-            // Create an adaptive card specifically to reference this app in Windows 10 Timeline.
-            apodTimelineCard = new AdaptiveCard("1.0")
-            {
-                // Select a good background image.
-                BackgroundImage = new Uri(volItem.Vol.Cover)
-            };
-
-            // Add a heading to the card, which allows the heading to wrap to the next line if necessary.
-            var apodHeading = new AdaptiveTextBlock
-            {
-                Text = "Vol." + volItem.Vol.VolNum + " " + volItem.Vol.Title,
-                Size = AdaptiveTextSize.Large,
-                Weight = AdaptiveTextWeight.Bolder,
-                Wrap = true,
-                MaxLines = 2
-            };
-            apodTimelineCard.Body.Add(apodHeading);
-
-            // Add a description to the card, and note that it can wrap for several lines.
-            var apodDesc = new AdaptiveTextBlock
-            {
-                Text = volItem.Vol.Description,
-                Size = AdaptiveTextSize.Default,
-                Weight = AdaptiveTextWeight.Lighter,
-                Wrap = true,
-                MaxLines = 4,
-            };
-            apodTimelineCard.Body.Add(apodDesc);
-        }
-
-        private async Task GenerateActivityAsync(VolItem volItem)
-        {
-            // Get the default UserActivityChannel and query it for our UserActivity. If the activity doesn't exist, one is created.
-            UserActivityChannel channel = UserActivityChannel.GetDefault();
-
-            // The text here should be treated as a title for this activity and should be unique to this app.
-            UserActivity userActivity = await channel.GetOrCreateUserActivityAsync("LuoVol."+volItem.Vol.VolNum);
-
-            // Populate required properties: DisplayText and ActivationUri are required.
-            userActivity.VisualElements.DisplayText = "Luoo-UWP Timeline activities";
-
-            // The name in the ActivationUri must match the name in the protocol setting in the manifest file (except for the "://" part).
-            userActivity.ActivationUri = new Uri("luoo://?volnum="+volItem.Vol.VolNum);
-
-            // Build the adaptive card from a JSON string.
-            userActivity.VisualElements.Content = AdaptiveCardBuilder.CreateAdaptiveCardFromJson(apodTimelineCard.ToJson());
-
-            // Set the mime type of the user activity, in this case, an application.
-            userActivity.ContentType = "application/octet-stream";
-
-            // Save the new metadata.
-            await userActivity.SaveAsync();
-
-            // Dispose of any current UserActivitySession, and create a new one.
-            _currentActivity?.Dispose();
-            _currentActivity = userActivity.CreateSession();
         }
 
         private ObservableCollection<LuoVol> _luoVols;
@@ -468,7 +395,7 @@ namespace LuoMusic.ViewModel
                         //TagDataVM = new VolDataViewModel(this,
                         //    new VolService(Request.GetTagVol(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
                         TagDataVM = new VolDataViewModel(this,
-                            new VolService(Request.GetTagVol_w(LuoVolTags[_currentTagIndex].Name), NormalFactory, CtsFactory));
+                            new VolService(Request.GetTagVol_q(LuoVolTags[_currentTagIndex].KeySrc), NormalFactory, CtsFactory));
                     }
 
                     RaisePropertyChanged(() => CurrentTagIndex);
@@ -1060,7 +987,7 @@ namespace LuoMusic.ViewModel
                         {
                             if(EnableTimeline)
                             {
-                                CreatVolPlayTimelineAsync(CurrentPlayVol);
+                                TimeLineHelper.CreatVolPlayTimelineAsync(CurrentPlayVol.Vol);
                             }
                         }
                         catch (Exception)
@@ -1068,6 +995,9 @@ namespace LuoMusic.ViewModel
 
                         }
                     }
+                    //更新最新的期刊号码
+                    if(CurrentPlayVol.Vol.VolNum == DataVM.DataList[0].Vol.VolNum && DataVM.DataList[0].Vol.VolNum != AppSettings.Instance.LatestVolNum)
+                    { AppSettings.Instance.LatestVolNum = DataVM.DataList[0].Vol.VolNum; }
                 }
             });
         }
@@ -1120,7 +1050,24 @@ namespace LuoMusic.ViewModel
                     _enableTimeline = value;
                     RaisePropertyChanged(() => EnableTimeline);
                     AppSettings.Instance.EnableTimeline = value;
+                }
+            }
+        }
 
+        private bool _enableCheckLatestVol = AppSettings.Instance.EnableCheckLatestVol;
+        public bool EnableCheckLatestVol
+        {
+            get
+            {
+                return _enableCheckLatestVol;
+            }
+            set
+            {
+                if (_enableCheckLatestVol != value)
+                {
+                    _enableCheckLatestVol = value;
+                    RaisePropertyChanged(() => EnableCheckLatestVol);
+                    AppSettings.Instance.EnableCheckLatestVol = value;
                 }
             }
         }

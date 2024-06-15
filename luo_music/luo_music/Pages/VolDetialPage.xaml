@@ -138,7 +138,7 @@
                                        HorizontalAlignment="Left" />
                         </Grid>
                         <ToggleButton x:Name="HeartButton" Grid.Column="2" IsThreeState="False"
-                                  IsChecked="{Binding CurrentVol.IsHeartVol, Mode=TwoWay}" 
+                                  IsChecked="{Binding CurrentVol.IsHeartVol, Mode=TwoWay, FallbackValue=false}" 
                                   ToolTipService.ToolTip="{x:Bind MainVM.CurrentVol.IsHeartVolToString(MainVM.CurrentVol.IsHeartVol),Mode=OneWay}"
                               Style="{StaticResource ToggleStarStyle}" Margin="8,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" FontSize="20" Opacity="0.9"/>

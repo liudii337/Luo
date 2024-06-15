@@ -58,6 +58,24 @@
                 <TextBlock
                             Margin="12,0,0,0"
                             VerticalAlignment="Center"
+                            Text="有新Vol时通知我" />
+                <ToggleSwitch
+                            Grid.Column="1"
+                            IsOn="{Binding EnableCheckLatestVol, Mode=TwoWay}"
+                            OnContent=""
+                            OffContent=""
+                            MinWidth="40"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
                             Text="主题" />
                 <ComboBox SelectedIndex="{Binding ThemeMode, Mode=TwoWay}"
                           Grid.Column="1" Width="120"

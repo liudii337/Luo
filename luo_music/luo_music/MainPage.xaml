@@ -214,9 +214,9 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Image Margin="4" x:Name="Artwork" Width="48" Height="48"
-                       Grid.Column="0" VerticalAlignment="Center"
-                       Stretch="UniformToFill" Source="{Binding CurrentSong.AlbumImage, Mode=OneWay, FallbackValue='/Assets/DefaultCover.png'}"/>
+                <Image Margin="4,8,4,0" x:Name="Artwork" Width="48" Height="48"
+                       Grid.Column="0" VerticalAlignment="Top"
+                       Stretch="UniformToFill" Source="{Binding CurrentSong.AlbumImage, Mode=OneWay, FallbackValue='/Assets/DefaultCover.png'}" HorizontalAlignment="Stretch"/>
                 <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Height="50" Margin="4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -246,7 +246,7 @@
                                            MaxLines="1" FontSize="13" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
-                    
+
                     <TextBlock x:Name="PositionText" 
                             Grid.Row="0" 
                             HorizontalAlignment="Right" 

@@ -34,7 +34,6 @@ namespace LuoMusic.Common
             }
         }
 
-
         public bool EnableTile
         {
             get
@@ -60,6 +59,37 @@ namespace LuoMusic.Common
             {
                 SaveSettings(nameof(EnableTimeline), value);
                 RaisePropertyChanged(() => EnableTimeline);
+            }
+        }
+
+        public bool EnableCheckLatestVol
+        {
+            get
+            {
+                return ReadSettings(nameof(EnableCheckLatestVol), true);
+            }
+            set
+            {
+                SaveSettings(nameof(EnableCheckLatestVol), value);
+                RaisePropertyChanged(() => EnableCheckLatestVol);
+
+                if(EnableCheckLatestVol)
+                { var task1 = BackgroundTaskRegister.RegisterAsync(); }
+                else
+                { var task1 = BackgroundTaskRegister.UnregisterAsync(); }
+            }
+        }
+
+        public string LatestVolNum
+        {
+            get
+            {
+                return ReadSettings(nameof(LatestVolNum), "1038");
+            }
+            set
+            {
+                SaveSettings(nameof(LatestVolNum), value);
+                RaisePropertyChanged(() => LatestVolNum);
             }
         }
 
@@ -199,6 +229,8 @@ namespace LuoMusic.Common
             _uiSettings = new UISettings();
             _uiSettings.ColorValuesChanged += Settings_ColorValuesChanged;
 
+            EnableCheckLatestVol = EnableCheckLatestVol;
+            LatestVolNum = LatestVolNum;
         }
 
         private async void Settings_ColorValuesChanged(UISettings sender, object args)

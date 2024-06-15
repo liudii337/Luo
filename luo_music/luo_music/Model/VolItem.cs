@@ -320,25 +320,26 @@ namespace LuoMusic.Model
             if(result!=null)
             {
                 // 暂用新的API
-                Vol.GetDetailVol_w(result);
-                // Check isOnline or file
-                // Get Song Json
-                var songJson = "";
-                if(true)
-                {
-                    //Change to Washa
-                    //var songSourceNum = Vol.GetVolSongSource(result);
-                    //songJson = await _service.GetVolDetailHtmlAsync(Request.GetSongListJson(songSourceNum));
-                    var WashaVolUriRequest = Request.GetWashaVolUrl(Vol.VolNum);
-                    var WashaVolHtml = await _service.GetVolDetailHtmlAsync(WashaVolUriRequest);
-                    var VolUri = Vol.GetWashaVolDetailUri(WashaVolHtml);
-                    songJson = Vol.GetWashaVolSongListJson(await _service.GetVolDetailHtmlAsync(VolUri));
-                }
-                else
-                {
-                    songJson = Vol.GetVolSongFileJson(result);
-                }
-                Vol.AddSongsFromJson(songJson);
+                Vol.GetDetailVol_q(result);
+                Init();
+                //// Check isOnline or file
+                //// Get Song Json
+                //var songJson = "";
+                //if(true)
+                //{
+                //    //Change to Washa
+                //    //var songSourceNum = Vol.GetVolSongSource(result);
+                //    //songJson = await _service.GetVolDetailHtmlAsync(Request.GetSongListJson(songSourceNum));
+                //    var WashaVolUriRequest = Request.GetWashaVolUrl(Vol.VolNum);
+                //    var WashaVolHtml = await _service.GetVolDetailHtmlAsync(WashaVolUriRequest);
+                //    var VolUri = Vol.GetWashaVolDetailUri(WashaVolHtml);
+                //    songJson = Vol.GetWashaVolSongListJson(await _service.GetVolDetailHtmlAsync(VolUri));
+                //}
+                //else
+                //{
+                //    songJson = Vol.GetVolSongFileJson(result);
+                //}
+                //Vol.AddSongsFromJson(songJson);
             }
             //if (result.IsRequestSuccessful)
             //{

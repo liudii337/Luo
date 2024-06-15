@@ -92,6 +92,28 @@ namespace Luo.Shared.Helper
 
         #endregion
 
+        #region QueMusic
+        public static string HOST_q => "www.indie.cn";
+        //获取全部vol列表
+        public static string GetAllVol_q => $"https://{HOST_q}/music/all/";
+        //获取分类vol列表
+        public static string GetTagVol_q(string tag)
+        {
+            return $"https://{HOST_q}/music/{tag}/";
+        }
+        //获取vol详情页面
+        public static string GetNumVol_q(int num)
+        {
+            return $"https://{HOST_q}/vol/{num}";
+        }
+
+        public static string GetNumVol_q(string num)
+        {
+            return $"https://{HOST_q}/vol/{num}";
+        }
+
+        #endregion
+
         //public static string SearchImages => $"http://{HOST}/search/photos?";
 
         //public static string GetRandomImages => $"http://{HOST}/photos/random?";

@@ -103,6 +103,7 @@
     <Compile Include="Common\AdaptiveGridView.cs" />
     <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Common\BackdropBlurBrush.cs" />
+    <Compile Include="Common\BackgroundTaskRegister.cs" />
     <Compile Include="Common\ColorToBrushConverter.cs" />
     <Compile Include="Common\Composition\CompositionAnimationBuilder.cs" />
     <Compile Include="Common\Composition\CompositionExtensions.cs" />
@@ -167,6 +168,8 @@
     <Content Include="Assets\LargeTile.scale-150.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\qrcode_android.png" />
+    <Content Include="Assets\qrcode_apple.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />
@@ -298,6 +301,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundTask\BackgroundTask.csproj">
+      <Project>{124ae534-93c8-48a5-b5e1-af3c40a1f588}</Project>
+      <Name>BackgroundTask</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Luo.Shared\Luo.Shared.csproj">
       <Project>{65edf7bc-0d53-4196-a76a-d747879fec54}</Project>
       <Name>Luo.Shared</Name>

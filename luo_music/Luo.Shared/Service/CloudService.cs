@@ -53,15 +53,25 @@ namespace Luo.Shared.Service
 
         private async Task<string> HttpRequestAsync_w(string url)
         {
-            //HttpClientHandler handler = new HttpClientHandler()
-            //{
-            //    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            //};
-            var http = new HttpClient();
-            http.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36 Edg/95.0.1020.44");
-            var response = await http.GetAsync(url);
-            http.Dispose();
-            return response.Content.ReadAsStringAsync().Result;
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = true // 允许自动重定向
+            };
+
+            using (HttpClient http = new HttpClient(handler))
+            {
+                // 设置请求头，模拟浏览器
+                http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0");
+                http.DefaultRequestHeaders.Add("Connection", "keep-alive");
+                http.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+                http.DefaultRequestHeaders.Add("Accept-Language", "zh-CN,zh;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6");
+                // 发送GET请求
+                HttpResponseMessage response = await http.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                http.Dispose();
+                return response.Content.ReadAsStringAsync().Result;
+            }
         }
 
         internal async Task<string> GetVolDetailHtmlAsync_w(string url)
@@ -85,7 +95,8 @@ namespace Luo.Shared.Service
             }
             else
             {
-                return null;
+                var result = await HttpRequestAsync_w(url + page);
+                return result;
             }
         }
 
@@ -98,7 +109,8 @@ namespace Luo.Shared.Service
             }
             else
             {
-                return null;
+                var result = await HttpRequestAsync_w(url + page);
+                return result;
             }
         }
     }

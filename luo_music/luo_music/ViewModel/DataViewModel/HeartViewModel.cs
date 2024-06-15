@@ -260,7 +260,12 @@ namespace LuoMusic.ViewModel.DataViewModel
 #pragma warning restore
         public bool IsHeartedVol(VolItem item)
         {
-            return HeartVols.Any(p => p.TitleString == item.TitleString);
+            if(HeartVols!=null)
+            {
+                return HeartVols.Any(p => p.Vol.Title == item.Vol.Title);
+            }
+            else
+            { return false; }
         }
         public bool IsHeartedVol(LuoVol item)
         {

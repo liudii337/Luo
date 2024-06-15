@@ -4,18 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{65EDF7BC-0D53-4196-A76A-D747879FEC54}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{124AE534-93C8-48A5-B5E1-AF3C40A1F588}</ProjectGuid>
+    <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Luo.Shared</RootNamespace>
-    <AssemblyName>Luo.Shared</AssemblyName>
+    <RootNamespace>BackgroundTask</RootNamespace>
+    <AssemblyName>BackgroundTask</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AllowCrossPlatformRetargeting>false</AllowCrossPlatformRetargeting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,7 +44,6 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -54,7 +54,6 @@
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -65,7 +64,6 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -76,7 +74,26 @@
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -87,7 +104,6 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -98,7 +114,6 @@
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
@@ -106,57 +121,19 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Convertor\DoubleTimespanConvertor.cs" />
-    <Compile Include="Data\CancellationTokenSourceFactory.cs" />
-    <Compile Include="Data\QueSong.cs" />
-    <Compile Include="Data\LuoVol.cs" />
-    <Compile Include="Data\LuoVolFactory.cs" />
-    <Compile Include="Data\LuoVolSong.cs" />
-    <Compile Include="Data\LuoVolTag.cs" />
-    <Compile Include="Data\ModelBase.cs" />
-    <Compile Include="Data\SimpleSong.cs" />
-    <Compile Include="Data\WashaSong.cs" />
-    <Compile Include="Extension\EnumrableExtesion.cs" />
-    <Compile Include="Extension\ExceptionHandlingSynchronizationContext.cs" />
-    <Compile Include="Extension\StringExtension.cs" />
-    <Compile Include="Helper\CookieHelper.cs" />
-    <Compile Include="Helper\Tile.cs" />
-    <Compile Include="Helper\TimeLineHelper.cs" />
-    <Compile Include="Helper\ToastNotificationHelper.cs" />
-    <Compile Include="Helper\Tools.cs" />
-    <Compile Include="PlaybackEngine\IPlayer.cs" />
-    <Compile Include="PlaybackEngine\Player.cs" />
-    <Compile Include="Service\CloudService.cs" />
-    <Compile Include="Service\VolService.cs" />
-    <Compile Include="Service\VolServiceBase.cs" />
-    <Compile Include="Helper\Request.cs" />
-    <Compile Include="Helper\StringHelper.cs" />
-    <Compile Include="Helper\Xpath_helper.cs" />
+    <Compile Include="CheckLatestVolTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\IService.cs" />
-    <EmbeddedResource Include="Properties\Luo.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AdaptiveCards">
-      <Version>1.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="HtmlAgilityPack">
-      <Version>1.8.9</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.9</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>7.1.3</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.17134.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
+    <ProjectReference Include="..\Luo.Shared\Luo.Shared.csproj">
+      <Project>{65edf7bc-0d53-4196-a76a-d747879fec54}</Project>
+      <Name>Luo.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

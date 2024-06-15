@@ -39,7 +39,8 @@
                         Padding="0,5,0,5"
                         ItemContainerStyle="{StaticResource TagGridViewItemContainerStyle}"
                         SelectedIndex="{Binding CurrentNumIndex,Mode=TwoWay}"
-                        SelectionChanged="NumGrid_SelectionChanged">
+                        SelectionChanged="NumGrid_SelectionChanged"
+                        Visibility="Collapsed">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolTag">
                                 <Grid Margin="8,0,8,0">
