@@ -63,7 +63,7 @@
                 <RichTextBlock Style="{StaticResource SubContentRichTextBlockStyle}">
                     <Paragraph>
                         本APP数据基于
-                        <Hyperlink NavigateUri="https://www.luoow.com/">雀乐</Hyperlink>  网站
+                        <Hyperlink NavigateUri="https://www.indie.cn/">雀乐</Hyperlink>  网站
                         ，开发基于个人兴趣，无广告不盈利。雀乐已经回归，扫描二维码下载手机APP~
                     </Paragraph>
                 </RichTextBlock>

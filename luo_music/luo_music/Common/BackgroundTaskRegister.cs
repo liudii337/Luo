@@ -21,10 +21,6 @@ namespace LuoMusic.Common
                 Debug.WriteLine("IsBackgroundTaskRegistered: true");
                 return;
             }
-            if (AppSettings.Instance.EnableCheckLatestVol == false)
-            {
-                return;
-            }
             var period = PERIOD_HOUR_MINS * 4;
             await RegisterBackgroundTask(typeof(CheckLatestVolTask),
                                                     new TimeTrigger(period, false),
