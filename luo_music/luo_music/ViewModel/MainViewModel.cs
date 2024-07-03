@@ -29,6 +29,7 @@ using System.Net;
 using Windows.ApplicationModel.UserActivities;
 using AdaptiveCards;
 using Windows.UI.Shell;
+using System.ComponentModel;
 
 namespace LuoMusic.ViewModel
 {
@@ -87,8 +88,6 @@ namespace LuoMusic.ViewModel
 
         }
 
-
-
         private async Task Initialize()
         {
             try
@@ -98,6 +97,8 @@ namespace LuoMusic.ViewModel
 
                 HeartVM = new HeartViewModel();
                 await HeartVM.RestoreListAsync();
+
+                LyricVM = new LyricViewModel();
 
                 //DataVM = new VolDataViewModel(this, new VolService(Request.GetAllVol_w, NormalFactory, CtsFactory));
 
@@ -245,6 +246,23 @@ namespace LuoMusic.ViewModel
             }
         }
 
+        private LyricViewModel _lyricVM;
+        public LyricViewModel LyricVM
+        {
+            get
+            {
+                return _lyricVM;
+            }
+            set
+            {
+                if (_lyricVM != value)
+                {
+                    _lyricVM = value;
+                    RaisePropertyChanged(() => LyricVM);
+                }
+            }
+        }
+
         //use for view binding
         private VolItem _currentVol;
         public VolItem CurrentVol
@@ -334,7 +352,6 @@ namespace LuoMusic.ViewModel
             {
                 if (_currentSongIndex != value)
                 {
-
                     RaisePropertyChanged(() => CurrentSongIndex);
                 }
             }
@@ -477,10 +494,59 @@ namespace LuoMusic.ViewModel
                 }
             }
         }
+
+        private bool _songPlayPagePresented = false;
+        public bool SongPlayPagePresented
+        {
+            get
+            {
+                return _songPlayPagePresented;
+            }
+            set
+            {
+                if (_songPlayPagePresented != value)
+                {
+                    _songPlayPagePresented = value;
+                    RaisePropertyChanged(() => SongPlayPagePresented);
+                }
+            }
+        }
+
+        private RelayCommand _presentSongPlayCommand;
+        public RelayCommand PresentSongPlayCommand
+        {
+            get
+            {
+                if (_presentSongPlayCommand != null) return _presentSongPlayCommand;
+                return _presentSongPlayCommand = new RelayCommand(() =>
+                {
+                    SongPlayPagePresented = !SongPlayPagePresented;
+                });
+            }
+        }
+
+        private bool _currentvolDetailPagePresented = false;
+        public bool CurrentvolDetailPagePresented
+        {
+            get
+            {
+                return _currentvolDetailPagePresented;
+            }
+            set
+            {
+                if (_currentvolDetailPagePresented != value)
+                {
+                    _currentvolDetailPagePresented = value;
+                    RaisePropertyChanged(() => CurrentvolDetailPagePresented);
+                }
+            }
+        }
+
         #endregion
 
         #region PlayMusic
-        private bool _isPlaying;
+
+        private bool _isPlaying=false;
         public bool IsPlaying
         {
             get
@@ -619,6 +685,12 @@ namespace LuoMusic.ViewModel
         {
             return isplaying == true ? "\uE103" : "\uE102";
         }
+
+        public string PlayPageOpenToIcon(bool isplaypageopen)
+        {
+            return isplaypageopen == true ?  "\uE96E" : "\uE96D";
+        }
+
         public string PlayPauseToString(bool isplaying)
         {
             return isplaying == true ? "暂停" : "播放";
@@ -865,6 +937,16 @@ namespace LuoMusic.ViewModel
                 if (e.CurrentSong != null)
                 {
                     CurrentSong = e.CurrentSong;
+
+                    //获取当前歌曲歌词
+                    if(CurrentSong.LrcUrl!=null)
+                    {
+                        LyricVM.LoadLrcAsync(CurrentSong.LrcUrl, TotalDuration);
+                    }
+                    else
+                    {
+                        LyricVM.Clear();
+                    }
                     //CurrentSong.IsPlaying = true;
                     //var p = e.CurrentSong;
                     ////CurrentTitle = p.Title.IsNullorEmpty() ? p.FilePath.Split('\\').LastOrDefault() : p.Title;

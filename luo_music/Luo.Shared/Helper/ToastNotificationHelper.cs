@@ -47,7 +47,7 @@ namespace Luo.Shared.Helper
                         new ToastButton("稍后再听","").SetDismissActivation()
                     }
                 },
-
+                Launch= "?volnum=" + volnum
             };
 
             return new ToastNotification(toastContent.GetXml());

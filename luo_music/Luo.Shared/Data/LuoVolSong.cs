@@ -74,7 +74,10 @@ namespace Luo.Shared.Data
             {
                 if (name != value)
                 {
-                    name = value;
+                    if(value[0]== ' ')
+                    { name=value.Substring(1); }
+                    else
+                    { name = value; }
                     RaisePropertyChanged(() => Name);
                 }
             }
@@ -144,6 +147,23 @@ namespace Luo.Shared.Data
                 {
                     songurl = value;
                     RaisePropertyChanged(() => SongUrl);
+                }
+            }
+        }
+
+        private string lrcurl;
+        public string LrcUrl
+        {
+            get
+            {
+                return lrcurl;
+            }
+            set
+            {
+                if (lrcurl != value)
+                {
+                    lrcurl = value;
+                    RaisePropertyChanged(() => LrcUrl);
                 }
             }
         }
@@ -243,6 +263,18 @@ namespace Luo.Shared.Data
             Album = _album;
             AlbumImage = _cover;
             SongUrl = _songurl;
+        }
+
+        public LuoVolSong(string _vol, string _index, string _name, string _artist, string _album, string _cover, string _songurl, string _lrcurl)
+        {
+            VolNum = _vol;
+            Index = _index;
+            Name = _name;
+            Artist = _artist;
+            Album = _album;
+            AlbumImage = _cover;
+            SongUrl = _songurl;
+            LrcUrl = _lrcurl;
         }
 
         //example: http://192.168.73.132/luoow.wxwenku.com/999/07._Froesche_Die_Schröders.mp3

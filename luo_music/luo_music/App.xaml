@@ -24,6 +24,8 @@
             <common:AppSettings x:Key="AppSettings" />
 
             <common:StringFormatConverter x:Key="StringFormatConverter"/>
+
+            <common:BoolNottoVisibilityConverter x:Key="BoolNottoVisibilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

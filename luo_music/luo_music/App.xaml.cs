@@ -136,17 +136,16 @@ namespace LuoMusic
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += App_CloseRequested;
             RegisterExceptionHandlingSynchronizationContext();
 
+            if (Window.Current.Content == null)
+            {
+                CreateRootFrame(ApplicationExecutionState.NotRunning);
+
+                rootFrame.Navigate(typeof(MainPage));
+
+                Window.Current.Activate();
+            }
             if (args.Kind == ActivationKind.Protocol)
             {
-                if (Window.Current.Content == null)
-                {
-                    CreateRootFrame(ApplicationExecutionState.NotRunning);
-
-                    rootFrame.Navigate(typeof(MainPage));
-
-                    Window.Current.Activate();
-                }
-
                 var a = args as ProtocolActivatedEventArgs;
                 var uri = a.Uri;
 
@@ -156,9 +155,16 @@ namespace LuoMusic
                     MainPage.Current?.NavigateByVolNum(volnum);
                 }
             }
-            else
+            if(args.Kind == ActivationKind.ToastNotification)
             {
-                Window.Current.Activate();
+                var a = args as ToastNotificationActivatedEventArgs;
+                var uri = a.Argument;
+
+                if (uri != null)
+                {
+                    var volnum = uri.Replace("?volnum=", "");
+                    MainPage.Current?.NavigateByVolNum(volnum);
+                }
             }
         }
 

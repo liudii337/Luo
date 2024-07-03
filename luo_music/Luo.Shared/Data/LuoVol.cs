@@ -470,7 +470,14 @@ namespace Luo.Shared.Data
 
                 if (!VolSongs.Any(p => p.Index == _index))
                 {
-                    VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _album, _cover, _songurl));
+                    if (i.Lrc != null)
+                    {
+                        VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _album, _cover, _songurl, i.Lrc.ToString()));
+                    }
+                    else
+                    {
+                        VolSongs.Add(new LuoVolSong(VolNum, _index, _name, _artist, _album, _cover, _songurl));
+                    }
                 }
             }
             //check if there is repeat volSongs

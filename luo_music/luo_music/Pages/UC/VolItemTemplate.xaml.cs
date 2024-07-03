@@ -141,6 +141,9 @@ namespace LuoMusic.Pages.UC
             if (!volItem.Vol.IsDetailGet)
             { await volItem.GetVolDetialAsync(); }
 
+            if(volItem.MainVM.CurrentVol==null)
+            { volItem.MainVM.CurrentVol = volItem; }
+            
             volItem.MainVM.CurrentPlayVol = volItem;
             await volItem.MainVM.InstantPlayAsync(volItem.Vol.VolSongs);
         }

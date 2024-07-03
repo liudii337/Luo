@@ -298,5 +298,53 @@ namespace LuoMusic
                 MainVM.CurrentNavIndex = -1;
             }
         }
+
+        private void Artwork_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if(MainVM.CurrentSong != null)
+            {
+                MainVM.PresentSongPlayCommand.Execute(null);
+            }
+        }
+
+        private void SongPlayUC_OnPresentedChanged(object sender, PresentedArgs e)
+        {
+            if(!MainVM.SongPlayPagePresented && MainVM.CurrentvolDetailPagePresented)
+            {
+                if (MainFrame.Content.GetType() != typeof(VolPlayDetialPage))
+                {
+                    if ((MainVM.CurrentPlayVol == MainVM.CurrentVol) && (MainFrame.Content.GetType() == typeof(VolDetialPage)))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        MainFrame.Navigate(typeof(VolPlayDetialPage));
+                    }
+                }
+                MainVM.CurrentvolDetailPagePresented = false;
+            }
+        }
+
+        private void SongPlayUC_OnPresentedChanged(object sender, object e)
+        {
+
+        }
+
+        private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (MainVM.CurrentSong != null)
+            {
+                ArtworkBorder.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Grid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (MainVM.CurrentSong != null)
+            {
+                ArtworkBorder.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

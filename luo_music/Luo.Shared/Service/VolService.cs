@@ -122,5 +122,21 @@ namespace Luo.Shared.Service
             
         }
 
+        public async Task<string> GetLrcStringAsync(string LrcUrl)
+        {
+            // 获取最新一期Vol信息
+            var result = await _cloudService.GetLrcStringAsync(LrcUrl);
+            if (result != null)
+            {
+                return result;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
     }
 }

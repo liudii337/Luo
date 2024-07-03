@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Convertor\DoubleTimespanConvertor.cs" />
     <Compile Include="Data\CancellationTokenSourceFactory.cs" />
+    <Compile Include="Data\Lyric.cs" />
     <Compile Include="Data\QueSong.cs" />
     <Compile Include="Data\LuoVol.cs" />
     <Compile Include="Data\LuoVolFactory.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Helper\TimeLineHelper.cs" />
     <Compile Include="Helper\ToastNotificationHelper.cs" />
     <Compile Include="Helper\Tools.cs" />
+    <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="PlaybackEngine\IPlayer.cs" />
     <Compile Include="PlaybackEngine\Player.cs" />
     <Compile Include="Service\CloudService.cs" />

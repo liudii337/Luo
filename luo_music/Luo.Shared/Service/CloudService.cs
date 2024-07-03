@@ -51,7 +51,7 @@ namespace Luo.Shared.Service
         //    return result;
         //}
 
-        private async Task<string> HttpRequestAsync_w(string url)
+        private async Task<string> HttpRequestAsync_q(string url)
         {
             HttpClientHandler handler = new HttpClientHandler()
             {
@@ -76,13 +76,19 @@ namespace Luo.Shared.Service
 
         internal async Task<string> GetVolDetailHtmlAsync_w(string url)
         {
-            var result = await HttpRequestAsync_w(url);
+            var result = await HttpRequestAsync_q(url);
+            return result;
+        }
+
+        internal async Task<string> GetLrcStringAsync(string url)
+        {
+            var result = await HttpRequestAsync_q(url);
             return result;
         }
 
         internal async Task<string> GetVolsAsync_w(int page, int pageCount, CancellationToken token, string url)
         {
-            var result = await HttpRequestAsync_w(string.Format("{0}{1}", url, Request.RequestParse(page)));
+            var result = await HttpRequestAsync_q(string.Format("{0}{1}", url, Request.RequestParse(page)));
             return result;
         }
 
@@ -90,12 +96,12 @@ namespace Luo.Shared.Service
         {
             if (page == 1)
             {
-                var result = await HttpRequestAsync_w(url);
+                var result = await HttpRequestAsync_q(url);
                 return result;
             }
             else
             {
-                var result = await HttpRequestAsync_w(url + page);
+                var result = await HttpRequestAsync_q(url + page);
                 return result;
             }
         }
@@ -104,12 +110,12 @@ namespace Luo.Shared.Service
         {
             if(page==1)
             {
-                var result = await HttpRequestAsync_w(url);
+                var result = await HttpRequestAsync_q(url);
                 return result;
             }
             else
             {
-                var result = await HttpRequestAsync_w(url + page);
+                var result = await HttpRequestAsync_q(url + page);
                 return result;
             }
         }
