@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Globalization;
 
 namespace Luo.Shared.Data
 {
@@ -116,6 +117,14 @@ namespace Luo.Shared.Data
             //voltaglist.Add(new LuoVolTag() { Name = "另类", KeySrc = "alternative", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5c66bc566af6f.jpg!/fwfh/640x452" });
             //voltaglist.Add(new LuoVolTag() { Name = "人声", KeySrc = "vocal", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/57862dc457a86.jpg!/fwfh/640x452" });
             //voltaglist.Add(new LuoVolTag() { Name = "品牌", KeySrc = "brand", ImgSrc = "http://img-cdn2.luoo.net/pics/vol/5a02c66d3722b.jpg!/fwfh/640x452" });
+
+            if(ApplicationLanguages.PrimaryLanguageOverride == "en-US")
+            {
+                foreach (var i in voltaglist)
+                {
+                    i.Name = i.KeySrc;
+                }
+            }
 
             return voltaglist;
         }

@@ -11,7 +11,7 @@
 
     <Grid>
         <StackPanel Margin="0,20,0,0" MaxWidth="400" >
-            <TextBlock
+            <TextBlock x:Uid="SettingTitle"
                         Style="{StaticResource SubTitleTextBlockStyle}"
                         Text="设置" />
             <Grid Height="50">
@@ -19,7 +19,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock
+                <TextBlock x:Uid="LiveTile"
                             Margin="12,0,0,0"
                             VerticalAlignment="Center"
                             Text="动态磁贴" />
@@ -37,7 +37,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock
+                <TextBlock x:Uid="TimeLine"
                             Margin="12,0,0,0"
                             VerticalAlignment="Center"
                             Text="时间线记录" />
@@ -52,10 +52,10 @@
             </Grid>
             <Grid Height="50">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock
+                <TextBlock x:Uid="RemindNewVol"
                             Margin="12,0,0,0"
                             VerticalAlignment="Center"
                             Text="有新Vol时通知我" />
@@ -73,7 +73,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock
+                <TextBlock x:Uid="AppTheme"
                             Margin="12,0,0,0"
                             VerticalAlignment="Center"
                             Text="主题" />
@@ -81,14 +81,36 @@
                           Grid.Column="1" Width="120"
                           Margin="0,0,12,0"
                           HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <ComboBoxItem
+                    <ComboBoxItem x:Uid="ThemeComboBoxLight"
                             Content="亮"
                              />
-                    <ComboBoxItem
+                    <ComboBoxItem x:Uid="ThemeComboBoxDark"
                             Content="暗"
                              />
-                    <ComboBoxItem
+                    <ComboBoxItem x:Uid="ThemeComboBoxSystem"
                             Content="跟随系统"
+                             />
+                </ComboBox>
+
+            </Grid>
+            <Grid Height="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Uid="LanguageTitle"
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="语言" />
+                <ComboBox SelectedIndex="{Binding Language, Mode=TwoWay}"
+                          Grid.Column="1" Width="120"
+                          Margin="0,0,12,0"
+                          HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <ComboBoxItem x:Uid="LanguageComboBoxEnglish"
+                            Content="英文"
+                             />
+                    <ComboBoxItem x:Uid="LanguageComboBoxChinese"
+                            Content="中文"
                              />
                 </ComboBox>
 

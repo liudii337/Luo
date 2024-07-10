@@ -30,6 +30,7 @@ using Windows.ApplicationModel.UserActivities;
 using AdaptiveCards;
 using Windows.UI.Shell;
 using System.ComponentModel;
+using Windows.ApplicationModel.Resources;
 
 namespace LuoMusic.ViewModel
 {
@@ -116,6 +117,8 @@ namespace LuoMusic.ViewModel
                 TagDataVM.RefreshAsync();
 
                 SetPlayerCookie();
+
+                CurrentSong = new LuoVolSong();
 
                 //var timer = new DispatcherTimer();
                 //timer.Interval = new TimeSpan(0, 0, 6);
@@ -433,7 +436,7 @@ namespace LuoMusic.ViewModel
             {
                 //多语言支持
                 //Title = Consts.Localizer.GetString("HomeText"),
-                Title="最新期刊",
+                Title=ResourceLoader.GetForCurrentView().GetString("AllVols"),
                 TargetType = typeof(VolListPage),
                 Icon="\uE80F",
                 Index = VirtualKey.Number1,
@@ -441,7 +444,7 @@ namespace LuoMusic.ViewModel
             },
             new HamPanelItem
             {
-                Title = "分类",
+                Title=ResourceLoader.GetForCurrentView().GetString("TagVols"),
                 Icon="\uE2AC",
                 TargetType = typeof(VolTagListPage),
                 Index = VirtualKey.Number2,
@@ -449,7 +452,7 @@ namespace LuoMusic.ViewModel
             },
             new HamPanelItem
             {
-                Title = "收藏",
+                Title=ResourceLoader.GetForCurrentView().GetString("HeartVols"),
                 Icon = "\uEFA9",
                 TargetType = typeof(HeartPage),
                 Index = VirtualKey.Number3,
@@ -637,19 +640,19 @@ namespace LuoMusic.ViewModel
                         IsLoop = true;
                         IsOneLoop = false;
                         IsShuffle = false;
-                        ToastService.SendToast("循环播放");
+                        ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("SongLoop"));
                         break;
                     case 1:
                         IsLoop = true;
                         IsOneLoop = true;
                         IsShuffle = false;
-                        ToastService.SendToast("单曲循环");
+                        ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("SongSingleLoop"));
                         break;
                     case 2:
                         IsLoop = true;
                         IsOneLoop = false;
                         IsShuffle = true;
-                        ToastService.SendToast("随机播放");
+                        ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("SongShuffle"));
                         break;
                     default:
                         break;
@@ -693,7 +696,7 @@ namespace LuoMusic.ViewModel
 
         public string PlayPauseToString(bool isplaying)
         {
-            return isplaying == true ? "暂停" : "播放";
+            return isplaying == true ? ResourceLoader.GetForCurrentView().GetString("SongPause") : ResourceLoader.GetForCurrentView().GetString("SongPlay");
         }
 
         public string PlayModeToIcon(int playmode)
@@ -715,13 +718,13 @@ namespace LuoMusic.ViewModel
             switch (playmode)
             {
                 case 0:
-                    return "循环播放";
+                    return ResourceLoader.GetForCurrentView().GetString("SongLoop");
                 case 1:
-                    return "单曲循环";
+                    return ResourceLoader.GetForCurrentView().GetString("SongSingleLoop");
                 case 2:
-                    return "随机播放";
+                    return ResourceLoader.GetForCurrentView().GetString("SongShuffle");
                 default:
-                    return "循环播放";
+                    return ResourceLoader.GetForCurrentView().GetString("SongLoop");
             }
         }
 
@@ -1173,6 +1176,24 @@ namespace LuoMusic.ViewModel
             }
         }
 
+        private int _language = AppSettings.Instance.Language;
+        public int Language
+        {
+            get
+            {
+                return _language;
+            }
+            set
+            {
+                if (_language != value)
+                {
+                    _language = value;
+                    RaisePropertyChanged(() => Language);
+                    AppSettings.Instance.Language = value;
+
+                }
+            }
+        }
         #endregion
     }
 }

@@ -10,6 +10,8 @@ using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.ApplicationModel.Resources;
+using Windows.Globalization;
 
 namespace LuoMusic.Common
 {
@@ -203,21 +205,22 @@ namespace LuoMusic.Common
         //    }
         //}
 
-        //public int Language
-        //{
-        //    get
-        //    {
-        //        return ReadSettings(nameof(Language), 0);
-        //    }
-        //    set
-        //    {
-        //        SaveSettings(nameof(Language), value);
-        //        RaisePropertyChanged(() => Language);
-        //        //ToastService.SendToast(ResourcesHelper.GetResString("RestartHint"), 3000);
+        public int Language
+        {
+            get
+            {
+                return ReadSettings(nameof(Language), 0);
+            }
+            set
+            {
+                SaveSettings(nameof(Language), value);
+                RaisePropertyChanged(() => Language);
+                ApplicationLanguages.PrimaryLanguageOverride = value == 1 ? "zh-CN" : "en-US";
+                ToastService.SendToast(ResourcesHelper.GetResString("RestartHint"), 3000);
 
-        //        //Events.LogSwitchLanguage(value);
-        //    }
-        //}
+                //Events.LogSwitchLanguage(value);
+            }
+        }
 
         private readonly UISettings _uiSettings;
 
@@ -231,6 +234,18 @@ namespace LuoMusic.Common
 
             EnableCheckLatestVol = EnableCheckLatestVol;
             LatestVolNum = LatestVolNum;
+
+            var language = ApplicationLanguages.PrimaryLanguageOverride;
+            if (language == "")
+            {
+                var languages = ApplicationLanguages.Languages;
+                if (languages.Count > 0)
+                {
+                    var primary = languages[0];
+                    SaveSettings(nameof(Language), primary?.Contains("zh") ?? false ? 1 : 0);
+                }
+            }
+
         }
 
         private async void Settings_ColorValuesChanged(UISettings sender, object args)

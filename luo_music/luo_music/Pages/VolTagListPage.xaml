@@ -65,7 +65,7 @@
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <ProgressRing Foreground="{ThemeResource SystemBaseHighColor}" IsActive="True" />
                                 <TextBlock
-                                    x:Uid="LoadingTextBlock"
+                                    x:Uid="LoadingVols"
                                     Margin="8,0,0,0"
                                     VerticalAlignment="Center"
                                     Foreground="{ThemeResource SystemBaseHighColor}"

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -14,7 +15,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
@@ -31,6 +34,20 @@ namespace LuoMusic.Pages
         {
             this.InitializeComponent();
             VersionTB.Text = App.GetAppVersion();
+            SetLocalizedRichText();
+        }
+
+        private void SetLocalizedRichText()
+        {
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var localizedText = resourceLoader.GetString("CreditsString");
+
+            // 将字符串转换为 XAML 片段
+            Paragraph paragraph = (Paragraph)XamlReader.Load(localizedText);
+
+            // 清空现有内容并添加新的段落
+            richTextBlock.Blocks.Clear();
+            richTextBlock.Blocks.Add(paragraph);
         }
 
         private async void MailFeedback_Click(object sender, RoutedEventArgs e)

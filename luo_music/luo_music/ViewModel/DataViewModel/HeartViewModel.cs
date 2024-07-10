@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
 
@@ -282,7 +283,7 @@ namespace LuoMusic.ViewModel.DataViewModel
             if (!IsHeartedVol(item))
             {
                 HeartVols.Add(item);
-                ToastService.SendToast("期刊已收藏");
+                ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("HeartVolSuccess"));
             }
         }
         public void RemoveVol(VolItem item)
@@ -290,7 +291,7 @@ namespace LuoMusic.ViewModel.DataViewModel
             if(IsHeartedVol(item))
             {
                 HeartVols.Remove(item);
-                ToastService.SendToast("已取消收藏");
+                ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("HeartVolCancel"));
             }
         }
 

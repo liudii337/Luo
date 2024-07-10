@@ -230,7 +230,7 @@
                           ItemTemplate="{StaticResource LuoVolSongTemplate}" ScrollViewer.VerticalScrollMode="Disabled"
                           IsItemClickEnabled="True" IsSynchronizedWithCurrentItem="False" ItemClick="ListView_ItemClick_1" SelectionMode="None" SelectedIndex="{x:Bind MainVM.CurrentSongIndex, Mode=OneWay, FallbackValue=-1}" SelectionChanged="ListView_SelectionChanged">
                         <ListView.Header>
-                            <TextBlock Text="全部歌曲" FontWeight="Bold" FontSize="18" Margin="12,0,12,12"/>
+                            <TextBlock x:Uid="AllSongs" Text="全部歌曲" FontWeight="Bold" FontSize="18" Margin="12,0,12,12"/>
                         </ListView.Header>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">

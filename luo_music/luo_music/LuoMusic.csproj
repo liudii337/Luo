@@ -110,6 +110,7 @@
     <Compile Include="Common\Composition\ReorderGridAnimation.cs" />
     <Compile Include="Common\IncrementalLoadingCollection.cs" />
     <Compile Include="Common\NavigableUserControl.cs" />
+    <Compile Include="Common\ResourcesHelper.cs" />
     <Compile Include="Common\StringFormatConverter.cs" />
     <Compile Include="Common\ToastService.cs" />
     <Compile Include="Common\TopNavigationControl.cs" />
@@ -168,6 +169,8 @@
     </AppxManifest>
     <None Include="LuoMusic_StoreKey.pfx" />
     <None Include="luo_music_StoreKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
     <None Include="Win10_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +183,7 @@
     <Content Include="Assets\LargeTile.scale-400.png" />
     <Content Include="Assets\qrcode_android.png" />
     <Content Include="Assets\qrcode_apple.png" />
+    <Content Include="Assets\Empty.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />
@@ -331,6 +335,7 @@
       <Name>Luo.Shared</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>
   </PropertyGroup>

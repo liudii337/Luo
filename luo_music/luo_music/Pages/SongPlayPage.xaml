@@ -208,8 +208,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid x:Name="LrcHeaderGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding LyricVM.HasLyric,Converter={StaticResource BoolNottoVisibilityConverter},Mode=OneWay}">
-                <TextBlock FontSize="18" x:Name="LrcHeader" Text="暂无歌词"
-                               Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock FontSize="18" x:Name="LrcHeader" Text="暂无歌词" 
+                           x:Uid="SongHasNoLyrics" Style="{ThemeResource SubtitleTextBlockStyle}" />
             </Grid>
         </Grid>
 

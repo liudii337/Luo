@@ -179,7 +179,7 @@
             <StackPanel x:Name="ControlPanel" Orientation="Horizontal" Grid.Column="0"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
-                        Command="{x:Bind MainVM.GoPrevious}" ToolTipService.ToolTip="上一曲" 
+                        Command="{x:Bind MainVM.GoPrevious}" 
                         cu:Style="{StaticResource MainButtonCompatStyle}"
                         fcu:Style="{StaticResource MainButtonStyle}"
                         Width="{StaticResource MainButtonSize}" 
@@ -189,6 +189,9 @@
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE100;" />
                     </Button.Content>
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="SongPrevious" />
+                    </ToolTipService.ToolTip>
                 </Button>
                 <Button AccessKey="P" x:Name="PlayPause"
                         Command="{x:Bind MainVM.PlayPause}" ToolTipService.ToolTip="{x:Bind MainVM.PlayPauseToString(MainVM.IsPlaying),Mode=OneWay}"
@@ -203,7 +206,7 @@
                     </Button.Content>
                 </Button>
                 <Button AccessKey="]" x:Uid="Next" x:Name="Next"
-                        Command="{x:Bind MainVM.GoNext}"  ToolTipService.ToolTip="下一曲"
+                        Command="{x:Bind MainVM.GoNext}"
                         cu:Style="{StaticResource MainButtonCompatStyle}"
                         fcu:Style="{StaticResource MainButtonStyle}"
                         Width="{StaticResource MainButtonSize}" 
@@ -213,6 +216,9 @@
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE101;" />
                     </Button.Content>
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="SongNext" />
+                    </ToolTipService.ToolTip>
                 </Button>
             </StackPanel>
 
@@ -237,27 +243,29 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="NarrowTitle" Grid.Row="0" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}"  
+                    <TextBlock x:Name="NarrowTitle" x:Uid="LuooTitle" Grid.Row="0" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
                                            TextWrapping="NoWrap"
                                            FontSize="13"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" />
-                    <TextBlock x:Name="NarrowArtist" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay, FallbackValue='独立，不独于世'}" 
+                    <TextBlock x:Name="NarrowArtist" x:Uid="LuooSlogan" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
                                            Style="{ThemeResource BodyTextBlockStyle}" 
                                            MaxLines="1" FontSize="12" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                     <StackPanel x:Name="WideTitle" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}"  
-                                           TextWrapping="NoWrap"
+                        <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
+                                   x:Uid="LuooTitle" 
+                                   TextWrapping="NoWrap"
                                            FontSize="13"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" MaxWidth="240"/>
 
                         <TextBlock Text="-" FontSize="13" Margin="3,0,3,0" FontWeight="ExtraBold" />
 
-                        <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay, FallbackValue='独立，不独于世'}" 
-                                           Style="{ThemeResource BodyTextBlockStyle}" 
+                        <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
+                                   x:Uid="LuooSlogan"
+                                   Style="{ThemeResource BodyTextBlockStyle}" 
                                            MaxLines="1" FontSize="13" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
@@ -293,7 +301,7 @@
             </Grid>
 
             <StackPanel x:Name="ModePanel" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="Volume" x:Uid="VolumeButton" ToolTipService.ToolTip="音量" 
+                <Button x:Name="Volume" x:Uid="VolumeButton" 
                         cu:Style="{StaticResource MainButtonCompatStyle}"
                         fcu:Style="{StaticResource MainButtonStyle}"
                         Width="{StaticResource MainButtonSize}" 
@@ -331,10 +339,13 @@
                             </Grid>
                         </Flyout>
                     </Button.Flyout>
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="SongVolume" />
+                    </ToolTipService.ToolTip>
                 </Button>
 
                 <Button x:Name="RelateVol"
-                        Click="RelateVol_Click"  ToolTipService.ToolTip="当前播放期刊"
+                        Click="RelateVol_Click"
                         cu:Style="{StaticResource MainButtonCompatStyle}"
                         fcu:Style="{StaticResource MainButtonStyle}"
                         Width="{StaticResource MainButtonSize}" 
@@ -344,6 +355,9 @@
                     <Button.Content>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE93C;" />
                     </Button.Content>
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="CurrentPlayVol" />
+                    </ToolTipService.ToolTip>
                 </Button>
 
                 <Button x:Name="PlayMode"

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.System;
 
@@ -210,7 +211,7 @@ namespace LuoMusic.Model
 
         public string IsHeartVolToString(bool isHeartVol)
         {
-            return isHeartVol == true ? "已收藏" : "收藏此期刊";
+            return isHeartVol == true ? ResourceLoader.GetForCurrentView().GetString("HeartVolCancelString") : ResourceLoader.GetForCurrentView().GetString("HeartVolSetString");
         }
 
 

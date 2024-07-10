@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllSongs.Text" xml:space="preserve">
+    <value>全部歌曲</value>
+  </data>
+  <data name="AllVols" xml:space="preserve">
+    <value>最新期刊</value>
+  </data>
+  <data name="AppTheme.Text" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="Credits.Text" xml:space="preserve">
+    <value>鸣谢</value>
+  </data>
+  <data name="CreditsString" xml:space="preserve">
+    <value>&lt;Paragraph xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'&gt;
+        本应用数据基于 &lt;Bold&gt;&lt;Hyperlink NavigateUri="https://www.indie.cn/"&gt;雀乐&lt;/Hyperlink&gt;&lt;/Bold&gt; 网站，开发基于个人兴趣，无广告不盈利。雀乐已经回归，扫描二维码下载手机APP~
+      &lt;/Paragraph&gt;
+</value>
+  </data>
+  <data name="CurrentPlayVol.Text" xml:space="preserve">
+    <value>当前播放期刊</value>
+  </data>
+  <data name="Feedback.Text" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="HeartVolCancel" xml:space="preserve">
+    <value>已取消收藏</value>
+  </data>
+  <data name="HeartVolCancelString" xml:space="preserve">
+    <value>取消收藏</value>
+  </data>
+  <data name="HeartVols" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="HeartVolSetString" xml:space="preserve">
+    <value>收藏此期刊</value>
+  </data>
+  <data name="HeartVolSuccess" xml:space="preserve">
+    <value>期刊已收藏</value>
+  </data>
+  <data name="LanguageComboBoxChinese.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="LanguageComboBoxEnglish.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="LiveTile.Text" xml:space="preserve">
+    <value>动态磁贴</value>
+  </data>
+  <data name="LoadingVols.Text" xml:space="preserve">
+    <value>加载中...</value>
+  </data>
+  <data name="LuooSlogan.Text" xml:space="preserve">
+    <value>独立，不独于世</value>
+  </data>
+  <data name="LuooSloganString" xml:space="preserve">
+    <value>独立，不独于世</value>
+  </data>
+  <data name="LuooTitle.Text" xml:space="preserve">
+    <value>落网</value>
+  </data>
+  <data name="LuooTitleString" xml:space="preserve">
+    <value>落网</value>
+  </data>
+  <data name="Motivation.Text" xml:space="preserve">
+    <value>好评一下</value>
+  </data>
+  <data name="NoCollectionText" xml:space="preserve">
+    <value>这里空空如也&amp;#x0a;快去收藏自己喜欢的音乐吧</value>
+  </data>
+  <data name="RateTextBlock.Text" xml:space="preserve">
+    <value>到商店支持</value>
+  </data>
+  <data name="RemindNewVol.Text" xml:space="preserve">
+    <value>有新Vol时通知我</value>
+  </data>
+  <data name="RestartHint" xml:space="preserve">
+    <value>You need to restart app to apply the language setting.</value>
+  </data>
+  <data name="SettingTitle.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SongHasNoLyrics.Text" xml:space="preserve">
+    <value>暂无歌词</value>
+  </data>
+  <data name="SongLoop" xml:space="preserve">
+    <value>循环播放</value>
+  </data>
+  <data name="SongNext.Text" xml:space="preserve">
+    <value>下一曲</value>
+  </data>
+  <data name="SongPause" xml:space="preserve">
+    <value>暂停</value>
+  </data>
+  <data name="SongPlay" xml:space="preserve">
+    <value>播放</value>
+  </data>
+  <data name="SongPrevious.Text" xml:space="preserve">
+    <value>上一曲</value>
+  </data>
+  <data name="SongShuffle" xml:space="preserve">
+    <value>随机播放</value>
+  </data>
+  <data name="SongSingleLoop" xml:space="preserve">
+    <value>单曲循环</value>
+  </data>
+  <data name="SongVolume.Text" xml:space="preserve">
+    <value>音量</value>
+  </data>
+  <data name="TagVols" xml:space="preserve">
+    <value>分类</value>
+  </data>
+  <data name="ThemeComboBoxDark.Content" xml:space="preserve">
+    <value>暗</value>
+  </data>
+  <data name="ThemeComboBoxLight.Content" xml:space="preserve">
+    <value>亮</value>
+  </data>
+  <data name="ThemeComboBoxSystem.Content" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="TimeLine.Text" xml:space="preserve">
+    <value>时间线记录</value>
+  </data>
+  <data name="VersionTextBlock.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+</root>

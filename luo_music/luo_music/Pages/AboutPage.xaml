@@ -25,9 +25,11 @@
                 </Viewbox>
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
                            FontWeight="Bold"
-                           Text="落网"/>
+                           x:Uid="LuooTitle"
+                           Text="Luoo"/>
                 <TextBlock Style="{StaticResource SubContentTextBlockStyle}"
-                           Text="独立，不独于世"/>
+                           x:Uid="LuooSlogan"
+                           Text="Independent, yet not isolated from the world"/>
 
                 <Border
                         Margin="0,12,0,0"
@@ -38,7 +40,6 @@
                         CornerRadius="2">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
-                                x:Uid="VersionTextBlock"
                                 Margin="8,0,2,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -57,10 +58,10 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock
+                <TextBlock x:Uid="Credits"
                         Style="{StaticResource SubTitleTextBlockStyle}"
                         Text="鸣谢" />
-                <RichTextBlock Style="{StaticResource SubContentRichTextBlockStyle}">
+                <RichTextBlock x:Name="richTextBlock" Style="{StaticResource SubContentRichTextBlockStyle}">
                     <Paragraph>
                         本APP数据基于
                         <Hyperlink NavigateUri="https://www.indie.cn/">雀乐</Hyperlink>  网站
@@ -89,7 +90,7 @@
                 </StackPanel>
                 
                 <TextBlock
-                        x:Uid="FeedBackTitle"
+                        x:Uid="Feedback"
                         Style="{StaticResource SubTitleTextBlockStyle}"
                         Text="反馈" />
                 <StackPanel
@@ -111,7 +112,7 @@
                 </StackPanel>
 
                 <TextBlock
-                        x:Uid="MotivationTitle"
+                        x:Uid="Motivation"
                         Style="{StaticResource SubTitleTextBlockStyle}"
                         Text="好评一下" />
                 <Button Name="RateBtn"

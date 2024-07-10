@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -213,6 +214,9 @@ namespace Luo.Shared.Data
 
         public LuoVolSong()
         {
+            Name = ResourceLoader.GetForCurrentView().GetString("LuooTitleString");
+            Artist = ResourceLoader.GetForCurrentView().GetString("LuooSloganString");
+            AlbumImage = "/Assets/DefaultCover.png";
         }
 
         //public LuoVolSong(string _vol,string _index, string _name, string _artist, string _album, string _albumimage)
