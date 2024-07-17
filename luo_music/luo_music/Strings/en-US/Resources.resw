@@ -185,8 +185,8 @@
   <data name="Motivation.Text" xml:space="preserve">
     <value>MOTIVATION</value>
   </data>
-  <data name="NoCollectionText" xml:space="preserve">
-    <value>Here is empty&amp;#x0a;Go ahead and build your own favorite collection</value>
+  <data name="NoCollection1.Text" xml:space="preserve">
+    <value>Here is empty</value>
   </data>
   <data name="RateTextBlock.Text" xml:space="preserve">
     <value>Rate this app</value>
@@ -244,5 +244,8 @@
   </data>
   <data name="VersionTextBlock.Text" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="NoCollection2.Text" xml:space="preserve">
+    <value>Go ahead and build your own favorite collection</value>
   </data>
 </root>

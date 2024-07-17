@@ -18,17 +18,17 @@
 
     <Grid>
         <ScrollViewer Style="{StaticResource ScrollViewerCommonStyle}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="320">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="360">
                 <Viewbox Height="80" Width="80"  Margin="0,20,4,4">
                     <PathIcon Data="F1 M 10.078125 18.984375 C 9.101563 18.880209 8.193359 18.629557 7.353516 18.232422 C 6.513671 17.835287 5.716146 17.285156 4.960938 16.582031 C 4.388021 16.035156 3.844401 15.592448 3.330078 15.253906 C 2.815755 14.915365 2.278646 14.635417 1.71875 14.414063 C 1.588542 14.361979 1.471354 14.309896 1.367188 14.257813 C 1.263021 14.205729 1.210938 14.179688 1.210938 14.179688 C 1.210938 14.166667 1.246745 14.147136 1.318359 14.121094 C 1.389974 14.095053 1.471354 14.069011 1.5625 14.042969 C 1.809896 13.977865 2.174479 13.951823 2.65625 13.964844 C 3.138021 13.977865 3.483073 14.010417 3.691406 14.0625 C 3.769531 14.088542 3.83789 14.108073 3.896484 14.121094 C 3.955078 14.134115 3.984375 14.140625 3.984375 14.140625 C 3.984375 14.127604 3.951823 14.078776 3.886719 13.994141 C 3.821615 13.909506 3.74349 13.815104 3.652344 13.710938 C 3.300781 13.294271 2.994792 12.832031 2.734375 12.324219 C 2.473958 11.816406 2.265625 11.276042 2.109375 10.703125 C 2.044271 10.455729 1.998698 10.224609 1.972656 10.009766 C 1.946615 9.794922 1.927083 9.485678 1.914063 9.082031 L 1.894531 8.066406 L 2.167969 8.574219 C 2.441406 9.029948 2.747396 9.453125 3.085938 9.84375 C 3.424479 10.234375 3.776042 10.579428 4.140625 10.878906 C 4.427083 11.100261 4.583333 11.207683 4.609375 11.201172 C 4.635417 11.194662 4.576823 11.054688 4.433594 10.78125 C 4.147135 10.182292 3.945313 9.632162 3.828125 9.130859 C 3.710938 8.629558 3.645833 8.033854 3.632813 7.34375 C 3.632812 6.653646 3.688151 6.064453 3.798828 5.576172 C 3.909505 5.087891 4.108073 4.550781 4.394531 3.964844 C 4.524739 3.704428 4.710286 3.385418 4.951172 3.007813 C 5.192057 2.630209 5.325521 2.454428 5.351563 2.480469 C 5.351563 2.49349 5.348307 2.532553 5.341797 2.597656 C 5.335286 2.662762 5.325521 2.734375 5.3125 2.8125 C 5.260417 3.111979 5.240885 3.544922 5.253906 4.111328 C 5.266927 4.677734 5.305989 5.143229 5.371094 5.507813 C 5.527344 6.250001 5.78776 6.953126 6.152344 7.617188 C 6.503906 8.268229 6.940104 8.854167 7.460938 9.375 C 7.981771 9.895834 8.567708 10.338542 9.21875 10.703125 C 9.869791 11.067709 10.572916 11.328125 11.328125 11.484375 C 11.653646 11.5625 11.891275 11.595053 12.041016 11.582031 C 12.190755 11.569011 12.304688 11.523438 12.382813 11.445313 C 12.526041 11.289063 12.558593 11.136068 12.480469 10.986328 C 12.402343 10.836589 12.102863 10.507813 11.582031 10 C 10.579427 9.036459 9.869791 8.209636 9.453125 7.519531 C 9.036458 6.829428 8.802083 6.09375 8.75 5.3125 C 8.710938 4.648438 8.828125 4.003906 9.101563 3.378906 C 9.375 2.753906 9.765625 2.252605 10.273438 1.875 C 10.651041 1.575521 11.028646 1.363934 11.40625 1.240234 C 11.783854 1.116537 12.200521 1.054688 12.65625 1.054688 C 13.020833 1.054688 13.330078 1.08073 13.583984 1.132813 C 13.837891 1.184896 14.127604 1.295574 14.453125 1.464844 C 14.947916 1.686199 15.364583 1.998699 15.703125 2.402344 C 16.041666 2.80599 16.289063 3.251953 16.445313 3.740234 C 16.601563 4.228516 16.660156 4.746094 16.621094 5.292969 C 16.595051 5.826824 16.458332 6.354168 16.210938 6.875 C 16.080729 7.135417 15.957031 7.333984 15.839844 7.470703 C 15.722656 7.607422 15.625 7.662761 15.546875 7.636719 C 15.520833 7.623698 15.498047 7.535808 15.478516 7.373047 C 15.458984 7.210287 15.442708 6.901042 15.429688 6.445313 C 15.403646 5.807292 15.361328 5.319011 15.302734 4.980469 C 15.244141 4.641928 15.143229 4.316406 15 4.003906 C 14.882812 3.730469 14.755858 3.51237 14.619141 3.349609 C 14.482421 3.18685 14.303385 3.027345 14.082031 2.871094 C 13.326822 2.311199 12.503254 2.194012 11.611328 2.519531 C 10.7194 2.845053 10.149739 3.470053 9.902344 4.394531 C 9.824219 4.733073 9.804688 5.052084 9.84375 5.351563 C 9.882813 5.651043 9.986979 5.970053 10.15625 6.308594 C 10.3125 6.634115 10.608724 6.969401 11.044922 7.314453 C 11.481119 7.659506 12.447916 8.339844 13.945313 9.355469 C 15.403646 10.345053 16.3444 11.015625 16.767578 11.367188 C 17.190754 11.71875 17.5 12.096354 17.695313 12.5 C 17.98177 13.072917 18.105469 13.665365 18.066406 14.277344 C 18.027344 14.889323 17.838541 15.455729 17.5 15.976563 C 17.1875 16.458334 16.686197 16.940104 15.996094 17.421875 C 15.305989 17.903646 14.589844 18.27474 13.847656 18.535156 C 13.28776 18.730469 12.659504 18.870443 11.962891 18.955078 C 11.266275 19.039713 10.638021 19.049479 10.078125 18.984375 Z " 
                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Viewbox>
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
-                           FontWeight="Bold"
+                           FontWeight="Bold" FontFamily="{StaticResource AppFontFamily}"
                            x:Uid="LuooTitle"
                            Text="Luoo"/>
                 <TextBlock Style="{StaticResource SubContentTextBlockStyle}"
-                           x:Uid="LuooSlogan"
+                           x:Uid="LuooSlogan" FontFamily="{StaticResource AppFontFamily}"
                            Text="Independent, yet not isolated from the world"/>
 
                 <Border
@@ -43,7 +43,7 @@
                                 Margin="8,0,2,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                FontSize="13"
+                                FontSize="13" FontFamily="{StaticResource AppFontFamily}"
                                 FontWeight="Bold"
                                 Foreground="{ThemeResource SystemAltHighColor}"
                                 Text="Version" />
@@ -59,9 +59,9 @@
                 </Border>
 
                 <TextBlock x:Uid="Credits"
-                        Style="{StaticResource SubTitleTextBlockStyle}"
+                        Style="{StaticResource SubTitleTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                         Text="鸣谢" />
-                <RichTextBlock x:Name="richTextBlock" Style="{StaticResource SubContentRichTextBlockStyle}">
+                <RichTextBlock x:Name="richTextBlock" Style="{StaticResource SubContentRichTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}" LineHeight="23">
                     <Paragraph>
                         本APP数据基于
                         <Hyperlink NavigateUri="https://www.indie.cn/">雀乐</Hyperlink>  网站
@@ -74,7 +74,7 @@
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Margin="12,0,12,0">
-                        <TextBlock Text="Andriod" Margin="2" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Andriod" Margin="2" HorizontalAlignment="Center" FontFamily="{StaticResource AppFontFamily}"/>
                         <Image Name="qrcode_android" Source="/Assets/qrcode_android.png"
                             Width="122" Height="122" Margin="{StaticResource ButtonsStackMargin}"
                             >
@@ -82,7 +82,7 @@
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical" Margin="12,0,12,0">
-                        <TextBlock Text="Apple" Margin="2" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Apple" Margin="2" HorizontalAlignment="Center" FontFamily="{StaticResource AppFontFamily}"/>
                         <Image Name="qrcode_apple" Source="/Assets/qrcode_apple.png"
                             Width="122" Height="122" Margin="{StaticResource ButtonsStackMargin}"
                             />
@@ -90,7 +90,7 @@
                 </StackPanel>
                 
                 <TextBlock
-                        x:Uid="Feedback"
+                        x:Uid="Feedback" FontFamily="{StaticResource AppFontFamily}"
                         Style="{StaticResource SubTitleTextBlockStyle}"
                         Text="反馈" />
                 <StackPanel
@@ -111,9 +111,9 @@
                     </Button>
                 </StackPanel>
 
-                <TextBlock
+                <TextBlock 
                         x:Uid="Motivation"
-                        Style="{StaticResource SubTitleTextBlockStyle}"
+                        Style="{StaticResource SubTitleTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                         Text="好评一下" />
                 <Button Name="RateBtn"
                         Click="RateBtn_Click"
@@ -123,7 +123,7 @@
                         fcu:Style="{StaticResource MainButtonStyle}">
                     <TextBlock
                             x:Uid="RateTextBlock"
-                            Style="{StaticResource SubContentTextBlockStyle}"
+                            Style="{StaticResource SubContentTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                             Text="到商店支持" />
                 </Button>
 

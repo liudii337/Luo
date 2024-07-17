@@ -41,9 +41,12 @@
             <Grid VerticalAlignment="Center" Visibility="{x:Bind MainVM.HeartVM.NoVolItemVisibility, Mode=OneWay}">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Image Source="/Assets/Empty.png" Width="90" Margin="10"/>
-                    <TextBlock x:Uid="NoCollectionText"
-                        Text="这里空空如也&#x0a;快去收藏自己喜欢的音乐吧" TextAlignment="Center" LineHeight="30"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock TextAlignment="Center" LineHeight="30" FontFamily="{StaticResource AppFontFamily}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <Run x:Uid="NoCollection1"/>
+                        <LineBreak/>
+                        <Run x:Uid="NoCollection2"/>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
 

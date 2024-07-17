@@ -167,6 +167,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Fonts\MyCustomFont.otf" />
     <None Include="LuoMusic_StoreKey.pfx" />
     <None Include="luo_music_StoreKey.pfx" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />

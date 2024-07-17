@@ -70,7 +70,7 @@
                             <TextBlock
                                 x:Name="ContentTB"
                                 Margin="20,10"
-                                FontSize="14"
+                                FontSize="14" FontFamily="{StaticResource AppFontFamily}"
                                 Foreground="Black"
                                 Text="{TemplateBinding ContentText}" />
                         </Grid>

@@ -177,21 +177,21 @@
 
             </Grid>
             <Border x:Name="Vol" RelativePanel.AlignLeftWith="LeftSide" RelativePanel.Below="LeftSide"  
-                    Margin="0,18,0,5" CornerRadius="10" Tapped="Vol_Tapped">
-                <Grid>
+                    Margin="0,18,0,5" CornerRadius="11" Height="22" Tapped="Vol_Tapped">
+                <Grid PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited">
                     <Border  Background="DarkGray" Opacity="0.3"/>
                     <TextBlock Text="{Binding CurrentPlayVol.Vol.VolNum,Converter={StaticResource StringFormatConverter},ConverterParameter='VOL.{0:N0}',FallbackValue='Vol.1037'}" 
-                       FontSize="16" Margin="8,0,8,0"/>
+                       FontSize="14" FontFamily="{StaticResource AppFontFamily}" Margin="8,0,8,0" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
             <TextBlock x:Name="SongTitle" Text="{Binding CurrentSong.Name, Mode=OneWay, FallbackValue='落网'}" 
-                       FontWeight="ExtraBold" FontSize="18"
+                       FontWeight="ExtraBold" FontSize="18" FontFamily="{StaticResource AppFontFamily}"
                        RelativePanel.AlignLeftWith="LeftSide" RelativePanel.Below="Vol" Margin="0,5,0,5"/>
             <StackPanel RelativePanel.AlignLeftWith="LeftSide" RelativePanel.Below="SongTitle" Margin="0,5,0,0"
                         Orientation="Horizontal">
-                <TextBlock Text="{Binding CurrentSong.Artist}" FontSize="14" Opacity="0.8"/>
+                <TextBlock Text="{Binding CurrentSong.Artist}" FontSize="14" FontFamily="{StaticResource AppFontFamily}" Opacity="0.8"/>
                 <TextBlock Text="/" FontSize="14" Margin="5,0,5,0" />
-                <TextBlock Text="{Binding CurrentSong.Album}" FontSize="14" Opacity="0.8"/>
+                <TextBlock Text="{Binding CurrentSong.Album}" FontSize="14" FontFamily="{StaticResource AppFontFamily}" Opacity="0.8"/>
             </StackPanel>
         </RelativePanel>
         <Grid Name="LrcGrid" Tapped="LrcGrid_Tapped">
@@ -209,7 +209,7 @@
             </ListView>
             <Grid x:Name="LrcHeaderGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding LyricVM.HasLyric,Converter={StaticResource BoolNottoVisibilityConverter},Mode=OneWay}">
                 <TextBlock FontSize="18" x:Name="LrcHeader" Text="暂无歌词" 
-                           x:Uid="SongHasNoLyrics" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                           x:Uid="SongHasNoLyrics" Style="{ThemeResource SubtitleTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"/>
             </Grid>
         </Grid>
 

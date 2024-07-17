@@ -17,6 +17,7 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Luo.Shared.Helper;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace LuoMusic
 {
@@ -118,12 +119,12 @@ namespace LuoMusic
 
         private void HeartPage_MainNavigateToEvent(Type page)
         {
-            MainFrame.Navigate(page);
+            MainFrame.Navigate(page, typeof(HeartPage).Name, new SuppressNavigationTransitionInfo());
         }
 
         private void VolTagListPage_MainNavigateToEvent(Type page)
         {
-            MainFrame.Navigate(page);
+            MainFrame.Navigate(page, typeof(VolTagListPage).Name, new SuppressNavigationTransitionInfo());
         }
 
         private void CategoryPage_MainNavigateToEvent(Type page)
@@ -133,7 +134,7 @@ namespace LuoMusic
 
         private void VolListPage_MainNavigateToEvent(Type page)
         {
-            MainFrame.Navigate(page);
+            MainFrame.Navigate(page, typeof(VolListPage).Name, new SuppressNavigationTransitionInfo());
         }
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -172,7 +173,7 @@ namespace LuoMusic
         {
             if (MainFrame.CanGoBack)
             {
-                MainFrame.GoBack();
+                MainFrame.GoBack(new SuppressNavigationTransitionInfo());
                 return true;
             }
             else

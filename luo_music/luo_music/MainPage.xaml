@@ -90,7 +90,7 @@
             <common:TopNavigationControl.ItemTemplate>
                 <DataTemplate x:DataType="model:HamPanelItem">
                     <Grid Margin="0,0,15,2">
-                        <TextBlock Text="{x:Bind Title}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="{x:Bind Title}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontFamily="{StaticResource AppFontFamily}"/>
                     </Grid>
                 </DataTemplate>
             </common:TopNavigationControl.ItemTemplate>
@@ -190,7 +190,7 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE100;" />
                     </Button.Content>
                     <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="SongPrevious" />
+                        <TextBlock x:Uid="SongPrevious" FontFamily="{StaticResource AppFontFamily}"/>
                     </ToolTipService.ToolTip>
                 </Button>
                 <Button AccessKey="P" x:Name="PlayPause"
@@ -217,7 +217,7 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE101;" />
                     </Button.Content>
                     <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="SongNext" />
+                        <TextBlock x:Uid="SongNext" FontFamily="{StaticResource AppFontFamily}"/>
                     </ToolTipService.ToolTip>
                 </Button>
             </StackPanel>
@@ -245,27 +245,27 @@
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="NarrowTitle" x:Uid="LuooTitle" Grid.Row="0" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
                                            TextWrapping="NoWrap"
-                                           FontSize="13"
+                                           FontSize="13" FontFamily="{StaticResource AppFontFamily}"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" />
                     <TextBlock x:Name="NarrowArtist" x:Uid="LuooSlogan" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
-                                           Style="{ThemeResource BodyTextBlockStyle}" 
+                                           Style="{ThemeResource BodyTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                                            MaxLines="1" FontSize="12" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                     <StackPanel x:Name="WideTitle" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
                                    x:Uid="LuooTitle" 
-                                   TextWrapping="NoWrap"
-                                           FontSize="13"
+                                   TextWrapping="NoWrap" VerticalAlignment="Center"
+                                           FontSize="13" FontFamily="{StaticResource AppFontFamily}"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" MaxWidth="240"/>
 
-                        <TextBlock Text="-" FontSize="13" Margin="3,0,3,0" FontWeight="ExtraBold" />
+                        <TextBlock Text="-" FontSize="13" FontFamily="{StaticResource AppFontFamily}" Margin="3,0,3,0" FontWeight="ExtraBold" VerticalAlignment="Center"/>
 
                         <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
                                    x:Uid="LuooSlogan"
-                                   Style="{ThemeResource BodyTextBlockStyle}" 
+                                   Style="{ThemeResource BodyTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                                            MaxLines="1" FontSize="13" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
@@ -274,7 +274,7 @@
                             Grid.Row="0" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
-                            FontSize="12"
+                            FontSize="12" FontFamily="{StaticResource AppFontFamily}"
                             Margin="4"
                             Text="{x:Bind PositionToString(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
                     <ProgressBar x:Name="MainSliderBuffer" Grid.Row="1" 
@@ -340,7 +340,7 @@
                         </Flyout>
                     </Button.Flyout>
                     <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="SongVolume" />
+                        <TextBlock x:Uid="SongVolume" FontFamily="{StaticResource AppFontFamily}"/>
                     </ToolTipService.ToolTip>
                 </Button>
 
@@ -356,7 +356,7 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE93C;" />
                     </Button.Content>
                     <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="CurrentPlayVol" />
+                        <TextBlock x:Uid="CurrentPlayVol" FontFamily="{StaticResource AppFontFamily}"/>
                     </ToolTipService.ToolTip>
                 </Button>
 

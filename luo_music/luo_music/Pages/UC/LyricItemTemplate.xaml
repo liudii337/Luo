@@ -64,7 +64,7 @@
         </VisualStateManager.VisualStateGroups>
         <TextBlock TextAlignment="Center" x:Name="Main" FontSize="17"
                    TextTrimming="None" TextWrapping="WrapWholeWords"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource AppFontFamily}"
                    Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind Data.Content,Mode=OneWay}"/>
 
     </Grid>

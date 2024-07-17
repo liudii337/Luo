@@ -43,7 +43,7 @@
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolTag">
                                 <Grid Margin="8,0,8,0">
-                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontFamily="{StaticResource AppFontFamily}"/>
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -67,12 +67,12 @@
                                 <TextBlock
                                     x:Uid="LoadingVols"
                                     Margin="8,0,0,0"
-                                    VerticalAlignment="Center"
+                                    VerticalAlignment="Center" FontFamily="{StaticResource AppFontFamily}"
                                     Foreground="{ThemeResource SystemBaseHighColor}"
                                     Text="加载中..." />
                             </StackPanel>
                         </Grid>
-                        <TextBlock Text="—— 已经落在最低处了 ——" 
+                        <TextBlock Text="—— 已经落在最低处了 ——" FontFamily="{StaticResource AppFontFamily}"
                                    Visibility="{x:Bind MainVM.TagDataVM.EndVisibility, Mode=OneWay}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>

@@ -32,7 +32,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
-        <TextBlock Text="{Binding TitleString, Mode=OneWay}" Foreground="White" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Segoe UI"/>
+        <TextBlock Text="{Binding TitleString, Mode=OneWay}" Foreground="White" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource AppFontFamily}"/>
         <ToggleButton x:Name="HeartButton" IsThreeState="False" IsChecked="{Binding IsHeartVol, Mode=TwoWay}" Foreground="White"
                       ToolTipService.ToolTip="{x:Bind volItem.IsHeartVolToString(volItem.IsHeartVol),Mode=OneWay}"
                       Style="{StaticResource ToggleStarStyle}" Margin="0,0,10,13" HorizontalAlignment="Right" VerticalAlignment="Bottom">

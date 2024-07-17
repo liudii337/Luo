@@ -28,6 +28,8 @@ namespace LuoMusic.Pages
     {
         public MainViewModel MainVM => (MainViewModel)DataContext;
 
+        public string NavigatedToPageName;
+
         public VolDetialPage()
         {
             this.InitializeComponent();
@@ -59,11 +61,22 @@ namespace LuoMusic.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            if(e.SourcePageType.Name== NavigatedToPageName)
+            {
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardAnimation", Cover);
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            NavigatedToPageName = (string)e.Parameter;
+
+            ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("forwardAnimation");
+            if (animation != null)
+            {
+                animation.TryStart(Cover);
+            }
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,6 +102,23 @@ namespace LuoMusic.Pages
             //}
 
             
+        }
+
+        private void Image_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = new Duration(TimeSpan.FromSeconds(1))
+            };
+
+            var storyboard = new Storyboard();
+            storyboard.Children.Add(fadeInAnimation);
+            Storyboard.SetTarget(fadeInAnimation, CoverBack);
+            Storyboard.SetTargetProperty(fadeInAnimation, "Opacity");
+
+            storyboard.Begin();
         }
     }
 }

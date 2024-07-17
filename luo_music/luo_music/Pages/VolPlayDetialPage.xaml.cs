@@ -73,5 +73,22 @@ namespace LuoMusic.Pages
                 }
             }
         }
+
+        private void CoverBack_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = new Duration(TimeSpan.FromSeconds(1))
+            };
+
+            var storyboard = new Storyboard();
+            storyboard.Children.Add(fadeInAnimation);
+            Storyboard.SetTarget(fadeInAnimation, CoverBack);
+            Storyboard.SetTargetProperty(fadeInAnimation, "Opacity");
+
+            storyboard.Begin();
+        }
     }
 }

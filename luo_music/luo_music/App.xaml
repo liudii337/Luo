@@ -26,6 +26,10 @@
             <common:StringFormatConverter x:Key="StringFormatConverter"/>
 
             <common:BoolNottoVisibilityConverter x:Key="BoolNottoVisibilityConverter"/>
+            
+            <!-- Define a global FontFamily -->
+            <FontFamily x:Key="AppFontFamily">ms-appx:///Assets/Fonts/MyCustomFont.otf#D-DIN Exp</FontFamily>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

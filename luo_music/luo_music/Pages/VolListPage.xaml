@@ -44,7 +44,7 @@
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:LuoVolTag">
                                 <Grid Margin="8,0,8,0">
-                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontFamily="{StaticResource AppFontFamily}"/>
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -70,7 +70,7 @@
                                     Margin="8,0,0,0"
                                     VerticalAlignment="Center"
                                     Foreground="{ThemeResource SystemBaseHighColor}"
-                                    Text="加载中..." />
+                                    Text="加载中..." FontFamily="{StaticResource AppFontFamily}"/>
                             </StackPanel>
                         </Grid>
                         <StackPanel Visibility="{x:Bind MainVM.DataVM.EndVisibility, Mode=OneWay}"
@@ -79,7 +79,7 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Center" >
                                 <Button x:Name="LastPageButton" Click="LastPageButton_Click"
                                         Margin="8" ToolTipService.ToolTip="上一页"
-                                        Style="{StaticResource ButtonCommonStyle}"
+                                        Style="{StaticResource ButtonCommonStyle}" FontFamily="{StaticResource AppFontFamily}"
                                     VerticalAlignment="Center">
                                     <Grid>
                                         <Ellipse Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -90,7 +90,7 @@
                                 </Button>
                                 <Button x:Name="NextPageButton" Click="NextPageButton_Click"
                                         Margin="8" ToolTipService.ToolTip="下一页"
-                                    Style="{StaticResource ButtonCommonStyle}"
+                                    Style="{StaticResource ButtonCommonStyle}" FontFamily="{StaticResource AppFontFamily}"
                                     VerticalAlignment="Center">
                                     <Grid>
                                         <Ellipse Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -100,7 +100,7 @@
                                     </Grid>
                                 </Button>
                             </StackPanel>
-                            <TextBlock Text="—— 已经落在最低处了 ——" 
+                            <TextBlock Text="—— 已经落在最低处了 ——" FontFamily="{StaticResource AppFontFamily}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                         </StackPanel>
