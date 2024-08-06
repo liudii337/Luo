@@ -248,4 +248,10 @@
   <data name="NoCollection2.Text" xml:space="preserve">
     <value>Go ahead and build your own favorite collection</value>
   </data>
+  <data name="LaterListen" xml:space="preserve">
+    <value>Later On</value>
+  </data>
+  <data name="ListenNow" xml:space="preserve">
+    <value>Listen Now</value>
+  </data>
 </root>

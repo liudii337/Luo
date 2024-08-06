@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using JP.Utils.Debug;
 using Luo.Shared.Data;
+using Luo.Shared.Helper;
 using LuoMusic.Common;
 using LuoMusic.Model;
 using Newtonsoft.Json;
@@ -283,7 +284,7 @@ namespace LuoMusic.ViewModel.DataViewModel
             if (!IsHeartedVol(item))
             {
                 HeartVols.Add(item);
-                ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("HeartVolSuccess"));
+                ToastService.SendToast(ResourcesHelper.GetResString("HeartVolSuccess"));
             }
         }
         public void RemoveVol(VolItem item)
@@ -291,7 +292,7 @@ namespace LuoMusic.ViewModel.DataViewModel
             if(IsHeartedVol(item))
             {
                 HeartVols.Remove(item);
-                ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("HeartVolCancel"));
+                ToastService.SendToast(ResourcesHelper.GetResString("HeartVolCancel"));
             }
         }
 

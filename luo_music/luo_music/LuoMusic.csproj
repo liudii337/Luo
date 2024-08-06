@@ -110,7 +110,6 @@
     <Compile Include="Common\Composition\ReorderGridAnimation.cs" />
     <Compile Include="Common\IncrementalLoadingCollection.cs" />
     <Compile Include="Common\NavigableUserControl.cs" />
-    <Compile Include="Common\ResourcesHelper.cs" />
     <Compile Include="Common\StringFormatConverter.cs" />
     <Compile Include="Common\ToastService.cs" />
     <Compile Include="Common\TopNavigationControl.cs" />

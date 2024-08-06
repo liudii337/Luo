@@ -436,7 +436,7 @@ namespace Luo.Shared.Data
             //Date = doc.DocumentNode.SelectSingleNode("//span[@class='vol-date']").InnerText;
 
             Tags = new ObservableCollection<String>();
-            var vol_tags = doc.DocumentNode.SelectNodes("//span[@class='block w-fit py-[3px] px-[10px] rounded-[15px] bg-[rgba(0,0,0,0.05)] text-[rgba(0,0,0,0.7)] text-[12px] leading-[12px]']");
+            var vol_tags = doc.DocumentNode.SelectNodes("//a[@class='block w-fit py-[3px] px-[10px] rounded-[15px] bg-[rgba(0,0,0,0.05)] text-[rgba(0,0,0,0.7)] text-[12px] leading-[12px]']");
 
             if (vol_tags != null)
             {

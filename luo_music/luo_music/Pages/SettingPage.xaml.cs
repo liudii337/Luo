@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LuoMusic.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +21,16 @@ namespace LuoMusic.Pages
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class SettingPage : Page
+    public sealed partial class SettingPage : NavigableUserControl
     {
         public SettingPage()
         {
             this.InitializeComponent();
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Presented = false;
         }
     }
 }

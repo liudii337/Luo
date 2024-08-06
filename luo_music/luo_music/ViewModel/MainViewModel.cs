@@ -436,7 +436,7 @@ namespace LuoMusic.ViewModel
             {
                 //多语言支持
                 //Title = Consts.Localizer.GetString("HomeText"),
-                Title=ResourceLoader.GetForCurrentView().GetString("AllVols"),
+                Title=ResourcesHelper.GetResString("AllVols"),
                 TargetType = typeof(VolListPage),
                 Icon="\uE80F",
                 Index = VirtualKey.Number1,
@@ -444,7 +444,7 @@ namespace LuoMusic.ViewModel
             },
             new HamPanelItem
             {
-                Title=ResourceLoader.GetForCurrentView().GetString("TagVols"),
+                Title=ResourcesHelper.GetResString("TagVols"),
                 Icon="\uE2AC",
                 TargetType = typeof(VolTagListPage),
                 Index = VirtualKey.Number2,
@@ -452,7 +452,7 @@ namespace LuoMusic.ViewModel
             },
             new HamPanelItem
             {
-                Title=ResourceLoader.GetForCurrentView().GetString("HeartVols"),
+                Title=ResourcesHelper.GetResString("HeartVols"),
                 Icon = "\uEFA9",
                 TargetType = typeof(HeartPage),
                 Index = VirtualKey.Number3,
@@ -524,6 +524,66 @@ namespace LuoMusic.ViewModel
                 return _presentSongPlayCommand = new RelayCommand(() =>
                 {
                     SongPlayPagePresented = !SongPlayPagePresented;
+                });
+            }
+        }
+
+        private bool _settingPagePresented = false;
+        public bool SettingPagePresented
+        {
+            get
+            {
+                return _settingPagePresented;
+            }
+            set
+            {
+                if (_settingPagePresented != value)
+                {
+                    _settingPagePresented = value;
+                    RaisePropertyChanged(() => SettingPagePresented);
+                }
+            }
+        }
+
+        private RelayCommand _presentSettingCommand;
+        public RelayCommand PresentSettingCommand
+        {
+            get
+            {
+                if (_presentSettingCommand != null) return _presentSettingCommand;
+                return _presentSettingCommand = new RelayCommand(() =>
+                {
+                    SettingPagePresented = !SettingPagePresented;
+                });
+            }
+        }
+
+        private bool _aboutPagePresented = false;
+        public bool AboutPagePresented
+        {
+            get
+            {
+                return _aboutPagePresented;
+            }
+            set
+            {
+                if (_aboutPagePresented != value)
+                {
+                    _aboutPagePresented = value;
+                    RaisePropertyChanged(() => AboutPagePresented);
+                }
+            }
+        }
+
+        private RelayCommand _presentAboutCommand;
+        public RelayCommand PresentAboutCommand
+        {
+            get
+            {
+                if (_presentAboutCommand != null) return _presentAboutCommand;
+                return _presentAboutCommand = new RelayCommand(() =>
+                {
+                    AboutPagePresented = !AboutPagePresented;
                 });
             }
         }
@@ -620,7 +680,7 @@ namespace LuoMusic.ViewModel
             }
         }
 
-        private int _playMode;
+        private int _playMode=0;
         public int PlayMode
         {
             get
@@ -640,19 +700,19 @@ namespace LuoMusic.ViewModel
                         IsLoop = true;
                         IsOneLoop = false;
                         IsShuffle = false;
-                        ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("SongLoop"));
+                        ToastService.SendToast(ResourcesHelper.GetResString("SongLoop"));
                         break;
                     case 1:
                         IsLoop = true;
                         IsOneLoop = true;
                         IsShuffle = false;
-                        ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("SongSingleLoop"));
+                        ToastService.SendToast(ResourcesHelper.GetResString("SongSingleLoop"));
                         break;
                     case 2:
                         IsLoop = true;
                         IsOneLoop = false;
                         IsShuffle = true;
-                        ToastService.SendToast(ResourceLoader.GetForCurrentView().GetString("SongShuffle"));
+                        ToastService.SendToast(ResourcesHelper.GetResString("SongShuffle"));
                         break;
                     default:
                         break;
@@ -679,6 +739,23 @@ namespace LuoMusic.ViewModel
             }
         }
 
+        private Visibility _needShowPlayPannel = Visibility.Collapsed;
+        public Visibility NeedShowPlayPannel
+        {
+            get
+            {
+                return _needShowPlayPannel;
+            }
+            set
+            {
+                if (_needShowPlayPannel != value)
+                {
+                    _needShowPlayPannel = value;
+                    RaisePropertyChanged(() => NeedShowPlayPannel);
+                }
+            }
+        }
+
         public Visibility VisibilityTrans(bool s)
         {
             return s == true ? Visibility.Collapsed : Visibility.Visible;
@@ -696,7 +773,7 @@ namespace LuoMusic.ViewModel
 
         public string PlayPauseToString(bool isplaying)
         {
-            return isplaying == true ? ResourceLoader.GetForCurrentView().GetString("SongPause") : ResourceLoader.GetForCurrentView().GetString("SongPlay");
+            return isplaying == true ? ResourcesHelper.GetResString("SongPause") : ResourcesHelper.GetResString("SongPlay");
         }
 
         public string PlayModeToIcon(int playmode)
@@ -718,13 +795,13 @@ namespace LuoMusic.ViewModel
             switch (playmode)
             {
                 case 0:
-                    return ResourceLoader.GetForCurrentView().GetString("SongLoop");
+                    return ResourcesHelper.GetResString("SongLoop");
                 case 1:
-                    return ResourceLoader.GetForCurrentView().GetString("SongSingleLoop");
+                    return ResourcesHelper.GetResString("SongSingleLoop");
                 case 2:
-                    return ResourceLoader.GetForCurrentView().GetString("SongShuffle");
+                    return ResourcesHelper.GetResString("SongShuffle");
                 default:
-                    return ResourceLoader.GetForCurrentView().GetString("SongLoop");
+                    return ResourcesHelper.GetResString("SongLoop");
             }
         }
 
@@ -940,7 +1017,8 @@ namespace LuoMusic.ViewModel
                 if (e.CurrentSong != null)
                 {
                     CurrentSong = e.CurrentSong;
-
+                    if(NeedShowPlayPannel!=Visibility.Visible)
+                    { NeedShowPlayPannel = Visibility.Visible; }
                     //获取当前歌曲歌词
                     if(CurrentSong.LrcUrl!=null)
                     {

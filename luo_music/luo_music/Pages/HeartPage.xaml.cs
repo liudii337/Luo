@@ -31,14 +31,18 @@ namespace LuoMusic.Pages
         public delegate void NavigateHandel(Type page);
         public static event NavigateHandel MainNavigateToEvent;
 
+        public int SelectedVolIndex;
+
         public HeartPage()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         private void VolListGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             VolItem item = (VolItem)e.ClickedItem;
+            SelectedVolIndex = MainVM.HeartVM.HeartVols.IndexOf(item);
 
             if (!item.Vol.IsDetailGet)
             {
@@ -59,19 +63,21 @@ namespace LuoMusic.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var container = (GridViewItem)VolListGridView.ContainerFromItem(MainVM.CurrentVol);
-            if (container != null)
+            if(MainVM.CurrentVol!=null)
             {
-                var root = (FrameworkElement)container.ContentTemplateRoot;
-                var CoverImage = (Image)root.FindName("Cover");
-
-                ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("backwardAnimation");
-                if (animation != null)
+                var container = (GridViewItem)VolListGridView.ContainerFromItem(MainVM.CurrentVol);
+                if (container != null)
                 {
-                    animation.TryStart(CoverImage);
+                    var root = (FrameworkElement)container.ContentTemplateRoot;
+                    var CoverImage = (Image)root.FindName("Cover");
+
+                    ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("backwardAnimation");
+                    if (animation != null)
+                    {
+                        animation.TryStart(CoverImage);
+                    }
                 }
             }
-
         }
 
         public void ScrollToTop()

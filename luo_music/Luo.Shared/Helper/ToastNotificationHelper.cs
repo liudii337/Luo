@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Notifications;
 
 namespace Luo.Shared.Helper
@@ -42,9 +43,9 @@ namespace Luo.Shared.Helper
                 {
                     Buttons =
                     {
-                        new ToastButton("现在去听", "luoo://?volnum="+volnum)
+                        new ToastButton(ResourcesHelper.GetResString("ListenNow"), "luoo://?volnum="+volnum)
                         { ActivationType = ToastActivationType.Protocol },
-                        new ToastButton("稍后再听","").SetDismissActivation()
+                        new ToastButton(ResourcesHelper.GetResString("LaterListen"),"").SetDismissActivation()
                     }
                 },
                 Launch= "?volnum=" + volnum

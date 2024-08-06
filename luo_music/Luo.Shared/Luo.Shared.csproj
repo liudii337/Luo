@@ -121,6 +121,7 @@
     <Compile Include="Extension\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Helper\CookieHelper.cs" />
+    <Compile Include="Helper\ResourcesHelper.cs" />
     <Compile Include="Helper\Tile.cs" />
     <Compile Include="Helper\TimeLineHelper.cs" />
     <Compile Include="Helper\ToastNotificationHelper.cs" />

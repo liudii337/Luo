@@ -274,35 +274,17 @@ namespace LuoMusic
 
         private void SettingBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(MainFrame.Content.GetType() == typeof(SettingPage))
-            {
-                GoBack();
-                UpdateNavIndex();
-            }
-            else
-            {
-                MainFrame.Navigate(typeof(SettingPage));
-                MainVM.CurrentNavIndex = -1;
-            }
+            MainVM.PresentSettingCommand.Execute(null);
         }
 
         private void MoreBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (MainFrame.Content.GetType() == typeof(AboutPage))
-            {
-                GoBack();
-                UpdateNavIndex();
-            }
-            else
-            {
-                MainFrame.Navigate(typeof(AboutPage));
-                MainVM.CurrentNavIndex = -1;
-            }
+            MainVM.PresentAboutCommand.Execute(null);
         }
 
         private void Artwork_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if(MainVM.CurrentSong != null)
+            if(MainVM.CurrentPlayVol != null)
             {
                 MainVM.PresentSongPlayCommand.Execute(null);
             }
@@ -334,18 +316,30 @@ namespace LuoMusic
 
         private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (MainVM.CurrentSong != null)
+            if (MainVM.CurrentPlayVol != null)
             {
                 ArtworkBorder.Visibility = Visibility.Visible;
+                Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Hand, 0);
             }
         }
 
         private void Grid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if (MainVM.CurrentSong != null)
+            if (MainVM.CurrentPlayVol != null)
             {
                 ArtworkBorder.Visibility = Visibility.Collapsed;
+                Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Arrow, 0);
             }
+        }
+
+        private void SettingUC_OnPresentedChanged(object sender, PresentedArgs e)
+        {
+
+        }
+
+        private void AboutUC_OnPresentedChanged(object sender, PresentedArgs e)
+        {
+
         }
     }
 }

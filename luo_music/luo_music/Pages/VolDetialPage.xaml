@@ -96,7 +96,7 @@
         </Border>
 
         <ScrollViewer Name="NarrowView" Style="{StaticResource ScrollViewerCommonStyle}">
-            <Grid MaxWidth="650" HorizontalAlignment="Center" Margin="16" >
+            <Grid MaxWidth="650" HorizontalAlignment="Center" Margin="16,16,16,100" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -104,7 +104,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                     
-                <Image Grid.Row="0" Source="{Binding CurrentVol.Vol.Cover}"/>
+                <Image Name="CoverNarrow" Grid.Row="0" Source="{Binding CurrentVol.Vol.Cover}"/>
                 <Grid Grid.Row="1" Margin="0,10,0,10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -170,7 +170,7 @@
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Grid.Column="0" Style="{StaticResource ScrollViewerCommonStyle}">
-                <Grid MaxWidth="600" HorizontalAlignment="Stretch" Margin="30" >
+                <Grid MaxWidth="600" HorizontalAlignment="Stretch" Margin="30,30,30,100" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
@@ -228,7 +228,7 @@
             </ScrollViewer>
 
             <ScrollViewer Grid.Column="1" Style="{StaticResource ScrollViewerCommonStyle}">
-                <Grid MaxWidth="600" HorizontalAlignment="Stretch" Margin="30" >
+                <Grid MaxWidth="600" HorizontalAlignment="Stretch" Margin="30,30,30,100" >
                     <ListView x:Name="SongListViewWide" 
                           ItemsSource="{Binding CurrentVol.Vol.VolSongs}"
                           ItemTemplate="{StaticResource LuoVolSongTemplate}" ScrollViewer.VerticalScrollMode="Disabled"

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 
-namespace LuoMusic.Common
+namespace Luo.Shared.Helper
 {
     public class ResourcesHelper
     {

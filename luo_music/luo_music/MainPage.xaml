@@ -13,6 +13,7 @@
       xmlns:convertor="using:Luo.Shared.Convertor"
       xmlns:common="using:LuoMusic.Common"
       xmlns:uc="using:LuoMusic.Pages"
+      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
       x:Class="LuoMusic.MainPage"
       mc:Ignorable="d ignore"
       DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -30,7 +31,7 @@
             <VisualStateGroup>
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600"/>
+                        <AdaptiveTrigger MinWindowWidth="650"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Previous.Visibility" Value="Visible"/>
@@ -70,7 +71,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="64"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Button HorizontalAlignment="Left" VerticalAlignment="Bottom"
@@ -149,7 +150,7 @@
             d:IsHidden="True"
             OnPresentedChanged="SongPlayUC_OnPresentedChanged"
             Presented="{x:Bind MainVM.SongPlayPagePresented, Mode=TwoWay}" />
-        
+
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Transparent"
               x:Name="TitleBar" Loaded="TitleBar_Loaded">
             <Viewbox VerticalAlignment="Bottom" Margin="8,10,10,10" Width="32" Height="32">
@@ -159,16 +160,20 @@
             </Viewbox>
         </Grid>
 
-        <Grid x:Name="NowPanel" Grid.Row="2"
-              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              BorderBrush="Gray" BorderThickness="0,0.5,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+        <controls:DropShadowPanel Grid.Row="1" HorizontalContentAlignment="Stretch" MaxWidth="1200"
+                 Style="{StaticResource NowPannelDropShadowStyle}" VerticalAlignment="Bottom" Margin="18,0,18,18" 
+                 Visibility="{x:Bind MainVM.NeedShowPlayPannel,Mode=OneWay}">
+            <Grid x:Name="NowPanel"  
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="64" CornerRadius="32" Padding="12,0,12,0"
+              cu:Background="{ThemeResource SystemChromeMediumLowColor}"
+              fcu:Background="{ThemeResource CustomAcrylicBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <ProgressBar x:Name="NarrowProgressBar" Grid.ColumnSpan="3" 
+                <ProgressBar x:Name="NarrowProgressBar" Grid.ColumnSpan="3" 
                          HorizontalAlignment="Stretch" VerticalAlignment="Top"
                          Height="0.5" Opacity="0.5"
                          Background="Transparent"
@@ -176,108 +181,108 @@
                          Value="{x:Bind MainVM.PositionToValue(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
 
 
-            <StackPanel x:Name="ControlPanel" Orientation="Horizontal" Grid.Column="0"
+                <StackPanel x:Name="ControlPanel" Orientation="Horizontal" Grid.Column="0" 
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
+                    <Button AccessKey="[" x:Uid="Previous" x:Name="Previous"
                         Command="{x:Bind MainVM.GoPrevious}" 
                         cu:Style="{StaticResource MainButtonCompatStyle}"
-                        fcu:Style="{StaticResource MainButtonStyle}"
+                        fcu:Style="{StaticResource MainButtonStyleRound}"
                         Width="{StaticResource MainButtonSize}" 
                         Height="{StaticResource MainButtonSize}" 
                         Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE100;" />
-                    </Button.Content>
-                    <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="SongPrevious" FontFamily="{StaticResource AppFontFamily}"/>
-                    </ToolTipService.ToolTip>
-                </Button>
-                <Button AccessKey="P" x:Name="PlayPause"
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE100;" />
+                        </Button.Content>
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="SongPrevious" FontFamily="{StaticResource AppFontFamily}"/>
+                        </ToolTipService.ToolTip>
+                    </Button>
+                    <Button AccessKey="P" x:Name="PlayPause"
                         Command="{x:Bind MainVM.PlayPause}" ToolTipService.ToolTip="{x:Bind MainVM.PlayPauseToString(MainVM.IsPlaying),Mode=OneWay}"
                         cu:Style="{StaticResource MainButtonCompatStyle}"
-                        fcu:Style="{StaticResource MainButtonStyle}"
+                        fcu:Style="{StaticResource MainButtonStyleRound}"
                         Width="{StaticResource MainButtonSize}" 
                         Height="{StaticResource MainButtonSize}" 
                         Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayPauseToIcon(MainVM.IsPlaying),Mode=OneWay}"/>
-                    </Button.Content>
-                </Button>
-                <Button AccessKey="]" x:Uid="Next" x:Name="Next"
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayPauseToIcon(MainVM.IsPlaying),Mode=OneWay}"/>
+                        </Button.Content>
+                    </Button>
+                    <Button AccessKey="]" x:Uid="Next" x:Name="Next"
                         Command="{x:Bind MainVM.GoNext}"
                         cu:Style="{StaticResource MainButtonCompatStyle}"
-                        fcu:Style="{StaticResource MainButtonStyle}"
+                        fcu:Style="{StaticResource MainButtonStyleRound}"
                         Width="{StaticResource MainButtonSize}" 
                         Height="{StaticResource MainButtonSize}" 
                         Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE101;" />
-                    </Button.Content>
-                    <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="SongNext" FontFamily="{StaticResource AppFontFamily}"/>
-                    </ToolTipService.ToolTip>
-                </Button>
-            </StackPanel>
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE101;" />
+                        </Button.Content>
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="SongNext" FontFamily="{StaticResource AppFontFamily}"/>
+                        </ToolTipService.ToolTip>
+                    </Button>
+                </StackPanel>
 
-            <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,0,8,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid x:Name="ArtworkGrid" Margin="4,0,4,0" Width="48" Height="48" Grid.Column="0" VerticalAlignment="Center"
+                <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,0,8,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="ArtworkGrid" Margin="4,0,4,0" Width="48" Height="48" Grid.Column="0" VerticalAlignment="Center"
                       Tapped="Artwork_Tapped" PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited">
-                    <Image x:Name="Artwork"  Width="48" Height="48"
-                       VerticalAlignment="Top"
+                        <Image x:Name="Artwork"  Width="48" Height="48"
+                       VerticalAlignment="Top" 
                        Stretch="UniformToFill" Source="{Binding CurrentSong.AlbumImage, Mode=OneWay, FallbackValue='/Assets/DefaultCover.png'}" HorizontalAlignment="Stretch"/>
-                    <Grid x:Name="ArtworkBorder" Visibility="Collapsed">
-                        <Border Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"  Opacity="1" />
-                        <FontIcon x:Name="ArtworkIcon" FontFamily="{ThemeResource SymbolThemeFontFamily}" Foreground="{ThemeResource SystemAltHighColor}" 
+                        <Grid x:Name="ArtworkBorder" Visibility="Collapsed">
+                            <Border Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"  Opacity="1" />
+                            <FontIcon x:Name="ArtworkIcon" FontFamily="{ThemeResource SymbolThemeFontFamily}" Foreground="{ThemeResource SystemAltHighColor}" 
                                   Glyph="{x:Bind MainVM.PlayPageOpenToIcon(MainVM.SongPlayPagePresented),Mode=OneWay}" />
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Height="50" Margin="4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock x:Name="NarrowTitle" x:Uid="LuooTitle" Grid.Row="0" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
-                                           TextWrapping="NoWrap"
-                                           FontSize="13" FontFamily="{StaticResource AppFontFamily}"
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Height="50" Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="NarrowTitle" x:Uid="LuooTitle" Grid.Row="0" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
+                                           TextWrapping="NoWrap" VerticalAlignment="Center" FontWeight="Bold"
+                                           FontSize="14" FontFamily="{StaticResource AppFontFamily}"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" />
-                    <TextBlock x:Name="NarrowArtist" x:Uid="LuooSlogan" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
+                        <TextBlock x:Name="NarrowArtist" x:Uid="LuooSlogan" Grid.Row="1" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
                                            Style="{ThemeResource BodyTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                                            MaxLines="1" FontSize="12" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
-                    <StackPanel x:Name="WideTitle" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
+                        <StackPanel x:Name="WideTitle" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock x:Name="Title" Text="{Binding CurrentSong.Name, Mode=OneWay}"  
                                    x:Uid="LuooTitle" 
                                    TextWrapping="NoWrap" VerticalAlignment="Center"
                                            FontSize="13" FontFamily="{StaticResource AppFontFamily}"
                                            Style="{ThemeResource BaseTextBlockStyle}" MaxLines="1" 
                                            TextTrimming="CharacterEllipsis" MaxWidth="240"/>
 
-                        <TextBlock Text="-" FontSize="13" FontFamily="{StaticResource AppFontFamily}" Margin="3,0,3,0" FontWeight="ExtraBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="-" FontSize="13" FontFamily="{StaticResource AppFontFamily}" Margin="3,0,3,0" FontWeight="ExtraBold" VerticalAlignment="Center"/>
 
-                        <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
+                            <TextBlock x:Name="Artist" Text="{Binding CurrentSong.Artist, Mode=OneWay}" 
                                    x:Uid="LuooSlogan"
                                    Style="{ThemeResource BodyTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}"
                                            MaxLines="1" FontSize="13" VerticalAlignment="Center"
                                            TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                    <TextBlock x:Name="PositionText" 
+                        <TextBlock x:Name="PositionText" 
                             Grid.Row="0" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center"
                             FontSize="12" FontFamily="{StaticResource AppFontFamily}"
                             Margin="4"
                             Text="{x:Bind PositionToString(MainVM.CurrentPosition, MainVM.TotalDuration), Mode=OneWay}"/>
-                    <ProgressBar x:Name="MainSliderBuffer" Grid.Row="1" 
+                        <ProgressBar x:Name="MainSliderBuffer" Grid.Row="1" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
                             Height="4" 
                             Opacity="0.5"
@@ -285,7 +290,7 @@
                             Background="{ThemeResource AppBarBackgroundThemeBrush}" 
                             Value="{x:Bind MainVM.BufferProgress, Mode=OneWay}"/>
 
-                    <Slider x:Name="MainSlider" Grid.Row="1"
+                        <Slider x:Name="MainSlider" Grid.Row="1"
                             Style="{StaticResource PlayerSliderStyle}" 
                             cu:Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
                             cu:Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
@@ -297,83 +302,99 @@
                             IsThumbToolTipEnabled="False"                    
                             />
 
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <StackPanel x:Name="ModePanel" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="Volume" x:Uid="VolumeButton" 
+                <StackPanel x:Name="ModePanel" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="Volume" x:Uid="VolumeButton" 
                         cu:Style="{StaticResource MainButtonCompatStyle}"
-                        fcu:Style="{StaticResource MainButtonStyle}"
+                        fcu:Style="{StaticResource MainButtonStyleRound}"
                         Width="{StaticResource MainButtonSize}" 
                         Height="{StaticResource MainButtonSize}" 
                         Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Stretch" FontFamily="Segoe MDL2 Assets">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.VolumeToIcon(MainVM.Volume), Mode=OneWay}" />
-                    </Button.Content>
-                    <Button.Flyout>
-                        <Flyout>
-                            <Flyout.FlyoutPresenterStyle>
-                                <Style TargetType="FlyoutPresenter">
-                                    <Setter Property="MinWidth" Value="30"/>
-                                    <Setter Property="MinHeight" Value="100"/>
-                                </Style>
-                            </Flyout.FlyoutPresenterStyle>
-                            <Grid Width="30">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Margin="2" TextAlignment="Center" 
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.VolumeToIcon(MainVM.Volume), Mode=OneWay}" />
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout>
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="MinWidth" Value="30"/>
+                                        <Setter Property="MinHeight" Value="100"/>
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+                                <Grid Width="30">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Margin="2" TextAlignment="Center" 
                                            VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="None" MaxLines="1" 
                                            FontSize="16"
                                            HorizontalAlignment="Center" 
                                            Text="{x:Bind MainVM.Volume, Mode=OneWay}"/>
-                                <Slider Grid.Row="1" IsThumbToolTipEnabled="False" Orientation="Vertical" Style="{StaticResource PlayerSliderStyle}"
+                                    <Slider Grid.Row="1" IsThumbToolTipEnabled="False" Orientation="Vertical" Style="{StaticResource PlayerSliderStyle}"
                                         cu:Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
                                         cu:Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"
                                         fcu:Background="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
                                         fcu:Foreground="{ThemeResource SystemControlBackgroundBaseMediumHighRevealBorderBrush}"
                                         Height="100" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
                                         Minimum="0" Maximum="100" StepFrequency="1" Value="{x:Bind MainVM.Volume, Mode=TwoWay}"/>
-                            </Grid>
-                        </Flyout>
-                    </Button.Flyout>
-                    <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="SongVolume" FontFamily="{StaticResource AppFontFamily}"/>
-                    </ToolTipService.ToolTip>
-                </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="SongVolume" FontFamily="{StaticResource AppFontFamily}"/>
+                        </ToolTipService.ToolTip>
+                    </Button>
 
-                <Button x:Name="RelateVol"
+                    <Button x:Name="RelateVol"
                         Click="RelateVol_Click"
                         cu:Style="{StaticResource MainButtonCompatStyle}"
-                        fcu:Style="{StaticResource MainButtonStyle}"
+                        fcu:Style="{StaticResource MainButtonStyleRound}"
                         Width="{StaticResource MainButtonSize}" 
                         Height="{StaticResource MainButtonSize}" 
                         Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE93C;" />
-                    </Button.Content>
-                    <ToolTipService.ToolTip>
-                        <TextBlock x:Uid="CurrentPlayVol" FontFamily="{StaticResource AppFontFamily}"/>
-                    </ToolTipService.ToolTip>
-                </Button>
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE93C;" />
+                        </Button.Content>
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="CurrentPlayVol" FontFamily="{StaticResource AppFontFamily}"/>
+                        </ToolTipService.ToolTip>
+                    </Button>
 
-                <Button x:Name="PlayMode"
+                    <Button x:Name="PlayMode"
                         Command="{x:Bind MainVM.NextPlayMode}" ToolTipService.ToolTip="{x:Bind MainVM.PlayModeToString(MainVM.PlayMode),Mode=OneWay}"
                         cu:Style="{StaticResource MainButtonCompatStyle}"
-                        fcu:Style="{StaticResource MainButtonStyle}"
+                        fcu:Style="{StaticResource MainButtonStyleRound}"
                         Width="{StaticResource MainButtonSize}" 
                         Height="{StaticResource MainButtonSize}" 
                         Margin="{StaticResource ButtonsStackMargin}" 
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayModeToIcon(MainVM.PlayMode),Mode=OneWay}"/>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </Grid>
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind MainVM.PlayModeToIcon(MainVM.PlayMode),Mode=OneWay}"/>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+        </controls:DropShadowPanel>
+
+        <uc:SettingPage
+            x:Name="SettingUC"
+            Grid.RowSpan="4"
+            d:IsHidden="True"
+            OnPresentedChanged="SettingUC_OnPresentedChanged"
+            Presented="{x:Bind MainVM.SettingPagePresented, Mode=TwoWay}" />
+
+        <uc:AboutPage
+            x:Name="AboutUC"
+            Grid.RowSpan="4"
+            d:IsHidden="True"
+            OnPresentedChanged="AboutUC_OnPresentedChanged"
+            Presented="{x:Bind MainVM.AboutPagePresented, Mode=TwoWay}" />
 
 
     </Grid>

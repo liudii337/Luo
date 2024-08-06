@@ -1,5 +1,6 @@
 ﻿using JP.Utils.Debug;
 using JP.Utils.Helper;
+using LuoMusic.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,7 @@ namespace LuoMusic.Pages
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class AboutPage : Page
+    public sealed partial class AboutPage : NavigableUserControl
     {
         public AboutPage()
         {
@@ -77,6 +78,11 @@ namespace LuoMusic.Pages
         private async void RateBtn_Click(object sender, RoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?PFN=" + Package.Current.Id.FamilyName));
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Presented = false;
         }
     }
 }

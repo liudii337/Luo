@@ -75,19 +75,21 @@ namespace LuoMusic.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var container = (GridViewItem)VolListGridView.ContainerFromItem(MainVM.CurrentVol);
-            if (container != null)
+            if(MainVM.CurrentVol!=null)
             {
-                var root = (FrameworkElement)container.ContentTemplateRoot;
-                var CoverImage = (Image)root.FindName("Cover");
-
-                ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("backwardAnimation");
-                if (animation != null)
+                var container = (GridViewItem)VolListGridView.ContainerFromItem(MainVM.CurrentVol);
+                if (container != null)
                 {
-                    animation.TryStart(CoverImage);
+                    var root = (FrameworkElement)container.ContentTemplateRoot;
+                    var CoverImage = (Image)root.FindName("Cover");
+
+                    ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("backwardAnimation");
+                    if (animation != null)
+                    {
+                        animation.TryStart(CoverImage);
+                    }
                 }
             }
-
         }
 
         public void ScrollToTop()

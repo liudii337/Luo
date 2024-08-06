@@ -1,4 +1,5 @@
-﻿<Page
+﻿<common:NavigableUserControl
+    xmlns:common="using:LuoMusic.Common"
     x:Class="LuoMusic.Pages.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,13 +11,27 @@
     mc:Ignorable="d"
     Background="{x:Null}">
 
-    <Page.Resources>
+    <UserControl.Resources>
         <Style x:Key="PathStyle" TargetType="Path">
             <Setter Property="Fill" Value="{ThemeResource SystemBaseHighColor}" />
         </Style>
-    </Page.Resources>
+    </UserControl.Resources>
 
-    <Grid>
+    <Grid cu:Background="{ThemeResource SystemChromeMediumLowColor}"
+          fcu:Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
+        <Button
+            x:Name="CloseBtn"
+            Width="{StaticResource MainButtonSize}"
+            Height="{StaticResource MainButtonSize}"
+            Margin="12,12,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            cu:Style="{StaticResource MainButtonCompatStyle}"
+            fcu:Style="{StaticResource MainButtonStyle}"
+            Background="Transparent" Canvas.ZIndex="2"
+            Click="CloseBtn_Click">
+            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72B;" />
+        </Button>
         <ScrollViewer Style="{StaticResource ScrollViewerCommonStyle}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="360">
                 <Viewbox Height="80" Width="80"  Margin="0,20,4,4">
@@ -64,11 +79,11 @@
                 <RichTextBlock x:Name="richTextBlock" Style="{StaticResource SubContentRichTextBlockStyle}" FontFamily="{StaticResource AppFontFamily}" LineHeight="23">
                     <Paragraph>
                         本APP数据基于
-                        <Hyperlink NavigateUri="https://www.indie.cn/">雀乐</Hyperlink>  网站
+                        <Hyperlink NavigateUri="https://www.indie.cn/">雀乐</Hyperlink> 网站
                         ，开发基于个人兴趣，无广告不盈利。雀乐已经回归，扫描二维码下载手机APP~
                     </Paragraph>
                 </RichTextBlock>
-                
+
                 <StackPanel
                         Margin="0,4,0,0"
                         HorizontalAlignment="Center"
@@ -88,7 +103,7 @@
                             />
                     </StackPanel>
                 </StackPanel>
-                
+
                 <TextBlock
                         x:Uid="Feedback" FontFamily="{StaticResource AppFontFamily}"
                         Style="{StaticResource SubTitleTextBlockStyle}"
@@ -131,4 +146,4 @@
 
         </ScrollViewer>
     </Grid>
-</Page>
+</common:NavigableUserControl>

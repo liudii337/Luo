@@ -63,7 +63,10 @@ namespace LuoMusic.Pages
             base.OnNavigatedFrom(e);
             if(e.SourcePageType.Name== NavigatedToPageName)
             {
-                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardAnimation", Cover);
+                if(Frame.ActualWidth > 850)
+                { ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardAnimation", Cover); }
+                else
+                { ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardAnimation", CoverNarrow); }
             }
         }
 
@@ -75,7 +78,10 @@ namespace LuoMusic.Pages
             ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("forwardAnimation");
             if (animation != null)
             {
-                animation.TryStart(Cover);
+                if (Frame.ActualWidth > 850)
+                { animation.TryStart(Cover); }
+                else
+                { animation.TryStart(CoverNarrow); }
             }
         }
 

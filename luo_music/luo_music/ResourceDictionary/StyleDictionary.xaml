@@ -1233,6 +1233,54 @@
         <Setter Property="BorderThickness" Value="{StaticResource RevealThinkness}" />
         <Setter Property="Background" Value="Transparent" />
     </fcu:Style>
+    <fcu:Style x:Key="MainButtonStyleRound"
+        BasedOn="{StaticResource ButtonRevealStyle}"
+        TargetType="Button">
+        <Setter Property="BorderThickness" Value="{StaticResource RevealThinkness}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="24"
+                                    Width="48"
+                                    Height="48">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseLowBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Opacity" To="0.5" Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </fcu:Style>
+
     <Style x:Key="MainButtonCompatStyle"
         BasedOn="{StaticResource ListButtonStyle}"
         TargetType="Button" />
@@ -1424,5 +1472,15 @@
         <Setter Property="ShadowOpacity" Value="0.5" />
     </Style>
 
+    <Style x:Key="NowPannelDropShadowStyle" TargetType="controls:DropShadowPanel">
+        <Setter Property="BlurRadius" Value="32" />
+        <Setter Property="Color" Value="Black" />
+        <Setter Property="OffsetX" Value="1" />
+        <Setter Property="OffsetY" Value="1" />
+        <Setter Property="ShadowOpacity" Value="0.2" />
+    </Style>
+
+    <fcu:AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop"
+            TintColor="{ThemeResource SystemChromeAltHighColor}" TintOpacity="0.5" FallbackColor="{ThemeResource SystemChromeLowColor}" />
 
 </ResourceDictionary>

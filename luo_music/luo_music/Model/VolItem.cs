@@ -211,7 +211,7 @@ namespace LuoMusic.Model
 
         public string IsHeartVolToString(bool isHeartVol)
         {
-            return isHeartVol == true ? ResourceLoader.GetForCurrentView().GetString("HeartVolCancelString") : ResourceLoader.GetForCurrentView().GetString("HeartVolSetString");
+            return isHeartVol == true ? ResourcesHelper.GetResString("HeartVolCancelString") : ResourcesHelper.GetResString("HeartVolSetString");
         }
 
 

@@ -249,4 +249,10 @@
   <data name="NoCollection2.Text" xml:space="preserve">
     <value>快去收藏自己喜欢的音乐吧</value>
   </data>
+  <data name="LaterListen" xml:space="preserve">
+    <value>稍后去听</value>
+  </data>
+  <data name="ListenNow" xml:space="preserve">
+    <value>现在去听</value>
+  </data>
 </root>

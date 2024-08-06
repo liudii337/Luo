@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luo.Shared.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -214,8 +215,9 @@ namespace Luo.Shared.Data
 
         public LuoVolSong()
         {
-            Name = ResourceLoader.GetForCurrentView().GetString("LuooTitleString");
-            Artist = ResourceLoader.GetForCurrentView().GetString("LuooSloganString");
+            Name = ResourcesHelper.GetResString("LuooTitleString");
+            Artist = ResourcesHelper.GetResString("LuooSloganString");
+            Album = "";
             AlbumImage = "/Assets/DefaultCover.png";
         }
 
